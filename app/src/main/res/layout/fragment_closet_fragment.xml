@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/peach"
+    tools:context=".Closet_fragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/round_background"
+                android:clickable="true"
+                android:src="@drawable/back" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="15dp"
+                android:hint="@string/search"
+                android:textColorHint="@color/black"
+                app:boxStrokeErrorColor="@color/red"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/black"
+                app:errorIconTint="@color/red"
+                app:errorTextColor="@color/red"
+                app:startIconDrawable="@drawable/search"
+                app:startIconTint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/flag_transparent"
+                    android:fontFamily="@font/montserrat"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="25dp"
+            android:orientation="vertical"
+            android:background="@drawable/round_corners">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/closet"
+                android:textColor="@color/wood_brown"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/round_corners_clothes"
+                        android:elevation="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="15dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="@string/tops"
+                                android:layout_alignParentStart="true"
+                                android:textColor="@color/wood_brown"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginRight="30dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="@string/show_all"
+                                android:textColor="@color/wood_brown"
+                                android:textSize="13sp" />
+
+
+                        </RelativeLayout>
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/tops_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:layout_margin="10dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/round_corners_clothes"
+                        android:elevation="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="15dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="@string/bottoms"
+                                android:textColor="@color/wood_brown"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginRight="30dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="@string/show_all"
+                                android:textColor="@color/wood_brown"
+                                android:textSize="13sp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/bottoms_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:layout_margin="10dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="100dp"
+                        android:background="@drawable/round_corners_clothes"
+                        android:elevation="5dp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="15dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="@string/shoes"
+                                android:textColor="@color/wood_brown"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginRight="30dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="@string/show_all"
+                                android:textColor="@color/wood_brown"
+                                android:textSize="13sp" />
+
+                        </RelativeLayout>
+
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/shoes_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:layout_margin="10dp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="155dp"
+    android:layout_height="190dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="5dp"
+    android:layout_margin="5dp">
+
+    <RelativeLayout
+        android:layout_width="155dp"
+        android:layout_height="190dp"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:id="@+id/item_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="150dp"
+                android:layout_height="160dp"
+                android:src="@drawable/hanger"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/reroll_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/reroll"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+
+
+</androidx.cardview.widget.CardView>

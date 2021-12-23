@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/peach"
+    tools:context=".SignIn">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="226dp"
+            android:layout_height="214dp"
+            android:layout_marginTop="30dp"
+            app:srcCompat="@drawable/hanger"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/app_name_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pacifico"
+            android:text="@string/app_name"
+            android:textColor="@color/wood_brown"
+            android:textSize="42sp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:id="@+id/email_edit_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:textColorHint="@color/black_trans"
+                app:startIconDrawable="@drawable/email"
+                app:startIconTint="@color/black"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/black"
+                app:boxStrokeColor="@color/wood_brown"
+                app:boxStrokeWidthFocused="2dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/montserrat"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:background="@color/wood_brown_trans"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:id="@+id/password_edit_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:textColorHint="@color/black_trans"
+                app:startIconDrawable="@drawable/password"
+                app:startIconTint="@color/black"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/black"
+                android:paddingTop="10dp"
+                app:boxStrokeColor="@color/wood_brown"
+                app:boxStrokeWidthFocused="2dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/montserrat"
+                    android:background="@color/wood_brown_trans"
+                    android:textColor="@color/black"
+                    android:inputType="textPassword"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <CheckBox
+                    android:id="@+id/radio_bttn_remember"
+                    style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/montserrat"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:text="@string/remember"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:id="@+id/password_forget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/montserrat"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:stateListAnimator="@null"
+                    android:text="@string/forget"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/sign_in_bttn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical"
+                android:text="@string/sign_in"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                app:backgroundTint="@color/wood_brown" />
+
+            <Button
+                android:id="@+id/reg_redir_bttn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:text="@string/dont_have_account"
+                android:textColor="@color/black"
+                android:textSize="12dp"
+                android:stateListAnimator="@null"
+                android:background="@android:color/transparent"
+                android:textAllCaps="false"
+                android:foreground="?attr/selectableItemBackgroundBorderless"/>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</ScrollView>

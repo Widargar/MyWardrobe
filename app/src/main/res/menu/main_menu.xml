@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:title="@string/home"
+            android:icon="@drawable/home"/>
+
+        <item
+            android:id="@+id/nav_search"
+            android:title="@string/search"
+            android:icon="@drawable/search"/>
+
+        <item
+            android:id="@+id/nav_closet"
+            android:title="@string/closet"
+            android:icon="@drawable/all_clothes"/>
+
+    </group>
+
+    <item android:title="@string/profile">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_profile"
+                    android:title="@string/profile"
+                    android:icon="@drawable/profile"/>
+
+                <item
+                    android:id="@+id/nav_log_out"
+                    android:title="@string/log_out"
+                    android:icon="@drawable/log_out"/>
+
+            </group>
+
+        </menu>
+
+    </item>
+
+<!--    <item android:title="@string/categories">-->
+
+<!--        <menu>-->
+
+<!--            <group android:checkableBehavior="single">-->
+
+<!--                <item-->
+<!--                    android:id="@+id/nav_headdress"-->
+<!--                    android:title="@string/headdress"-->
+<!--                    android:icon="@drawable/headdress"/>-->
+
+<!--                <item-->
+<!--                    android:id="@+id/nav_tops"-->
+<!--                    android:title="@string/tops"-->
+<!--                    android:icon="@drawable/top"/>-->
+
+<!--                <item-->
+<!--                    android:id="@+id/nav_bottoms"-->
+<!--                    android:title="@string/pants"-->
+<!--                    android:icon="@drawable/pants"/>-->
+
+<!--                <item-->
+<!--                    android:id="@+id/nav_shoes"-->
+<!--                    android:title="@string/shoes"-->
+<!--                    android:icon="@drawable/shoe"/>-->
+
+<!--                <item-->
+<!--                    android:id="@+id/nav_accessories"-->
+<!--                    android:title="@string/accessories"-->
+<!--                    android:icon="@drawable/accessories"/>-->
+
+<!--            </group>-->
+
+<!--        </menu>-->
+
+<!--    </item>-->
+
+    <item android:title="Settings">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_settings"
+                    android:title="@string/settings"
+                    android:icon="@drawable/settings"/>
+
+            </group>
+
+        </menu>
+
+    </item>
+
+
+
+
+
+</menu>

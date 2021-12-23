@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/peach"
+    tools:context=".Camera_fragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/round_background"
+                android:clickable="true"
+                android:src="@drawable/back" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corners"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:elevation="25dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/taken_picture"
+                        android:layout_width="200dp"
+                        android:layout_height="250dp"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="30dp"
+                        android:clickable="true"
+                        android:src="@drawable/camera" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/clothe_title"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        android:hint="@string/close_title"
+                        android:textColorHint="@color/black_trans"
+                        app:boxStrokeColor="@color/wood_brown"
+                        app:boxStrokeErrorColor="@color/red"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/black"
+                        app:errorIconTint="@color/red"
+                        app:errorTextColor="@color/red"
+                        app:startIconDrawable="@drawable/title"
+                        app:startIconTint="@color/black">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_clothe_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/peach_trans"
+                            android:fontFamily="@font/montserrat"
+                            android:inputType="textPersonName"
+                            android:textColor="@color/black" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/clothe_description"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        android:hint="@string/description"
+                        android:textColorHint="@color/black_trans"
+                        app:boxStrokeColor="@color/wood_brown"
+                        app:boxStrokeErrorColor="@color/red"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/black"
+                        app:errorIconTint="@color/red"
+                        app:errorTextColor="@color/red"
+                        app:startIconDrawable="@drawable/description"
+                        app:startIconTint="@color/black">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_clothe_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/peach_trans"
+                            android:fontFamily="@font/montserrat"
+                            android:inputType="textLongMessage"
+                            android:scrollbars="vertical"
+                            android:textColor="@color/black" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/filters"
+                        android:textColor="@color/wood_brown"
+                        android:textSize="30sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/color"
+                            android:textColor="@color/wood_brown"
+                            android:textSize="20sp" />
+
+                        <RadioGroup
+                            android:id="@+id/color_radio_group"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@drawable/color_black_"
+                                android:tag="@string/black"
+                                android:drawablePadding="10dp"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_white"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@drawable/color_white_"
+                                android:tag="@string/white"
+                                android:drawablePadding="10dp"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+
+
+                        </RadioGroup>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/colors_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/size"
+                            android:textColor="@color/wood_brown"
+                            android:textSize="20sp" />
+
+                        <RadioGroup
+                            android:id="@+id/size_radio_group"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_xs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@null"
+                                android:padding="5dp"
+                                android:text="@string/xs"
+                                android:tag="@string/xs"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_s"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@null"
+                                android:padding="5dp"
+                                android:text="@string/s"
+                                android:tag="@string/s"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_m"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@null"
+                                android:padding="5dp"
+                                android:text="@string/m"
+                                android:tag="@string/m"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_l"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@null"
+                                android:padding="5dp"
+                                android:text="@string/l"
+                                android:tag="@string/l"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_xl"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@null"
+                                android:padding="5dp"
+                                android:text="@string/xl"
+                                android:tag="@string/xl"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_xxl"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@null"
+                                android:padding="5dp"
+                                android:text="@string/xxl"
+                                android:tag="@string/xxl"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+
+                        </RadioGroup>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/size_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/type"
+                            android:textColor="@color/wood_brown"
+                            android:textSize="20sp" />
+
+                            <RadioGroup
+                                android:id="@+id/type_radio_group"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_shirt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:button="@null"
+                                    android:padding="5dp"
+                                    android:text="@string/shirt"
+                                    android:tag="@string/shirt"
+                                    android:background="@drawable/color_selector"
+                                    android:elevation="5dp"/>
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_t_shirt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:button="@null"
+                                    android:padding="5dp"
+                                    android:text="@string/t_shirt"
+                                    android:tag="@string/t_shirt"
+                                    android:background="@drawable/color_selector"
+                                    android:elevation="5dp"/>
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_sweater"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:button="@null"
+                                    android:padding="5dp"
+                                    android:text="@string/sweater"
+                                    android:tag="@string/sweater"
+                                    android:background="@drawable/color_selector"
+                                    android:elevation="5dp"/>
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_jacket"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:button="@null"
+                                    android:padding="5dp"
+                                    android:text="@string/jacket"
+                                    android:tag="@string/jacket"
+                                    android:background="@drawable/color_selector"
+                                    android:elevation="5dp"/>
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_jeans"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:button="@null"
+                                    android:padding="5dp"
+                                    android:text="@string/jeans"
+                                    android:tag="@string/jeans"
+                                    android:background="@drawable/color_selector"
+                                    android:elevation="5dp"/>
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_sneakers"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:button="@null"
+                                    android:padding="5dp"
+                                    android:text="@string/sneakers"
+                                    android:tag="@string/sneakers"
+                                    android:background="@drawable/color_selector"
+                                    android:elevation="5dp"/>
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_dressed_shoes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:button="@null"
+                                    android:padding="5dp"
+                                    android:text="@string/dressed_shoes"
+                                    android:tag="@string/dressed_shoes"
+                                    android:background="@drawable/color_selector"
+                                    android:elevation="5dp"/>
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_boots"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:button="@null"
+                                    android:padding="5dp"
+                                    android:text="@string/boots"
+                                    android:tag="@string/boots"
+                                    android:background="@drawable/color_selector"
+                                    android:elevation="5dp"/>
+
+
+                            </RadioGroup>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/type_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/season"
+                            android:textColor="@color/wood_brown"
+                            android:textSize="20sp" />
+
+                        <RadioGroup
+                            android:id="@+id/season_radio_group"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_winter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@null"
+                                android:padding="5dp"
+                                android:text="@string/winter"
+                                android:tag="@string/winter"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_spring"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@null"
+                                android:padding="5dp"
+                                android:text="@string/spring"
+                                android:tag="@string/spring"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_summer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@null"
+                                android:padding="5dp"
+                                android:text="@string/summer"
+                                android:tag="@string/summer"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_autumn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:button="@null"
+                                android:padding="5dp"
+                                android:text="@string/autumn"
+                                android:tag="@string/autumn"
+                                android:background="@drawable/color_selector"
+                                android:elevation="5dp"/>
+
+                        </RadioGroup>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/season_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp" />
+
+                    </LinearLayout>
+
+
+                    <Button
+                        android:id="@+id/add_bttn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="100dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/add"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        app:backgroundTint="@color/wood_brown"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center_horizontal"/>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

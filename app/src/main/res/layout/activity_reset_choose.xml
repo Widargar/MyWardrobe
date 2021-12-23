@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/peach"
+    tools:context=".Reset_choose">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_reset"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:fontFamily="@font/montserrat"
+            android:textSize="30sp"
+            android:paddingTop="30dp"
+            android:textAlignment="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:paddingTop="70dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/via_email"
+                android:fontFamily="@font/montserrat"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:background="@color/wood_brown_trans"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:drawableLeft="@drawable/email"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/via_sms"
+                android:fontFamily="@font/montserrat"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:background="@color/wood_brown_trans"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:drawableLeft="@drawable/phone"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <Button
+                    android:id="@+id/next_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/wood_brown"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/white"
+                    android:text="@string/next"
+                    android:textAllCaps="false"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/back_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/back"
+                    android:drawableTint="@color/black"
+                    android:fontFamily="@font/montserrat"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:stateListAnimator="@null"
+                    android:text="@string/back"
+                    android:textColor="@color/black"
+                    android:textSize="13dp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

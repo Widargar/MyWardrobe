@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/peach"
+    android:fillViewport="true"
+    tools:context=".SignUp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/name_up"
+            android:layout_width="wrap_content"
+            android:layout_height="82dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pacifico"
+            android:text="@string/app_name"
+            android:textColor="@color/wood_brown"
+            android:textSize="42sp"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/reg"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintHorizontal_bias="0.498"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:id="@+id/sign_up_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/first_name"
+                android:textColorHint="@color/black_trans"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/black"
+                app:startIconDrawable="@drawable/person"
+                app:startIconTint="@color/black"
+                app:boxStrokeColor="@color/wood_brown"
+                app:boxStrokeWidthFocused="2dp"
+                app:errorTextColor="@color/red"
+                app:errorIconTint="@color/red"
+                app:boxStrokeErrorColor="@color/red">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_sign_up_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:background="@color/wood_brown_trans"
+                    android:textColor="@color/black"
+                    android:inputType="textPersonName"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:id="@+id/sign_up_surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/surname"
+                android:textColorHint="@color/black_trans"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/black"
+                app:startIconDrawable="@drawable/person"
+                app:startIconTint="@color/black"
+                android:paddingTop="10dp"
+                app:boxStrokeColor="@color/wood_brown"
+                app:boxStrokeWidthFocused="2dp"
+                app:errorTextColor="@color/red"
+                app:errorIconTint="@color/red"
+                app:boxStrokeErrorColor="@color/red">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_sign_up_surname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:background="@color/wood_brown_trans"
+                    android:textColor="@color/black"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gender"
+                        android:fontFamily="@font/montserrat"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"/>
+
+                    <RadioGroup
+                        android:id="@+id/radio_group_male_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_male"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/male"
+                            android:fontFamily="@font/montserrat"
+                            android:textColor="@color/black"
+                            android:buttonTint="@color/wood_brown"/>
+
+                        <RadioButton
+                            android:id="@+id/radio_female"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/female"
+                            android:fontFamily="@font/montserrat"
+                            android:textColor="@color/black"
+                            android:buttonTint="@color/wood_brown"/>
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/gender_error"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/choose_gender"
+                        android:textColor="@color/red"
+                        android:textSize="12sp"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:id="@+id/sign_up_birth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/birthday"
+                android:textColorHint="@color/black_trans"
+                android:clickable="false"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/black"
+                app:startIconDrawable="@drawable/birthday"
+                app:startIconTint="@color/black"
+                android:paddingTop="10dp"
+                app:boxStrokeColor="@color/wood_brown"
+                app:boxStrokeWidthFocused="2dp"
+                app:errorTextColor="@color/red"
+                app:errorIconTint="@color/red"
+                app:boxStrokeErrorColor="@color/red">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_sign_up_birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:background="@color/wood_brown_trans"
+                    android:textColor="@color/black"
+                    android:inputType="date"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:id="@+id/sign_up_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:textColorHint="@color/black_trans"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/black"
+                app:startIconDrawable="@drawable/email"
+                app:startIconTint="@color/black"
+                android:paddingTop="10dp"
+                app:boxStrokeColor="@color/wood_brown"
+                app:boxStrokeWidthFocused="2dp"
+                app:errorTextColor="@color/red"
+                app:errorIconTint="@color/red"
+                app:boxStrokeErrorColor="@color/red">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_sign_up_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:background="@color/wood_brown_trans"
+                    android:textColor="@color/black"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/country_picker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_showFlag="true"
+                    app:ccp_showFullName="true"
+                    android:paddingTop="10dp"
+                    android:background="@color/wood_brown_trans" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:id="@+id/sign_up_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/phone"
+                    android:textColorHint="@color/black_trans"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/black"
+                    app:startIconDrawable="@drawable/phone"
+                    app:startIconTint="@color/black"
+                    android:paddingTop="10dp"
+                    app:boxStrokeColor="@color/wood_brown"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:errorTextColor="@color/red"
+                    app:errorIconTint="@color/red"
+                    app:boxStrokeErrorColor="@color/red">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_sign_up_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:background="@color/wood_brown_trans"
+                        android:textColor="@color/black"
+                        android:inputType="phone" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:id="@+id/sign_up_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:textColorHint="@color/black_trans"
+                app:startIconDrawable="@drawable/password"
+                app:startIconTint="@color/black"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/black"
+                android:paddingTop="10dp"
+                app:boxStrokeColor="@color/wood_brown"
+                app:boxStrokeWidthFocused="2dp"
+                app:errorTextColor="@color/red"
+                app:errorIconTint="@color/red"
+                app:boxStrokeErrorColor="@color/red">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_sign_up_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/wood_brown_trans"
+                    android:fontFamily="@font/montserrat"
+                    android:inputType="textPassword"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:id="@+id/sign_up_repeat_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/repeat_password"
+                android:textColorHint="@color/black_trans"
+                app:startIconDrawable="@drawable/repeat"
+                app:startIconTint="@color/black"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/black"
+                android:paddingTop="10dp"
+                app:boxStrokeColor="@color/wood_brown"
+                app:boxStrokeWidthFocused="2dp"
+                app:errorTextColor="@color/red"
+                app:errorIconTint="@color/red"
+                app:boxStrokeErrorColor="@color/red">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_sign_up_repeat_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:background="@color/wood_brown_trans"
+                    android:textColor="@color/black"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/register"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                app:backgroundTint="@color/wood_brown" />
+
+            <Button
+                android:id="@+id/back_reg_sign_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/back"
+                android:drawableTint="@color/black"
+                android:fontFamily="@font/montserrat"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:stateListAnimator="@null"
+                android:text="@string/back"
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

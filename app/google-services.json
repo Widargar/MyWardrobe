@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "784131309904",
+    "project_id": "mywardrobe-92dcd",
+    "storage_bucket": "mywardrobe-92dcd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784131309904:android:3b30fbf10e92f202ef6c55",
+        "android_client_info": {
+          "package_name": "com.bilki.mywardrobe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784131309904-ek5khdgnosg61fj5tjajadekbhbvu63n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqZggKMRJ-yfENamTV1yVvrssohrG1nzE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784131309904-ek5khdgnosg61fj5tjajadekbhbvu63n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/bot_nav_closet"
+            android:icon="@drawable/all_clothes"
+            android:title="@string/closet" />
+
+        <item
+            android:id="@+id/bot_nav_looks"
+            android:icon="@drawable/looks"
+            android:title="@string/looks" />
+
+        <item
+            android:id="@+id/bot_nav_camera"
+            android:icon="@drawable/camera"
+            android:title="@string/camera" />
+
+    </group>
+
+
+</menu>
