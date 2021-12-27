@@ -20,12 +20,12 @@ public class ClosetAdapter extends RecyclerView.Adapter<ClosetAdapter.ClosetView
 
     private Context context;
     private ArrayList<FeaturedHelperClass> closetLocations;
+    private ClosetViewHolder.OnItemListener onItemListener;
 
-    public ClosetAdapter(ArrayList<FeaturedHelperClass> closetLocations) {
-
-
+    public ClosetAdapter(ArrayList<FeaturedHelperClass> closetLocations, ClosetViewHolder.OnItemListener onItemListener) {
 
         this.closetLocations = closetLocations;
+        this.onItemListener = onItemListener;
 
     }
 
@@ -34,7 +34,7 @@ public class ClosetAdapter extends RecyclerView.Adapter<ClosetAdapter.ClosetView
     public ClosetAdapter.ClosetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.close_card_design, parent, false);
-        ClosetAdapter.ClosetViewHolder closetViewHolder = new ClosetAdapter.ClosetViewHolder(view);
+        ClosetAdapter.ClosetViewHolder closetViewHolder = new ClosetAdapter.ClosetViewHolder(view, onItemListener);
         return closetViewHolder;
 
     }
@@ -59,18 +59,35 @@ public class ClosetAdapter extends RecyclerView.Adapter<ClosetAdapter.ClosetView
 
     }
 
-    public static class ClosetViewHolder extends RecyclerView.ViewHolder{
+    public static class ClosetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView image;
         TextView name;
+        OnItemListener onItemListener;
 
-        public ClosetViewHolder(@NonNull View itemView) {
+        public ClosetViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
 
             image = itemView.findViewById(R.id.close_image);
             name = itemView.findViewById(R.id.close_name);
+            this.onItemListener = onItemListener;
 
+            itemView.setOnClickListener(this);
 
         }
+
+        @Override
+        public void onClick(View v) {
+
+            onItemListener.onItemClick(getAdapterPosition());
+
+        }
+
+        public interface OnItemListener{
+
+            void onItemClick(int position);
+
+        }
+
     }
 }

@@ -118,8 +118,7 @@ public class Looks_fragment extends Fragment {
                 .build();
 
         adapter = new LooksAdapter(context, options);
-        adapter.setHasStableIds(true);
-
+//        adapter.setHasStableIds(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         looksRecycler.setLayoutManager(gridLayoutManager);
         looksRecycler.setHasFixedSize(false);

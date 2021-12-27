@@ -14,12 +14,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
-public class ClosetAdapter_ extends FirestoreRecyclerAdapter<Upload, ClosetAdapter_.ClosetViewHolder> {
+public class ClothesAdapter extends FirestoreRecyclerAdapter<Upload, ClothesAdapter.ClosetViewHolder> {
 
     private Context context;
     private FirestoreRecyclerOptions<Upload> uploads;
 
-    public ClosetAdapter_(Context context, FirestoreRecyclerOptions<Upload> uploads) {
+    public ClothesAdapter(Context context, FirestoreRecyclerOptions<Upload> uploads) {
         super(uploads);
 
         this.context = context;
@@ -29,10 +29,10 @@ public class ClosetAdapter_ extends FirestoreRecyclerAdapter<Upload, ClosetAdapt
 
     @NonNull
     @Override
-    public ClosetAdapter_.ClosetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ClothesAdapter.ClosetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(this.context).inflate(R.layout.close_card_design, parent, false);
-        ClosetAdapter_.ClosetViewHolder closetViewHolder = new ClosetAdapter_.ClosetViewHolder(view);
+        ClothesAdapter.ClosetViewHolder closetViewHolder = new ClothesAdapter.ClosetViewHolder(view);
         return closetViewHolder;
 
     }
@@ -52,8 +52,8 @@ public class ClosetAdapter_ extends FirestoreRecyclerAdapter<Upload, ClosetAdapt
     protected void onBindViewHolder(@NonNull ClosetViewHolder holder, int position, @NonNull Upload model) {
 
         Upload upload = uploads.getSnapshots().get(position);
-        Picasso.get().load(upload.getImageUrl()).into(holder.image);
-        holder.name.setText(model.getType());
+        Picasso.get().load(upload.getImageUrl()).fit().centerInside().into(holder.image);
+        holder.name.setText(model.getName());
 
     }
 

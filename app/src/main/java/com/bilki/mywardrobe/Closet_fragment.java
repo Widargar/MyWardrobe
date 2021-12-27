@@ -34,7 +34,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Closet_fragment extends Fragment {
+public class Closet_fragment extends Fragment implements ClosetAdapter.ClosetViewHolder.OnItemListener {
 
     private Context context;
     private View view;
@@ -48,7 +48,8 @@ public class Closet_fragment extends Fragment {
     private CollectionReference collectionReference, collectionReferenceImage;
     private DocumentSnapshot document;
     private DocumentReference documentReference, documentReferenceImage;
-    private final static String TAG = "bilki: Looks ";
+    ArrayList<FeaturedHelperClass> closetLocations = new ArrayList<>();
+    private final static String TAG = "bilki: Closet ";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,15 +125,16 @@ public class Closet_fragment extends Fragment {
         topsRecycler.setHasFixedSize(true);
         topsRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-        ArrayList<FeaturedHelperClass> closetLocations = new ArrayList<>();
+
 
         closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Shirt"));
         closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "T-shirt"));
         closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Sweater"));
         closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Jacket"));
 
-        adapter = new ClosetAdapter(closetLocations);
+        adapter = new ClosetAdapter(closetLocations, this);
         topsRecycler.setAdapter(adapter);
+
 
     }
 
@@ -159,7 +161,7 @@ public class Closet_fragment extends Fragment {
         closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Jeans"));
         closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Shorts"));
 
-        adapter = new ClosetAdapter(closetLocations);
+        adapter = new ClosetAdapter(closetLocations, this);
         bottomsRecycler.setAdapter(adapter);
 
     }
@@ -175,9 +177,37 @@ public class Closet_fragment extends Fragment {
         closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Dressed shoes"));
         closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Boots"));
 
-        adapter = new ClosetAdapter(closetLocations);
+        adapter = new ClosetAdapter(closetLocations, this);
         shoesRecycler.setAdapter(adapter);
 
     }
 
+    @Override
+    public void onItemClick(int position) {
+
+        Log.d(TAG, "onItemClick: Clicked: " + position);
+
+        Intent intent = new Intent(getActivity(), Closet_items.class);
+
+
+        switch (position){
+
+            case 0:
+                intent.putExtra("closet", "Shirt");
+                break;
+            case 1:
+                intent.putExtra("closet", "T-shirt");
+                break;
+            case 2:
+                intent.putExtra("closet", "Sweater");
+                break;
+            case 3:
+                intent.putExtra("closet", "Jacket");
+                break;
+
+        }
+
+        startActivity(intent);
+
+    }
 }

@@ -60,7 +60,7 @@ public class LooksAdapter extends FirestoreRecyclerAdapter<Upload, LooksAdapter.
 
 //        LooksHelperClass looksHelperClass = looksLocations.get(position);
 
-        Picasso.get().load(upload.getImageUrl()).fit().centerInside().into(holder.image);
+        Picasso.get().load(upload.getImageUrl()).fit().centerCrop().into(holder.image);
 
 //        holder.image.setImageResource(looksHelperClass.getImage());
 
