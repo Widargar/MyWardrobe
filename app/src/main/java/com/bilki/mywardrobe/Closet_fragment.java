@@ -136,6 +136,8 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.ClosetVie
         topsRecycler.setAdapter(adapter);
 
 
+
+
     }
 
 //    @Override

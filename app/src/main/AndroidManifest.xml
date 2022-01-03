@@ -24,6 +24,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyWardrobe">
         <activity
+            android:name=".SelectedClothe"
+            android:exported="true" />
+        <activity
             android:name=".Closet_items"
             android:exported="true" />
         <activity
@@ -61,7 +64,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

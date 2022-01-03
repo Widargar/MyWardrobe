@@ -70,7 +70,9 @@
     <string name="type">Type</string>
     <string name="season">Season</string>
     <string name="close_title">Title</string>
+    <string name="close_title_">Title:</string>
     <string name="description">Description</string>
+    <string name="description_">Description:</string>
     <string name="xs">XS</string>
     <string name="s">S</string>
     <string name="m">M</string>

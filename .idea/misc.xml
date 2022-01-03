@@ -11,6 +11,7 @@
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable/color_black.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable/color_selector.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable/colors_card_design.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable/home.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable/log_out.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable/menu.xml" value="0.22552083333333334" />
@@ -35,6 +36,7 @@
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_phone_verification.xml" value="0.25" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_profile.xml" value="0.18070652173913043" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_reset_choose.xml" value="0.19655797101449277" />
+        <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_selected_clothe.xml" value="0.22" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_sign_in.xml" value="0.25" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_sign_up.xml" value="0.19655797101449277" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/close_card_design.xml" value="0.25" />
@@ -44,6 +46,7 @@
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/dialog_choose_source.xml" value="0.33" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/fragment_camera_fragment.xml" value="0.21741481882098432" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/fragment_closet_fragment.xml" value="0.25" />
+        <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/fragment_clothe_selected.xml" value="0.19429347826086957" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/fragment_looks_fragment.xml" value="0.18070652173913043" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/look_card_design.xml" value="0.25" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/menu_header.xml" value="0.1852355072463768" />

@@ -1,14 +1,17 @@
 package com.bilki.mywardrobe;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -21,7 +24,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.firestore.Query;
 
-public class Closet_items extends AppCompatActivity {
+public class Closet_items extends AppCompatActivity{
 
     private int position;
     private Context context;
@@ -41,6 +44,7 @@ public class Closet_items extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_closte_items);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -90,6 +94,35 @@ public class Closet_items extends AppCompatActivity {
         closetRecycler.setLayoutManager(gridLayoutManager);
         closetRecycler.setHasFixedSize(false);
         closetRecycler.setAdapter(adapter);
+        adapter.setOnItemClickListener(new ClothesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+
+                Upload upload = documentSnapshot.toObject(Upload.class);
+                String id = documentSnapshot.getId();
+                String path = documentSnapshot.getReference().getPath();
+
+                Uri imgUrl = Uri.parse(upload.getImageUrl());
+                String imgName = upload.getName();
+                String imgDescription = upload.getDescription();
+                String imgColor = upload.getColor();
+                String imgSize = upload.getSize();
+                String imgType = upload.getType();
+                String imgSeason = upload.getSeason();
+
+                Intent intent = new Intent(context, SelectedClothe.class);
+                intent.putExtra("imgUrl", imgUrl);
+                intent.putExtra("imgName", imgName);
+                intent.putExtra("imgDescription", imgDescription);
+                intent.putExtra("imgColor", imgColor);
+                intent.putExtra("imgSize", imgSize);
+                intent.putExtra("imgType", imgType);
+                intent.putExtra("imgSeason", imgSeason);
+                startActivity(intent);
+
+
+            }
+        });
         Log.d(TAG, "closetsRecycler: Adapter set");
 
 
@@ -125,7 +158,16 @@ public class Closet_items extends AppCompatActivity {
 
 
     }
-
+//
+//    @Override
+//    public void onClotheClick(int position) {
+//
+//        Log.d(TAG, "onClotheClick: Clicked: " + position);
+//
+//        Intent intent = new Intent(Closet_items.this, MainActivity.class);
+//        startActivity(intent);
+//
+//    }
 
     @Override
     public void onStart() {
@@ -138,6 +180,5 @@ public class Closet_items extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
-
 
 }
