@@ -89,6 +89,16 @@
             android:clickable="true"
             android:src="@drawable/top" />
 
+        <ImageView
+            android:id="@+id/img_clothe_edit"
+            android:layout_width="250dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:clickable="true"
+            android:src="@drawable/top"
+            android:visibility="gone"/>
+
         <LinearLayout
             android:id="@+id/tags_layout"
             android:layout_width="match_parent"

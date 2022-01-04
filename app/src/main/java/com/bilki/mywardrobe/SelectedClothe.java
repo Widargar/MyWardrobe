@@ -4,17 +4,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.FileProvider;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,26 +42,34 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SelectedClothe extends AppCompatActivity {
 
-    private String _name, _description, _color, _type, _size, _season, _id;
-    private Uri _url;
+    private String _name, _description, _color, _type, _size, _season, _id, fileName, currentPhotoPath;
+    private File f;
+    private Uri imageUri, _url;
+    private Dialog choose_source;
     private TextView img_title, img_description, img_type, img_season, img_size,
     img_type_edit, img_season_edit, img_size_edit;
     private TextInputLayout title_input, description_input;
     private TextInputEditText title_edit, description_edit;
-    private Button edit_bttn, save_bttn, delete_bttn;
+    private Button edit_bttn, save_bttn, delete_bttn, camera_bttn, gallery_bttn;
     private LinearLayout img_desc, tags_layout, tags_layout_edit;
-    private ImageView img_color, img,  img_color_edit;
+    private ImageView img_color, img, img_edit,  img_color_edit;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
     private CollectionReference collectionReference;
     private DocumentReference documentReference;
     private DocumentSnapshot documentSnapshot;
+    private static final int REQUEST_IMAGE_CAPTURE = 100;
+    private static final int SELECT_PICTURE_CODE = 101;
     private final static String TAG = "bilki: selected_clothe ";
 
     @Override
@@ -92,6 +110,7 @@ public class SelectedClothe extends AppCompatActivity {
         img_size = (TextView) findViewById(R.id.img_size);
         img_type = (TextView) findViewById(R.id.img_type);
         img_season = (TextView) findViewById(R.id.img_season);
+        img_edit = (ImageView) findViewById(R.id.img_clothe_edit);
         img_color_edit = (ImageView) findViewById(R.id.img_color_edit);
         img_type_edit = (TextView) findViewById(R.id.img_type_edit);
         img_season_edit = (TextView) findViewById(R.id.img_season_edit);
@@ -113,6 +132,15 @@ public class SelectedClothe extends AppCompatActivity {
         delete_bttn = (Button) findViewById(R.id.delete_bttn);
 
         setData();
+
+        img_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                chooseSource();
+
+            }
+        });
 
 //        img_title.setText(_name);
 //
@@ -160,6 +188,8 @@ public class SelectedClothe extends AppCompatActivity {
                 edit_bttn.setVisibility(View.GONE);
                 save_bttn.setVisibility(View.VISIBLE);
                 delete_bttn.setVisibility(View.VISIBLE);
+                img.setVisibility(View.GONE);
+                img_edit.setVisibility(View.VISIBLE);
 
 //                title_edit.setText(_name);
 //
@@ -188,6 +218,8 @@ public class SelectedClothe extends AppCompatActivity {
                 tags_layout.setVisibility(View.VISIBLE);
                 tags_layout_edit.setVisibility(View.GONE);
                 edit_bttn.setVisibility(View.VISIBLE);
+                img.setVisibility(View.VISIBLE);
+                img_edit.setVisibility(View.GONE);
 
                 setData();
                 editClothe();
@@ -275,7 +307,8 @@ public class SelectedClothe extends AppCompatActivity {
 //                        int visibility = img_title.getVisibility();
 //                        Log.d(TAG, "Visibility: " + visibility);
 
-                        if (tags_layout.getVisibility() == View.VISIBLE){
+                        if (tags_layout.getVisibility() == View.VISIBLE && img.getVisibility() == View.VISIBLE){
+
 
                             img_title.setText(imgName);
 
@@ -312,6 +345,8 @@ public class SelectedClothe extends AppCompatActivity {
                             Picasso.get().load(imgUrl).fit().centerInside().into(img);
 
                         }else {
+
+                            Picasso.get().load(imgUrl).fit().centerInside().into(img_edit);
 
                             title_edit.setText(imgName);
 
@@ -367,6 +402,160 @@ public class SelectedClothe extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void chooseSource() {
+
+        choose_source = new Dialog(this);
+        choose_source.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        choose_source.setContentView(R.layout.dialog_choose_source);
+        choose_source.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        choose_source.show();
+
+        camera_bttn = (Button) choose_source.findViewById(R.id.dialog_camera_button);
+        gallery_bttn = (Button) choose_source.findViewById(R.id.dialog_gallery_button);
+
+        camera_bttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                checkCameraHardware(SelectedClothe.this);
+                takePicture();
+                choose_source.dismiss();
+
+            }
+        });
+
+        gallery_bttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                takeImageFromGallery();
+                choose_source.dismiss();
+
+            }
+        });
+
+
+    }
+
+    private boolean checkCameraHardware(Context context) {
+        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            Log.d(TAG, "checkCameraHardware: There is camera on your phone!");
+            return true;
+        } else {
+            Log.d(TAG, "checkCameraHardware: There is no camera on your phone!");
+            return false;
+        }
+    }
+
+    public void takePicture() {
+
+
+        Log.d(TAG, "Take picture activity");
+        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (takePicture.resolveActivity(this.getPackageManager()) != null) {
+
+            File photoFile = null;
+
+            try {
+
+                photoFile = createPhotoFile();
+
+            } catch (IOException e) {
+                Log.d(TAG, "Photo file cannot be created");
+                e.printStackTrace();
+            }
+
+            if (photoFile != null) {
+
+                Log.d(TAG, "File != null");
+                Uri photoUri = FileProvider.getUriForFile(this, "com.bilki.mywardrobe.fileprovider", photoFile);
+                takePicture.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                //getActivity().startActivityFromFragment(Camera_fragment.this, takePicture, REQUEST_IMAGE_CAPTURE);
+                startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
+
+            }
+
+        }
+
+    }
+
+    private File createPhotoFile() throws IOException {
+
+        Log.d(TAG, "File created");
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss").format(new Date());
+        fileName = "myWardrobe_" + timeStamp + ".";
+        //File storageDirectory = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File photoFile = File.createTempFile(fileName, ".jpg", storageDirectory);
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = photoFile.getAbsolutePath();
+//        f = new File(currentPhotoPath);
+//        contentUri = Uri.fromFile(f);
+        //uploadImageToFirebase(f.getName(), contentUri);
+
+        return photoFile;
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Log.d(TAG, "On result");
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
+            /*Bitmap photoBitmap = BitmapFactory.decodeFile(currentPhotoPath);
+
+            //Bundle extras = data.getExtras();
+            //Bitmap imageBitmap = (Bitmap) extras.get("data");
+            takenPicture.setImageBitmap(photoBitmap);*/
+
+            f = new File(currentPhotoPath);
+            imageUri = Uri.fromFile(f);
+            img_edit.setImageURI(imageUri);
+            Log.d(TAG, "Absolute Url of the photo is " + Uri.fromFile(f));
+
+            galleryAddPic();
+
+
+        }/*else{
+
+            Toast.makeText(getActivity(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+
+        }*/
+
+        if (requestCode == SELECT_PICTURE_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            imageUri = data.getData();
+//            String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss").format(new Date());
+//            String fileName = "myWardrobe_" + timeStamp + "." + getFileExt(imageUri);
+            img_edit.setImageURI(imageUri);
+            Log.d(TAG, "Gallery url of the photo is " + fileName);
+            //uploadImageToFirebase(fileName, contentUri);
+
+
+        }/*else{
+
+            Toast.makeText(getActivity(), "Picture wasn't chosen!", Toast.LENGTH_SHORT).show();
+
+        }*/
+    }
+
+    private void galleryAddPic() {
+
+        Log.d(TAG, "Added to gallery");
+
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        f = new File(currentPhotoPath);
+        imageUri = Uri.fromFile(f);
+        mediaScanIntent.setData(imageUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 
 
