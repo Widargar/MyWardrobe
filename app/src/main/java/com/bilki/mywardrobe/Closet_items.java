@@ -3,6 +3,7 @@ package com.bilki.mywardrobe;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -82,42 +83,71 @@ public class Closet_items extends AppCompatActivity{
 
     private void closetRecycler(){
 
+
+
         Query query = documentReference.collection("images/").whereEqualTo("type", textPosition).orderBy("name", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Upload> options = new FirestoreRecyclerOptions.Builder<Upload>()
                 .setQuery(query, Upload.class)
                 .build();
-
         adapter = new ClothesAdapter(context, options);
+
+        adapter.setHasStableIds(true);
 //        adapter.setHasStableIds(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
 //        closetRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         closetRecycler.setLayoutManager(gridLayoutManager);
         closetRecycler.setHasFixedSize(false);
         closetRecycler.setAdapter(adapter);
+
+
+//        long id = adapter.getItemId(2);
+//
+//        if(id != RecyclerView.NO_ID){
+//
+//            adapter.notifyDataSetChanged();
+//
+//        }else{
+//
+//
+//
+//        }
+
+//        adapter.getItemCount();
+//
+//        long id = adapter.getItemId(2);
+//
+//        if (id == -1){
+//
+//
+//
+//        }
+
         adapter.setOnItemClickListener(new ClothesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
                 Upload upload = documentSnapshot.toObject(Upload.class);
-                String id = documentSnapshot.getId();
-                String path = documentSnapshot.getReference().getPath();
+                String imgId = documentSnapshot.getId();
 
-                Uri imgUrl = Uri.parse(upload.getImageUrl());
-                String imgName = upload.getName();
-                String imgDescription = upload.getDescription();
-                String imgColor = upload.getColor();
-                String imgSize = upload.getSize();
-                String imgType = upload.getType();
-                String imgSeason = upload.getSeason();
+//                String path = documentSnapshot.getReference().getPath();
+//
+//                Uri imgUrl = Uri.parse(upload.getImageUrl());
+//                String imgName = upload.getName();
+//                String imgDescription = upload.getDescription();
+//                String imgColor = upload.getColor();
+//                String imgSize = upload.getSize();
+//                String imgType = upload.getType();
+//                String imgSeason = upload.getSeason();
 
                 Intent intent = new Intent(context, SelectedClothe.class);
-                intent.putExtra("imgUrl", imgUrl);
-                intent.putExtra("imgName", imgName);
-                intent.putExtra("imgDescription", imgDescription);
-                intent.putExtra("imgColor", imgColor);
-                intent.putExtra("imgSize", imgSize);
-                intent.putExtra("imgType", imgType);
-                intent.putExtra("imgSeason", imgSeason);
+//                intent.putExtra("imgUrl", imgUrl);
+//                intent.putExtra("imgName", imgName);
+//                intent.putExtra("imgDescription", imgDescription);
+//                intent.putExtra("imgColor", imgColor);
+//                intent.putExtra("imgSize", imgSize);
+//                intent.putExtra("imgType", imgType);
+//                intent.putExtra("imgSeason", imgSeason);
+                intent.putExtra("imgId", imgId);
                 startActivity(intent);
 
 

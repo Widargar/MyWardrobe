@@ -78,6 +78,7 @@ public class ClothesAdapter extends FirestoreRecyclerAdapter<Upload, ClothesAdap
 
             image = itemView.findViewById(R.id.close_image);
             name = itemView.findViewById(R.id.close_name);
+
 //            this.onClotheListener = onClotheListener;
 
             itemView.setOnClickListener(new View.OnClickListener() {

@@ -92,6 +92,11 @@
     <string name="spring">Spring</string>
     <string name="autumn">Autumn</string>
     <string name="add">Add</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="enter_description">Write a description</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->
