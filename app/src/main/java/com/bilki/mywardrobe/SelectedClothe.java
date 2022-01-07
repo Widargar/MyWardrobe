@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.FileProvider;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,13 +22,17 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -40,6 +46,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -51,20 +59,22 @@ import java.util.Map;
 
 public class SelectedClothe extends AppCompatActivity {
 
-    private String _name, _description, _color, _type, _size, _season, _id, fileName, currentPhotoPath;
+    private String _name, _description, _color, _type, _size, _season, _id, __id, id, fileName, currentPhotoPath,
+            userId, strUri, strImageUri, urll;
     private File f;
     private Uri imageUri, _url;
     private Dialog choose_source;
     private TextView img_title, img_description, img_type, img_season, img_size,
-    img_type_edit, img_season_edit, img_size_edit;
+            img_type_edit, img_season_edit, img_size_edit;
     private TextInputLayout title_input, description_input;
     private TextInputEditText title_edit, description_edit;
     private Button edit_bttn, save_bttn, delete_bttn, camera_bttn, gallery_bttn;
     private LinearLayout img_desc, tags_layout, tags_layout_edit;
-    private ImageView img_color, img, img_edit,  img_color_edit;
+    private ImageView img_color, img, img_edit, img_color_edit;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
-    private StorageReference storageReference;
+    private StorageReference storageReference, imageReference, existedImageReference;
+    private StorageTask uploadTask;
     private CollectionReference collectionReference;
     private DocumentReference documentReference;
     private DocumentSnapshot documentSnapshot;
@@ -88,6 +98,8 @@ public class SelectedClothe extends AppCompatActivity {
         collectionReference = firebaseFirestore.collection("users/");
         documentReference = collectionReference.document(FirebaseAuth.getInstance().getCurrentUser().getEmail() + "/");
 
+        userId = mAuth.getUid();
+
         Intent intent = getIntent();
 
 //        _url = intent.getStringExtra("imgUrl").trim();
@@ -98,7 +110,11 @@ public class SelectedClothe extends AppCompatActivity {
 //        _size = intent.getStringExtra("imgSize").trim();
 //        _type = intent.getStringExtra("imgType").trim();
 //        _season = intent.getStringExtra("imgSeason").trim();
+
+
         _id = intent.getStringExtra("imgId").trim();
+
+
 
 //        Log.d(TAG, "Description: " + _description);
 
@@ -221,8 +237,44 @@ public class SelectedClothe extends AppCompatActivity {
                 img.setVisibility(View.VISIBLE);
                 img_edit.setVisibility(View.GONE);
 
-                setData();
-                editClothe();
+
+//                imageUri = Uri.fromFile(f);
+                if (uploadTask != null && uploadTask.isInProgress()) {
+
+                    Toast.makeText(SelectedClothe.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+
+                } else if (imageUri != null) {
+
+                    uploadImageToFirebase(fileName, imageUri);
+                    uploadTask.addOnSuccessListener(new OnSuccessListener() {
+                        @Override
+                        public void onSuccess(Object o) {
+
+                            editClothe();
+                            setData();
+//                            Intent i = new Intent(SelectedClothe.this, SelectedClothe.class);
+//                            startActivity(i);
+//                            finish();
+
+                        }
+                    });
+
+                } else if (imageUri == null) {
+
+                    editClothe();
+                    setData();
+//                    Intent i = new Intent(SelectedClothe.this, SelectedClothe.class);
+//                    startActivity(i);
+//                    finish();
+
+                }
+
+
+//                } else if(uploadTask.isComplete()){
+//
+//
+//
+//                }
 
 
 //                Intent intent = new Intent(SelectedClothe.this, Closet_items.class);
@@ -234,7 +286,6 @@ public class SelectedClothe extends AppCompatActivity {
 //                Intent refresh = new Intent(SelectedClothe.this, SelectedClothe.class);
 //                startActivity(refresh);
 //                finish();
-
 
             }
         });
@@ -271,14 +322,6 @@ public class SelectedClothe extends AppCompatActivity {
         }
     }
 
-    private void editClothe() {
-
-        Map<String, Object> clothe = new HashMap<>();
-        clothe.put("name", title_input.getEditText().getText().toString().trim());
-        clothe.put("description", description_input.getEditText().getText().toString().trim());
-
-        documentReference.collection("images/").document(_id).update(clothe);
-    }
 
     private void setData() {
 
@@ -307,7 +350,7 @@ public class SelectedClothe extends AppCompatActivity {
 //                        int visibility = img_title.getVisibility();
 //                        Log.d(TAG, "Visibility: " + visibility);
 
-                        if (tags_layout.getVisibility() == View.VISIBLE && img.getVisibility() == View.VISIBLE){
+                        if (tags_layout.getVisibility() == View.VISIBLE && img.getVisibility() == View.VISIBLE) {
 
 
                             img_title.setText(imgName);
@@ -344,7 +387,7 @@ public class SelectedClothe extends AppCompatActivity {
                             img_season.setText(imgSeason);
                             Picasso.get().load(imgUrl).fit().centerInside().into(img);
 
-                        }else {
+                        } else {
 
                             Picasso.get().load(imgUrl).fit().centerInside().into(img_edit);
 
@@ -376,15 +419,7 @@ public class SelectedClothe extends AppCompatActivity {
                             img_season_edit.setText(imgSeason);
 
 
-
                         }
-
-
-
-
-
-
-
 
 
                     } else {
@@ -494,11 +529,22 @@ public class SelectedClothe extends AppCompatActivity {
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = photoFile.getAbsolutePath();
+        f = new File(currentPhotoPath);
+        imageUri = Uri.fromFile(f);
+
 //        f = new File(currentPhotoPath);
 //        contentUri = Uri.fromFile(f);
         //uploadImageToFirebase(f.getName(), contentUri);
 
         return photoFile;
+
+    }
+
+    private String getFileExt(Uri contentUri) {
+
+        ContentResolver c = this.getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(c.getType(contentUri));
 
     }
 
@@ -558,5 +604,148 @@ public class SelectedClothe extends AppCompatActivity {
         this.sendBroadcast(mediaScanIntent);
     }
 
+    private void uploadImageToFirebase(String name, Uri contentUri) {
 
+        if (imageUri != null) {
+
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Adding...");
+            progressDialog.show();
+
+            deletePreviousImage();
+
+            imageReference = storageReference.child("images/" + userId + "/" + name);
+            uploadTask = imageReference.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            strUri = uri.toString();
+
+                            Log.d(TAG, "Image Url " + uri.toString());
+                            Log.d(TAG, "Uploaded");
+                            Log.d(TAG, "Image name: " + name);
+                            Log.d(TAG, "File name:  " + fileName);
+                            deletePreviousImage();
+                            progressDialog.dismiss();
+
+                        }
+                    });
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    Log.d(TAG, "Upload failed: " + e.getMessage());
+                    Toast.makeText(SelectedClothe.this, "Upload failed", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+        } else {
+
+            Toast.makeText(SelectedClothe.this, "No file selected", Toast.LENGTH_SHORT).show();
+
+        }
+
+
+    }
+
+    private void deletePreviousImage() {
+
+        Upload upload = documentSnapshot.toObject(Upload.class);
+        Uri imgUrl = Uri.parse(upload.getImageUrl());
+        strUri = imgUrl.toString().trim();
+        existedImageReference = FirebaseStorage.getInstance().getReferenceFromUrl(strUri);
+
+//        imageReference = storageReference.child("images/" + userId + "/" + );
+
+        existedImageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+
+                Log.d(TAG, "Previous image deleted!");
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Log.d(TAG, "Image wasn't deleted: " + e.getMessage());
+
+            }
+        });
+
+    }
+
+    private void editClothe() {
+
+        Upload upload = documentSnapshot.toObject(Upload.class);
+        String imageName = upload.getImageName();
+//        Uri imgUrl = Uri.parse(upload.getImageUrl());
+//        strUri = imgUrl.toString().trim();
+//        existedImageReference = FirebaseStorage.getInstance().getReferenceFromUrl(strUri);
+//        String name = existedImageReference.getName();
+//        strImageUri = imageUri.toString().trim();
+
+        Log.d(TAG, "editClothe: fileName: " + fileName);
+        Log.d(TAG, "editClothe: imageName: " + imageName);
+        String name = "myWardrobe_20211219_220432.";
+        imageReference = storageReference.child("images/" + userId + "/" + imageName);
+        imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+
+                Upload upload = documentSnapshot.toObject(Upload.class);
+                Uri imgUrl = Uri.parse(upload.getImageUrl());
+                strUri = imgUrl.toString().trim();
+                existedImageReference = FirebaseStorage.getInstance().getReferenceFromUrl(strUri);
+                urll = uri.toString().trim();
+                Log.d(TAG, "Uri: " + urll);
+
+                if (strUri == urll) {
+
+                    Map<String, Object> clothe = new HashMap<>();
+                    clothe.put("name", title_input.getEditText().getText().toString().trim());
+                    clothe.put("description", description_input.getEditText().getText().toString().trim());
+                    documentReference.collection("images/").document(_id).update(clothe);
+
+                } else {
+
+                    Map<String, Object> clothe = new HashMap<>();
+                    clothe.put("name", title_input.getEditText().getText().toString().trim());
+                    clothe.put("description", description_input.getEditText().getText().toString().trim());
+                    clothe.put("imageUrl", urll);
+                    clothe.put("imageName", imageName);
+                    documentReference.collection("images/").document(_id).update(clothe);
+
+                }
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Log.d(TAG, "New url wasn't set: " + e.getMessage());
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i = new Intent(SelectedClothe.this, Closet_items.class);
+        i.putExtra("imgType", img_type.getText().toString().trim());
+        overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
+        startActivity(i);
+        finish();
+    }
 }

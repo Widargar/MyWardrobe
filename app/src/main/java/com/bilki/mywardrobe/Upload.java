@@ -2,14 +2,14 @@ package com.bilki.mywardrobe;
 
 public class Upload {
 
-    private String mName, mDescription, mImageUrl, mColor, mSize, mType, mSeason;
+    private String mName, mDescription, mImageUrl, mColor, mSize, mType, mSeason, mImageName;
 
     public Upload(){
 
 
     }
 
-    public Upload(String name, String imageUrl, String description, String color, String size, String type, String season){
+    public Upload(String name, String imageUrl, String imageName, String description, String color, String size, String type, String season){
 
         if (name.trim().equals("")){
 
@@ -20,6 +20,7 @@ public class Upload {
         mDescription = description;
         mName = name;
         mImageUrl = imageUrl;
+        mImageName = imageName;
         mColor = color;
         mSize = size;
         mType = type;
@@ -96,5 +97,13 @@ public class Upload {
 
     public void setSeason(String mSeason) {
         this.mSeason = mSeason;
+    }
+
+    public String getImageName() {
+        return mImageName;
+    }
+
+    public void setImageName(String mImageName) {
+        this.mImageName = mImageName;
     }
 }

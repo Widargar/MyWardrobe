@@ -452,9 +452,10 @@ public class Camera_fragment extends Fragment {
                             title = clothe_title.getEditText().getText().toString().trim();
                             description = clothe_description.getEditText().getText().toString().trim();
 
-                            Upload upload = new Upload(title, strUri, description, color, size, type, season);
+                            Upload upload = new Upload(title, strUri, fileName, description, color, size, type, season);
 
                             Log.d(TAG, "Color: " + color);
+                            Log.d(TAG, "FileName: " + fileName);
 
 //                            Log.d(TAG, "URL: " + taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
                             String uploadId = firebaseFirestore.collection("users/").document(user_email + "/").collection("images/").document().getId();

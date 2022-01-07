@@ -29,7 +29,7 @@ public class Closet_items extends AppCompatActivity{
 
     private int position;
     private Context context;
-    private String textPosition, imageUrl, name;
+    private String textPosition, imageUrl, name, imgType, img_type;
     private TextView closetItemText;
     private ClothesAdapter adapter;
     private RecyclerView closetRecycler;
@@ -63,10 +63,29 @@ public class Closet_items extends AppCompatActivity{
 
         closetRecycler = (RecyclerView) findViewById(R.id.closet_recycler);
 
+
+        imgType = intent.getStringExtra("imgType");
         textPosition = intent.getStringExtra("closet");
 
+
         closetItemText = (TextView) findViewById(R.id.closet_items);
-        closetItemText.setText(textPosition);
+
+        if(textPosition == null || textPosition == ""){
+
+
+            closetItemText.setText(imgType);
+            img_type = imgType;
+
+
+        }else{
+
+
+            closetItemText.setText(textPosition);
+            img_type = textPosition;
+
+        }
+
+
 
         closetRecycler();
 
@@ -85,7 +104,7 @@ public class Closet_items extends AppCompatActivity{
 
 
 
-        Query query = documentReference.collection("images/").whereEqualTo("type", textPosition).orderBy("name", Query.Direction.DESCENDING);
+        Query query = documentReference.collection("images/").whereEqualTo("type", img_type).orderBy("name", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Upload> options = new FirestoreRecyclerOptions.Builder<Upload>()
                 .setQuery(query, Upload.class)
                 .build();
@@ -149,6 +168,7 @@ public class Closet_items extends AppCompatActivity{
 //                intent.putExtra("imgSeason", imgSeason);
                 intent.putExtra("imgId", imgId);
                 startActivity(intent);
+                finish();
 
 
             }
@@ -211,4 +231,13 @@ public class Closet_items extends AppCompatActivity{
         adapter.stopListening();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i = new Intent(Closet_items.this, Closet.class);
+        overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
+        startActivity(i);
+        finish();
+    }
 }
