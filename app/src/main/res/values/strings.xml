@@ -95,7 +95,34 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
-    <string name="enter_description">Write a description</string>
+    <string name="enter_description">Write a description...</string>
+    
+    <string-array name="types">
+        <item>Shirt</item>
+        <item>T-shirt</item>
+        <item>Sweater</item>
+        <item>Jacket</item>
+        <item>Jeans</item>
+        <item>Sneakers</item>
+        <item>Dressed shoes</item>
+        <item>Boots</item>
+    </string-array>
+
+    <string-array name="sizes">
+        <item>XS</item>
+        <item>S</item>
+        <item>M</item>
+        <item>L</item>
+        <item>Xl</item>
+        <item>XXL</item>
+    </string-array>
+
+    <string-array name="seasons">
+        <item>Winter</item>
+        <item>Spring</item>
+        <item>Summer</item>
+        <item>Autumn</item>
+    </string-array>
 
 
 

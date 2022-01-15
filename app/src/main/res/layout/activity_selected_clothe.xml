@@ -37,8 +37,8 @@
             android:textAllCaps="false"
             android:textColor="@color/wood_brown"
             android:textSize="15dp"
-            app:backgroundTint="@color/white"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            app:backgroundTint="@color/white" />
 
         <Button
             android:id="@+id/delete_bttn"
@@ -52,23 +52,23 @@
             android:textAllCaps="false"
             android:textColor="@color/wood_brown"
             android:textSize="15dp"
-            app:backgroundTint="@color/white"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:backgroundTint="@color/white" />
 
         <Button
             android:id="@+id/save_bttn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
             android:layout_marginRight="120dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/save"
             android:textAllCaps="false"
             android:textColor="@color/wood_brown"
             android:textSize="15dp"
-            app:backgroundTint="@color/white"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:backgroundTint="@color/white" />
 
 
     </RelativeLayout>
@@ -97,7 +97,7 @@
             android:layout_marginTop="30dp"
             android:clickable="true"
             android:src="@drawable/top"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/tags_layout"
@@ -273,7 +273,6 @@
         </LinearLayout>
 
 
-
         <LinearLayout
             android:id="@+id/tags_layout_edit"
             android:layout_width="match_parent"
@@ -313,7 +312,8 @@
                         android:background="@color/peach_trans"
                         android:fontFamily="@font/montserrat"
                         android:inputType="textPersonName"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="20dp"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -355,7 +355,8 @@
                         android:fontFamily="@font/montserrat"
                         android:inputType="textLongMessage"
                         android:scrollbars="vertical"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -411,17 +412,15 @@
                             android:textColor="@color/wood_brown"
                             android:textSize="15dp" />
 
-                        <TextView
-                            android:id="@+id/img_type_edit"
-                            android:layout_width="wrap_content"
+                        <Spinner
+                            android:id="@+id/type_spinner"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
                             android:layout_marginTop="5dp"
-                            android:background="@drawable/round_corners_bottom_nav"
-                            android:padding="5dp"
-                            android:text="@string/type"
-                            android:textColor="@color/wood_brown"
-                            android:textSize="20dp" />
+                            android:spinnerMode="dropdown"
+                            android:background="@drawable/drop_down_list"
+                            android:popupBackground="@drawable/drop_down_list_list"/>
+
 
                     </LinearLayout>
 
@@ -429,6 +428,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_columnWeight="1"
+                        android:layout_marginLeft="8dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -439,17 +439,14 @@
                             android:textColor="@color/wood_brown"
                             android:textSize="15dp" />
 
-                        <TextView
-                            android:id="@+id/img_size_edit"
-                            android:layout_width="wrap_content"
+                        <Spinner
+                            android:id="@+id/size_spinner"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
                             android:layout_marginTop="5dp"
-                            android:background="@drawable/round_corners_bottom_nav"
-                            android:padding="5dp"
-                            android:text="@string/size"
-                            android:textColor="@color/wood_brown"
-                            android:textSize="20dp" />
+                            android:spinnerMode="dropdown"
+                            android:background="@drawable/drop_down_list"
+                            android:popupBackground="@drawable/drop_down_list_list"/>
 
                     </LinearLayout>
 
@@ -468,17 +465,14 @@
                             android:textColor="@color/wood_brown"
                             android:textSize="15dp" />
 
-                        <TextView
-                            android:id="@+id/img_season_edit"
-                            android:layout_width="wrap_content"
+                        <Spinner
+                            android:id="@+id/season_spinner"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
                             android:layout_marginTop="5dp"
-                            android:background="@drawable/round_corners_bottom_nav"
-                            android:padding="5dp"
-                            android:text="@string/season"
-                            android:textColor="@color/wood_brown"
-                            android:textSize="20dp" />
+                            android:spinnerMode="dropdown"
+                            android:background="@drawable/drop_down_list"
+                            android:popupBackground="@drawable/drop_down_list_list"/>
 
                     </LinearLayout>
 
@@ -488,7 +482,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
 
 
     </LinearLayout>
