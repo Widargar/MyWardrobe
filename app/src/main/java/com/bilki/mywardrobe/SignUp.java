@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -43,16 +45,16 @@ import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
 
-    TextInputEditText displayDate2, ed_name, ed_surname, ed_email, ed_phone, ed_password, ed_repeat_password;
-    TextInputLayout birthday, name, surname, email, phone, password, repeat_password;
-    CountryCodePicker country;
-    RadioGroup male_female_group;
-    RadioButton male, female, male_female_radio_bttn;
-    Button back_sign_up, register_bttn;
+    private TextInputEditText displayDate2, ed_name, ed_surname, ed_email, ed_phone, ed_password, ed_repeat_password;
+    private TextInputLayout birthday, name, surname, email, phone, password, repeat_password;
+    private CountryCodePicker country;
+    private RadioGroup male_female_group;
+    private RadioButton male, female, male_female_radio_bttn;
+    private Button back_sign_up, register_bttn;
     boolean email_bool;
-    String date, userID, str_birthday_pass, str_gender_pass, str_full_number_pass,
+    private String date, userID, str_birthday_pass, str_gender_pass, str_full_number_pass,
             str_name_pass, str_email_pass, str_password_pass, str_surname_pass;
-    TextView choose_gender;
+    private TextView choose_gender;
     public SharedPreferences sharedpreferences;
     public static final String mypreference = "mypref";
     public static final String preference_name = "Name";
@@ -162,7 +164,9 @@ public class SignUp extends AppCompatActivity {
                 int day = picker.getDatePicker().getDayOfMonth();
                 int month = picker.getDatePicker().getMonth();
                 int year = picker.getDatePicker().getYear();
-                str_birthday_pass = day + "." + month + "." + year;
+                month = month + 1;
+                str_birthday_pass = ((day < 10) ? "0" + day : day) + "."
+                        + ((month < 10) ? "0" + month  : month) + "." + year;
                 //String str_birthday_pass = birthday.getEditText().getText().toString().trim();
 
 
@@ -346,26 +350,26 @@ public class SignUp extends AppCompatActivity {
 
         String val = email.getEditText().getText().toString().trim();
         String val_code = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"; //"[a-zA-Z0-9._-]+@[a-z]+\\\\.+[a-z]+";
-        mAuth.fetchSignInMethodsForEmail(val).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-            @Override
-            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-
-                boolean emailExists = task.getResult().getSignInMethods().isEmpty();
-
-                if(emailExists){
-
-                    email_bool = emailExists;
-                    Log.d(TAG, "Email is not on use!");
-
-                } else{
-
-                    email_bool = emailExists;
-                    Log.d(TAG, "Email is already used!");
-
-                }
-
-            }
-        });
+//        mAuth.fetchSignInMethodsForEmail(val).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+//
+//                boolean emailExists = task.getResult().getSignInMethods().isEmpty();
+//
+//                if(emailExists){
+//
+//                    email_bool = emailExists;
+//                    Log.d(TAG, "Email is not in use!");
+//
+//                } else{
+//
+//                    email_bool = emailExists;
+//                    Log.d(TAG, "Email is already used!");
+//
+//                }
+//
+//            }
+//        });
 
 
         if (val.isEmpty()) {
@@ -378,12 +382,13 @@ public class SignUp extends AppCompatActivity {
             email.setError("Invalid email!");
             return false;
 
-        } else if (email_bool = true){
-
-            email.setError("Email is already used!");
-            return false;
-
         }
+//        else if (email_bool = true){
+//
+//            email.setError("Email is already used!");
+//            return false;
+//
+//        }
 
         else {
 
@@ -540,19 +545,37 @@ public class SignUp extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
 
+                        FirebaseUser verifUser = mAuth.getCurrentUser();
+                        verifUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+
+                                Toast.makeText(SignUp.this, "Verification email has been sent.", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                                Log.d(TAG, "Verification email wasn't sent " + e.getMessage());
+
+                            }
+                        });
+
                         //UserHelperClass addNewUser = new UserHelperClass(_name, _surname, _email, _birthday, _gender, _phone, _password);
 
                         userID =mAuth.getCurrentUser().getUid();
                         DocumentReference documentReference = mFirebaseFirestore.collection("users").document(str_email_pass);//userID);
-                        Map<String, Object> user = new HashMap<>();
-                        user.put("id", userID);
-                        user.put("name", str_name_pass);
-                        user.put("surname", str_surname_pass);
-                        user.put("email", str_email_pass);
-                        user.put("birthday", str_birthday_pass);
-                        user.put("gender", str_gender_pass);
-                        user.put("phone", str_full_number_pass);
-                        user.put("password", str_password_pass);
+                        UserHelperClass user = new UserHelperClass(str_name_pass, str_surname_pass, str_email_pass, str_birthday_pass, str_gender_pass, str_full_number_pass, str_password_pass);
+//                        Map<String, Object> user = new HashMap<>();
+//                        user.put("id", userID);
+//                        user.put("name", str_name_pass);
+//                        user.put("surname", str_surname_pass);
+//                        user.put("email", str_email_pass);
+//                        user.put("birthday", str_birthday_pass);
+//                        user.put("gender", str_gender_pass);
+//                        user.put("phone", str_full_number_pass);
+//                        user.put("password", str_password_pass);
                         Log.d(TAG, "Adding users data");
 
 

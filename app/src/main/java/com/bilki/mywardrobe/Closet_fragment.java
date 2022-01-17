@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,6 +41,7 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.ClosetVie
     private View view;
     private RecyclerView topsRecycler, bottomsRecycler, shoesRecycler, accessoriesRecycler;
     private ClosetAdapter adapter;
+    private ImageView backCloset;
     private String _uri, imageUrl, type;
     private Bundle result;
     private FirebaseAuth mAuth;
@@ -72,7 +74,19 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.ClosetVie
         bottomsRecycler = (RecyclerView) view.findViewById(R.id.bottoms_recycler);
         shoesRecycler = (RecyclerView) view.findViewById(R.id.shoes_recycler);
 
+        backCloset = (ImageView) view.findViewById(R.id.back_closet);
 
+        backCloset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
+                getActivity().finish();
+
+            }
+        });
 
         topsRecycler();
 //        bottomsRecycler();
@@ -212,4 +226,5 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.ClosetVie
         startActivity(intent);
 
     }
+
 }

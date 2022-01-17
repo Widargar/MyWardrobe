@@ -10,9 +10,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -29,8 +31,9 @@ public class Closet_items extends AppCompatActivity{
 
     private int position;
     private Context context;
-    private String textPosition, imageUrl, name, imgType, img_type;
+    private String textPosition, imageUrl, name, imgType, img_type, imgTypeCheck;
     private TextView closetItemText;
+    private ImageView backClosetItems;
     private ClothesAdapter adapter;
     private RecyclerView closetRecycler;
     private FirebaseAuth mAuth;
@@ -61,10 +64,22 @@ public class Closet_items extends AppCompatActivity{
 
         Intent intent = getIntent();
 
+        backClosetItems = (ImageView) findViewById(R.id.back_closet_items);
+
         closetRecycler = (RecyclerView) findViewById(R.id.closet_recycler);
 
+        imgTypeCheck = intent.getStringExtra("imgType");
 
-        imgType = intent.getStringExtra("imgType");
+        if (imgTypeCheck == null || imgTypeCheck == ""){
+
+            imgType = intent.getStringExtra("imgType_delete");
+
+        }else {
+
+            imgType = intent.getStringExtra("imgType");
+
+        }
+
         textPosition = intent.getStringExtra("closet");
 
 
@@ -96,6 +111,18 @@ public class Closet_items extends AppCompatActivity{
 //
 //        }
 
+        backClosetItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(Closet_items.this, Closet.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
+                finish();
+
+            }
+        });
+
 
 
     }
@@ -109,14 +136,16 @@ public class Closet_items extends AppCompatActivity{
                 .setQuery(query, Upload.class)
                 .build();
         adapter = new ClothesAdapter(context, options);
-
-        adapter.setHasStableIds(true);
 //        adapter.setHasStableIds(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
 //        closetRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+//        int initialSize = options.getSnapshots().size();
+
         closetRecycler.setLayoutManager(gridLayoutManager);
         closetRecycler.setHasFixedSize(false);
         closetRecycler.setAdapter(adapter);
+//        adapter.notifyItemRangeChanged(initialSize - 1, options.getSnapshots().size());
+//        adapter.notifyItemRangeInserted(initialSize, options.getSnapshots().size() - 1);
 
 
 //        long id = adapter.getItemId(2);
@@ -236,8 +265,9 @@ public class Closet_items extends AppCompatActivity{
         super.onBackPressed();
 
         Intent i = new Intent(Closet_items.this, Closet.class);
-        overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
         finish();
+
     }
 }

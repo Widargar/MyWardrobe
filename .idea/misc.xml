@@ -6,6 +6,8 @@
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable-v24/back.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable-v24/password.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable-v24/person.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable-v24/phone.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable/camera.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable/color_balck.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/drawable/color_black.xml" value="0.22552083333333334" />
@@ -36,7 +38,7 @@
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_forget_password.xml" value="0.19655797101449277" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_phone_verification.xml" value="0.25" />
-        <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_profile.xml" value="0.18070652173913043" />
+        <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_profile.xml" value="0.22" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_reset_choose.xml" value="0.19655797101449277" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_selected_clothe.xml" value="0.33" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_sign_in.xml" value="0.25" />

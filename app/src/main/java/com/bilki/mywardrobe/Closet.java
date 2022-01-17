@@ -39,12 +39,10 @@ public class Closet extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
 
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         getSupportFragmentManager().beginTransaction().replace(R.id.closet_layout, new Closet_fragment()).commit();
         bottomNavigationView.setSelectedItemId(R.id.bot_nav_closet);
-
-
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -81,10 +79,15 @@ public class Closet extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
 
         Intent i = new Intent(Closet.this, MainActivity.class);
-        startActivity(i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+        startActivity(i);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
         finish();
 
     }
+
+
 }

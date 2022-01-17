@@ -2,7 +2,7 @@ package com.bilki.mywardrobe;
 
 public class UserHelperClass {
 
-    String name, surname, email, birthday, gender, phone, password;
+    String name, surname, email, birthday, gender, phone, password, imageUrl, imageName;
 
     public UserHelperClass(){}
 
@@ -15,6 +15,30 @@ public class UserHelperClass {
         this.gender = gender;
         this.phone = phone;
         this.password = password;
+
+    }
+
+    public UserHelperClass(String name, String surname, String email, String birthday, String gender, String phone) {
+
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.phone = phone;
+
+    }
+
+    public UserHelperClass(String name, String surname, String email, String birthday, String gender, String phone, String imageUrl, String imageName){
+
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.phone = phone;
+        this.imageUrl = imageUrl;
+        this.imageName = imageName;
 
     }
 
@@ -72,5 +96,21 @@ public class UserHelperClass {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }

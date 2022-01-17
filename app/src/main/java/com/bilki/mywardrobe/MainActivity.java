@@ -379,9 +379,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 Intent intent = new Intent(MainActivity.this, Closet.class);
                 //overridePendingTransition(0, 0);
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                //getWindow().setWindowAnimations(0);
+                overridePendingTransition(R.anim.slide_to_right, R.anim.slide_from_left);
+                startActivity(intent);
                 finish();
+                //getWindow().setWindowAnimations(0);
+
 
             }
         });
@@ -417,6 +419,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 super.onBackPressed();
                 finish();
+
 
         } else {
 

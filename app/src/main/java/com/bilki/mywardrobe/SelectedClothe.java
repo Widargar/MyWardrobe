@@ -86,7 +86,7 @@ public class SelectedClothe extends AppCompatActivity {
     private TextInputEditText title_edit, description_edit;
     private Button edit_bttn, save_bttn, delete_bttn, camera_bttn, gallery_bttn;
     private LinearLayout img_desc, tags_layout, tags_layout_edit;
-    private ImageView img_color, img, img_edit, img_color_edit;
+    private ImageView img_color, img, img_edit, img_color_edit, backSelectedClothe;
     private Spinner typeSpinner, sizeSpinner, seasonSpinner;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -131,7 +131,20 @@ public class SelectedClothe extends AppCompatActivity {
 
         _id = intent.getStringExtra("imgId").trim();
 
+        backSelectedClothe = (ImageView) findViewById(R.id.back_selected_clothe);
 
+        backSelectedClothe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(SelectedClothe.this, Closet_items.class);
+                i.putExtra("imgType", img_type.getText().toString().trim());
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
+                finish();
+
+            }
+        });
 
 //        Log.d(TAG, "Description: " + _description);
 
@@ -277,16 +290,23 @@ public class SelectedClothe extends AppCompatActivity {
 //                            finish();
 
                         }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            Log.d(TAG, "upload task wasn't successful: " + e.getMessage());
+
+                        }
                     });
 
                 } else if (imageUri == null) {
 
-                    if (documentSnapshot.exists()){
+//                    if (documentSnapshot.exists()){
 
                         editClothe();
                         setData();
 
-                    }
+//                    }
 
 
 //                    Intent i = new Intent(SelectedClothe.this, SelectedClothe.class);
@@ -312,6 +332,15 @@ public class SelectedClothe extends AppCompatActivity {
 //                Intent refresh = new Intent(SelectedClothe.this, SelectedClothe.class);
 //                startActivity(refresh);
 //                finish();
+
+            }
+        });
+
+        delete_bttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                deleteClothe();
 
             }
         });
@@ -351,293 +380,294 @@ public class SelectedClothe extends AppCompatActivity {
 
     private void setData() {
 
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+        documentReference.collection("images/").document(_id).addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
                 if (error != null) {
-
+                    Log.d(TAG, "Data set failed: " + error);
                     return;
 
                 }
 
                 documentReference.collection("images/").document(_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                        if (task.isSuccessful()) {
+                            if (task.isSuccessful()) {
 
-                            documentSnapshot = task.getResult();
-
-                            if (documentSnapshot.exists()) {
+                                if (value.exists()) {
 
 //                        title_edit.setText(documentSnapshot.getString("name"));
 //                        description_edit.setText(documentSnapshot.getString("description"));
 
 
 
-                                Upload upload = documentSnapshot.toObject(Upload.class);
-                                Uri imgUrl = Uri.parse(upload.getImageUrl());
-                                String imgName = upload.getName();
-                                String imgDescription = upload.getDescription();
-                                String imgColor = upload.getColor();
-                                String imgSize = upload.getSize();
-                                String imgType = upload.getType();
-                                String imgSeason = upload.getSeason();
+                                    Upload upload = value.toObject(Upload.class);
+                                    Uri imgUrl = Uri.parse(upload.getImageUrl());
+                                    String imgName = upload.getName();
+                                    String imgDescription = upload.getDescription();
+                                    String imgColor = upload.getColor();
+                                    String imgSize = upload.getSize();
+                                    String imgType = upload.getType();
+                                    String imgSeason = upload.getSeason();
 
 //                        int visibility = img_title.getVisibility();
 //                        Log.d(TAG, "Visibility: " + visibility);
 
 
 
-                                if (tags_layout.getVisibility() == View.VISIBLE && img.getVisibility() == View.VISIBLE) {
+                                    if (tags_layout.getVisibility() == View.VISIBLE && img.getVisibility() == View.VISIBLE) {
 
-                                    Picasso.get().load(imgUrl).fit().centerInside().into(img);
-                                    img_title.setText(imgName);
+                                        Picasso.get().load(imgUrl).fit().centerInside().into(img);
+                                        img_title.setText(imgName);
 
-                                    if (imgDescription == "" || imgDescription == null || imgDescription.isEmpty()) {
+                                        if (imgDescription == "" || imgDescription == null || imgDescription.isEmpty()) {
 
-                                        img_desc.setVisibility(View.GONE);
-                                        Log.d(TAG, "Description is empty!");
+                                            img_desc.setVisibility(View.GONE);
+                                            Log.d(TAG, "Description is empty!");
 
-                                    } else {
+                                        } else {
 
-                                        img_desc.setVisibility(View.VISIBLE);
-                                        img_description.setText(imgDescription);
-                                        Log.d(TAG, "Description is not empty!");
+                                            img_desc.setVisibility(View.VISIBLE);
+                                            img_description.setText(imgDescription);
+                                            Log.d(TAG, "Description is not empty!");
 
-                                    }
+                                        }
 
-                                    switch (imgColor) {
+                                        switch (imgColor) {
 
-                                        case "Black":
+                                            case "Black":
 //                img_color.setBackground(getResources().getDrawable(R.drawable.color_black));
-                                            img_color.setImageDrawable(getResources().getDrawable(R.drawable.color_black));
+                                                img_color.setImageDrawable(getResources().getDrawable(R.drawable.color_black));
 //                img_color.setText(_color);
-                                            break;
+                                                break;
 
-                                        case "White":
+                                            case "White":
 //                img_color.setBackground(getResources().getDrawable(R.drawable.round_background));
-                                            img_color.setImageDrawable(getResources().getDrawable(R.drawable.round_background));
+                                                img_color.setImageDrawable(getResources().getDrawable(R.drawable.round_background));
 //                img_color.setText(_color);
-                                    }
+                                        }
 
-                                    img_type.setText(imgType);
-                                    img_size.setText(imgSize);
-                                    img_season.setText(imgSeason);
+                                        img_type.setText(imgType);
+                                        img_size.setText(imgSize);
+                                        img_season.setText(imgSeason);
 
-
-                                } else {
-
-                                    Picasso.get().load(imgUrl).fit().centerInside().into(img_edit);
-
-                                    title_edit.setText(imgName);
-
-                                    if (imgDescription == "" || imgDescription == null || imgDescription.isEmpty()) {
-
-                                        Log.d(TAG, "Description is empty!");
 
                                     } else {
 
-                                        description_edit.setText(imgDescription);
-                                        Log.d(TAG, "Description is not empty!");
+                                        Picasso.get().load(imgUrl).fit().centerInside().into(img_edit);
 
-                                    }
+                                        title_edit.setText(imgName);
 
-                                    switch (imgColor) {
+                                        if (imgDescription == "" || imgDescription == null || imgDescription.isEmpty()) {
 
-                                        case "Black":
-                                            img_color_edit.setImageDrawable(getResources().getDrawable(R.drawable.color_black));
-                                            break;
+                                            Log.d(TAG, "Description is empty!");
 
-                                        case "White":
-                                            img_color_edit.setImageDrawable(getResources().getDrawable(R.drawable.round_background));
-                                    }
+                                        } else {
+
+                                            description_edit.setText(imgDescription);
+                                            Log.d(TAG, "Description is not empty!");
+
+                                        }
+
+                                        switch (imgColor) {
+
+                                            case "Black":
+                                                img_color_edit.setImageDrawable(getResources().getDrawable(R.drawable.color_black));
+                                                break;
+
+                                            case "White":
+                                                img_color_edit.setImageDrawable(getResources().getDrawable(R.drawable.round_background));
+                                        }
 
 //                                    img_type_edit.setText(imgType);
 //                                    img_size_edit.setText(imgSize);
 //                                    img_season_edit.setText(imgSeason);
 
-                                    typeSpinner = (Spinner) findViewById(R.id.type_spinner);
-                                    sizeSpinner = (Spinner) findViewById(R.id.size_spinner);
-                                    seasonSpinner = (Spinner) findViewById(R.id.season_spinner);
+                                        typeSpinner = (Spinner) findViewById(R.id.type_spinner);
+                                        sizeSpinner = (Spinner) findViewById(R.id.size_spinner);
+                                        seasonSpinner = (Spinner) findViewById(R.id.season_spinner);
 
-                                    typesArray = getResources().getStringArray(R.array.types);
-                                    sizesArray = getResources().getStringArray(R.array.sizes);
-                                    seasonsArray = getResources().getStringArray(R.array.seasons);
+                                        typesArray = getResources().getStringArray(R.array.types);
+                                        sizesArray = getResources().getStringArray(R.array.sizes);
+                                        seasonsArray = getResources().getStringArray(R.array.seasons);
 
-                                    types = new ArrayList<String>(Arrays.asList(typesArray));
-                                    types.add(0, imgType);
-                                    sizes =  new ArrayList<String>(Arrays.asList(sizesArray));
-                                    sizes.add(0, imgSize);
-                                    seasons = new ArrayList<String>(Arrays.asList(seasonsArray));
-                                    seasons.add(0, imgSeason);
+                                        types = new ArrayList<String>(Arrays.asList(typesArray));
+                                        types.add(0, imgType);
+                                        sizes =  new ArrayList<String>(Arrays.asList(sizesArray));
+                                        sizes.add(0, imgSize);
+                                        seasons = new ArrayList<String>(Arrays.asList(seasonsArray));
+                                        seasons.add(0, imgSeason);
 
-                                    ArrayAdapter<String> typeAdapter = new ArrayAdapter(SelectedClothe.this, R.layout.spinner_item, types);
-                                    typeAdapter.setDropDownViewResource(R.layout.spinner_item_list);
+                                        ArrayAdapter<String> typeAdapter = new ArrayAdapter(SelectedClothe.this, R.layout.spinner_item, types);
+                                        typeAdapter.setDropDownViewResource(R.layout.spinner_item_list);
 
-                                    ArrayAdapter<String> sizeAdapter = new ArrayAdapter(SelectedClothe.this, R.layout.spinner_item, sizes);
-                                    sizeAdapter.setDropDownViewResource(R.layout.spinner_item_list);
+                                        ArrayAdapter<String> sizeAdapter = new ArrayAdapter(SelectedClothe.this, R.layout.spinner_item, sizes);
+                                        sizeAdapter.setDropDownViewResource(R.layout.spinner_item_list);
 
-                                    ArrayAdapter<String> seasonAdapter = new ArrayAdapter(SelectedClothe.this, R.layout.spinner_item, seasons);
-                                    seasonAdapter.setDropDownViewResource(R.layout.spinner_item_list);
+                                        ArrayAdapter<String> seasonAdapter = new ArrayAdapter(SelectedClothe.this, R.layout.spinner_item, seasons);
+                                        seasonAdapter.setDropDownViewResource(R.layout.spinner_item_list);
 
-                                    typeSpinner.setAdapter(typeAdapter);
-                                    type = types.get(0);
-                                    typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                        @Override
-                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        typeSpinner.setAdapter(typeAdapter);
+                                        type = types.get(0);
+                                        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                            @Override
+                                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                                            if (parent.getItemAtPosition(position).equals(imgType)){
+                                                if (parent.getItemAtPosition(position).equals(imgType)){
 
-                                                switch (imgType){
+                                                    switch (imgType){
 
-                                                    case "Shirt":
-                                                        types.remove(1);
-                                                        break;
-                                                    case "T-shirt":
-                                                        types.remove(2);
-                                                        break;
-                                                    case "Sweater":
-                                                        types.remove(3);
-                                                        break;
-                                                    case "Jacket":
-                                                        types.remove(4);
-                                                        break;
-                                                    case "Jeans":
-                                                        types.remove(5);
-                                                        break;
-                                                    case "Sneakers":
-                                                        types.remove(6);
-                                                        break;
-                                                    case "Dressed shoes":
-                                                        types.remove(7);
-                                                        break;
-                                                    case "Boots":
-                                                        types.remove(8);
-                                                        break;
+                                                        case "Shirt":
+                                                            types.remove(1);
+                                                            break;
+                                                        case "T-shirt":
+                                                            types.remove(2);
+                                                            break;
+                                                        case "Sweater":
+                                                            types.remove(3);
+                                                            break;
+                                                        case "Jacket":
+                                                            types.remove(4);
+                                                            break;
+                                                        case "Jeans":
+                                                            types.remove(5);
+                                                            break;
+                                                        case "Sneakers":
+                                                            types.remove(6);
+                                                            break;
+                                                        case "Dressed shoes":
+                                                            types.remove(7);
+                                                            break;
+                                                        case "Boots":
+                                                            types.remove(8);
+                                                            break;
 
-                                                }
+                                                    }
 
-                                            }else {
+                                                }else {
 
-                                                type = parent.getItemAtPosition(position).toString();
-                                                Log.d(TAG, "Type onItemSelected: " + type);
-
-                                            }
-
-                                        }
-
-                                        @Override
-                                        public void onNothingSelected(AdapterView<?> parent) {//
-
-                                        }
-                                    });
-
-                                    sizeSpinner.setAdapter(sizeAdapter);
-                                    size = sizes.get(0);
-                                    sizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                        @Override
-                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                                            if (parent.getItemAtPosition(position).equals(imgSize)){
-
-                                                switch (imgSize){
-
-                                                    case "XS":
-                                                        sizes.remove(1);
-                                                        break;
-                                                    case "S":
-                                                        sizes.remove(2);
-                                                        break;
-                                                    case "M":
-                                                        sizes.remove(3);
-                                                        break;
-                                                    case "L":
-                                                        sizes.remove(4);
-                                                        break;
-                                                    case "XL":
-                                                        sizes.remove(5);
-                                                        break;
-                                                    case "XXL":
-                                                        sizes.remove(6);
-                                                        break;
+                                                    type = parent.getItemAtPosition(position).toString();
+                                                    Log.d(TAG, "Type onItemSelected: " + type);
 
                                                 }
 
-                                            }else {
-
-                                                size = parent.getItemAtPosition(position).toString();
-                                                Log.d(TAG, "Size onItemSelected: " + type);
-
                                             }
 
-                                        }
+                                            @Override
+                                            public void onNothingSelected(AdapterView<?> parent) {//
 
-                                        @Override
-                                        public void onNothingSelected(AdapterView<?> parent) {
+                                            }
+                                        });
 
-                                        }
-                                    });
+                                        sizeSpinner.setAdapter(sizeAdapter);
+                                        size = sizes.get(0);
+                                        sizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                            @Override
+                                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                                    seasonSpinner.setAdapter(seasonAdapter);
-                                    season = seasons.get(0);
-                                    seasonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                        @Override
-                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                if (parent.getItemAtPosition(position).equals(imgSize)){
 
-                                            if (parent.getItemAtPosition(position).equals(imgSeason)){
+                                                    switch (imgSize){
 
-                                                switch (imgSeason){
+                                                        case "XS":
+                                                            sizes.remove(1);
+                                                            break;
+                                                        case "S":
+                                                            sizes.remove(2);
+                                                            break;
+                                                        case "M":
+                                                            sizes.remove(3);
+                                                            break;
+                                                        case "L":
+                                                            sizes.remove(4);
+                                                            break;
+                                                        case "XL":
+                                                            sizes.remove(5);
+                                                            break;
+                                                        case "XXL":
+                                                            sizes.remove(6);
+                                                            break;
 
-                                                    case "Winter":
-                                                        seasons.remove(1);
-                                                        break;
-                                                    case "Spring":
-                                                        seasons.remove(2);
-                                                        break;
-                                                    case "Summer":
-                                                        seasons.remove(3);
-                                                        break;
-                                                    case "Autumn":
-                                                        seasons.remove(4);
-                                                        break;
+                                                    }
+
+                                                }else {
+
+                                                    size = parent.getItemAtPosition(position).toString();
+                                                    Log.d(TAG, "Size onItemSelected: " + type);
 
                                                 }
 
-                                            }else {
+                                            }
 
-                                                season = parent.getItemAtPosition(position).toString();
-                                                Log.d(TAG, "Season onItemSelected: " + type);
+                                            @Override
+                                            public void onNothingSelected(AdapterView<?> parent) {
+
+                                            }
+                                        });
+
+                                        seasonSpinner.setAdapter(seasonAdapter);
+                                        season = seasons.get(0);
+                                        seasonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                            @Override
+                                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                                                if (parent.getItemAtPosition(position).equals(imgSeason)){
+
+                                                    switch (imgSeason){
+
+                                                        case "Winter":
+                                                            seasons.remove(1);
+                                                            break;
+                                                        case "Spring":
+                                                            seasons.remove(2);
+                                                            break;
+                                                        case "Summer":
+                                                            seasons.remove(3);
+                                                            break;
+                                                        case "Autumn":
+                                                            seasons.remove(4);
+                                                            break;
+
+                                                    }
+
+                                                }else {
+
+                                                    season = parent.getItemAtPosition(position).toString();
+                                                    Log.d(TAG, "Season onItemSelected: " + type);
+
+                                                }
 
                                             }
 
-                                        }
+                                            @Override
+                                            public void onNothingSelected(AdapterView<?> parent) {
 
-                                        @Override
-                                        public void onNothingSelected(AdapterView<?> parent) {
+                                            }
+                                        });
 
-                                        }
-                                    });
 
+                                    }
+
+
+                                } else {
+
+                                    Log.d(TAG, "Document doesn't exist");
 
                                 }
 
-
                             } else {
 
-                                Log.d(TAG, "Document doesn't exist");
+                                Log.d(TAG, "Failed with: " + task.getException());
 
                             }
 
-                        } else {
-
-                            Log.d(TAG, "Failed with: " + task.getException());
-
                         }
+                    });
 
-                    }
-                });
+
+
 
             }
         });
@@ -844,7 +874,7 @@ public class SelectedClothe extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                takeImageFromGallery();
+                takeImageFromGallery();
                 choose_source.dismiss();
 
             }
@@ -861,6 +891,17 @@ public class SelectedClothe extends AppCompatActivity {
             Log.d(TAG, "checkCameraHardware: There is no camera on your phone!");
             return false;
         }
+    }
+
+    public void takeImageFromGallery() {
+
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        gallery.setType("image/");
+        startActivityForResult(gallery, SELECT_PICTURE_CODE);
+        String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss").format(new Date());
+        fileName = "myWardrobe_" + timeStamp + ".";
+
+
     }
 
     public void takePicture() {
@@ -993,6 +1034,25 @@ public class SelectedClothe extends AppCompatActivity {
 
 //            deletePreviousImage();
 
+
+            documentReference.collection("images/").document(_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                    Upload upload = documentSnapshot.toObject(Upload.class);
+                    Uri imgUrl = Uri.parse(upload.getImageUrl());
+                    strUri = imgUrl.toString().trim();
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    Log.d(TAG, "Getting data to delete previous image wasn't successful");
+
+                }
+            });
+
             imageReference = storageReference.child("images/" + userId + "/" + name);
             uploadTask = imageReference.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -1002,14 +1062,21 @@ public class SelectedClothe extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
 
-                            strUri = uri.toString();
-
                             Log.d(TAG, "Image Url " + uri.toString());
                             Log.d(TAG, "Uploaded");
                             Log.d(TAG, "Image name: " + name);
                             Log.d(TAG, "File name:  " + fileName);
-                            deletePreviousImage();
+
+                            deletePreviousImage(strUri);
+
                             progressDialog.dismiss();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            Log.d(TAG, "Url of the previous photo wasn't get " + e.getMessage());
 
                         }
                     });
@@ -1034,11 +1101,11 @@ public class SelectedClothe extends AppCompatActivity {
 
     }
 
-    private void deletePreviousImage() {
+    private void deletePreviousImage(String strUri) {
 
-        Upload upload = documentSnapshot.toObject(Upload.class);
-        Uri imgUrl = Uri.parse(upload.getImageUrl());
-        strUri = imgUrl.toString().trim();
+//        Upload upload = documentSnapshot.toObject(Upload.class);
+//        Uri imgUrl = Uri.parse(upload.getImageUrl());
+//        strUri = imgUrl.toString().trim();
         existedImageReference = FirebaseStorage.getInstance().getReferenceFromUrl(strUri);
 
 //        imageReference = storageReference.child("images/" + userId + "/" + );
@@ -1064,120 +1131,176 @@ public class SelectedClothe extends AppCompatActivity {
 
     private void editClothe() {
 
-        Upload upload = documentSnapshot.toObject(Upload.class);
-        String imageName = upload.getImageName();
+        documentReference.collection("images/").document(_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                Upload upload = documentSnapshot.toObject(Upload.class);
+                String imageName = upload.getImageName();
 //        Uri imgUrl = Uri.parse(upload.getImageUrl());
 //        strUri = imgUrl.toString().trim();
 //        existedImageReference = FirebaseStorage.getInstance().getReferenceFromUrl(strUri);
 //        String name = existedImageReference.getName();
 //        strImageUri = imageUri.toString().trim();
 
-        Log.d(TAG, "editClothe: fileName: " + fileName);
-        Log.d(TAG, "editClothe: imageName: " + imageName);
-        if(fileName == null){
+                Log.d(TAG, "editClothe: fileName: " + fileName);
+                Log.d(TAG, "editClothe: imageName: " + imageName);
+                if(fileName == null){
 
-            imageReference = storageReference.child("images/" + userId + "/" + imageName);
-            imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
+                    imageReference = storageReference.child("images/" + userId + "/" + imageName);
+                    imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
 
-                    Upload upload = documentSnapshot.toObject(Upload.class);
-                    Uri imgUrl = Uri.parse(upload.getImageUrl());
-                    strUri = imgUrl.toString().trim();
-                    existedImageReference = FirebaseStorage.getInstance().getReferenceFromUrl(strUri);
-                    urll = uri.toString().trim();
-                    Log.d(TAG, "Uri: " + urll);
-                    Log.d(TAG, "StrUri: " + strUri);
+                            Upload upload = documentSnapshot.toObject(Upload.class);
+                            Uri imgUrl = Uri.parse(upload.getImageUrl());
+                            strUri = imgUrl.toString().trim();
+                            existedImageReference = FirebaseStorage.getInstance().getReferenceFromUrl(strUri);
+                            urll = uri.toString().trim();
+                            Log.d(TAG, "Uri: " + urll);
+                            Log.d(TAG, "StrUri: " + strUri);
 
-                    if (strUri == urll) {
+                            if (strUri == urll) {
 
-                        Map<String, Object> clothe = new HashMap<>();
-                        clothe.put("name", title_input.getEditText().getText().toString().trim());
-                        clothe.put("description", description_input.getEditText().getText().toString().trim());
-                        clothe.put("type", type);
-                        clothe.put("size", size);
-                        clothe.put("season", season);
-                        Log.d(TAG, "Check Type: " + type);
-                        documentReference.collection("images/").document(_id).update(clothe);
+                                Map<String, Object> clothe = new HashMap<>();
+                                clothe.put("name", title_input.getEditText().getText().toString().trim());
+                                clothe.put("description", description_input.getEditText().getText().toString().trim());
+                                clothe.put("type", type);
+                                clothe.put("size", size);
+                                clothe.put("season", season);
+                                Log.d(TAG, "Check Type: " + type);
+                                documentReference.collection("images/").document(_id).update(clothe);
 
-                    } else {
+                            } else {
 
-                        Map<String, Object> clothe = new HashMap<>();
-                        clothe.put("name", title_input.getEditText().getText().toString().trim());
-                        clothe.put("description", description_input.getEditText().getText().toString().trim());
-                        clothe.put("imageUrl", urll);
-                        clothe.put("imageName", imageName);
-                        clothe.put("type", type);
-                        clothe.put("size", size);
-                        clothe.put("season", season);
-                        Log.d(TAG, "Check Type: " + type);
-                        documentReference.collection("images/").document(_id).update(clothe);
+                                Map<String, Object> clothe = new HashMap<>();
+                                clothe.put("name", title_input.getEditText().getText().toString().trim());
+                                clothe.put("description", description_input.getEditText().getText().toString().trim());
+                                clothe.put("imageUrl", urll);
+                                clothe.put("imageName", imageName);
+                                clothe.put("type", type);
+                                clothe.put("size", size);
+                                clothe.put("season", season);
+                                Log.d(TAG, "Check Type: " + type);
+                                documentReference.collection("images/").document(_id).update(clothe);
 
-                    }
+                            }
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            Log.d(TAG, "New url wasn't set: " + e.getMessage());
+
+                        }
+                    });
+
+                }else {
+
+                    imageReference = storageReference.child("images/" + userId + "/" + fileName);
+                    imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            Upload upload = documentSnapshot.toObject(Upload.class);
+                            Uri imgUrl = Uri.parse(upload.getImageUrl());
+                            strUri = imgUrl.toString().trim();
+                            existedImageReference = FirebaseStorage.getInstance().getReferenceFromUrl(strUri);
+                            urll = uri.toString().trim();
+                            Log.d(TAG, "Uri: " + urll);
+                            Log.d(TAG, "StrUri: " + strUri);
+
+                            if (strUri == urll) {
+
+                                Map<String, Object> clothe = new HashMap<>();
+                                clothe.put("name", title_input.getEditText().getText().toString().trim());
+                                clothe.put("description", description_input.getEditText().getText().toString().trim());
+                                clothe.put("type", type);
+                                clothe.put("size", size);
+                                clothe.put("season", season);
+                                Log.d(TAG, "Check Type: " + type);
+                                documentReference.collection("images/").document(_id).update(clothe);
+
+                            } else {
+
+                                Map<String, Object> clothe = new HashMap<>();
+                                clothe.put("name", title_input.getEditText().getText().toString().trim());
+                                clothe.put("description", description_input.getEditText().getText().toString().trim());
+                                clothe.put("imageUrl", urll);
+                                clothe.put("imageName", fileName);
+                                clothe.put("type", type);
+                                clothe.put("size", size);
+                                clothe.put("season", season);
+                                Log.d(TAG, "Check Type: " + type);
+                                documentReference.collection("images/").document(_id).update(clothe);
+
+                            }
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            Log.d(TAG, "New url wasn't set: " + e.getMessage());
+
+                        }
+                    });
 
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
 
-                    Log.d(TAG, "New url wasn't set: " + e.getMessage());
 
-                }
-            });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
-        }else {
+                Log.d(TAG, "Getting data to edit clothe wasn't successful");
 
-            imageReference = storageReference.child("images/" + userId + "/" + fileName);
-            imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
+            }
+        });
 
-                    Upload upload = documentSnapshot.toObject(Upload.class);
-                    Uri imgUrl = Uri.parse(upload.getImageUrl());
-                    strUri = imgUrl.toString().trim();
-                    existedImageReference = FirebaseStorage.getInstance().getReferenceFromUrl(strUri);
-                    urll = uri.toString().trim();
-                    Log.d(TAG, "Uri: " + urll);
-                    Log.d(TAG, "StrUri: " + strUri);
 
-                    if (strUri == urll) {
 
-                        Map<String, Object> clothe = new HashMap<>();
-                        clothe.put("name", title_input.getEditText().getText().toString().trim());
-                        clothe.put("description", description_input.getEditText().getText().toString().trim());
-                        clothe.put("type", type);
-                        clothe.put("size", size);
-                        clothe.put("season", season);
-                        Log.d(TAG, "Check Type: " + type);
-                        documentReference.collection("images/").document(_id).update(clothe);
+    }
 
-                    } else {
+    private void deleteClothe(){
 
-                        Map<String, Object> clothe = new HashMap<>();
-                        clothe.put("name", title_input.getEditText().getText().toString().trim());
-                        clothe.put("description", description_input.getEditText().getText().toString().trim());
-                        clothe.put("imageUrl", urll);
-                        clothe.put("imageName", fileName);
-                        clothe.put("type", type);
-                        clothe.put("size", size);
-                        clothe.put("season", season);
-                        Log.d(TAG, "Check Type: " + type);
-                        documentReference.collection("images/").document(_id).update(clothe);
+        documentReference.collection("images/").document(_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                    }
+                Upload upload = documentSnapshot.toObject(Upload.class);
+                Uri imgUrl = Uri.parse(upload.getImageUrl());
+                strUri = imgUrl.toString().trim();
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
+            }
+        });
 
-                    Log.d(TAG, "New url wasn't set: " + e.getMessage());
+        documentReference.collection("images/").document(_id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if(task.isSuccessful()){
+
+                    Log.d(TAG, "Image document deleted");
+                    deletePreviousImage(strUri);
+                    Log.d(TAG, "Image is deleted");
+                    Intent intent = new Intent(SelectedClothe.this, Closet_items.class);
+                    intent.putExtra("imgType_delete", img_type.getText().toString().trim());
+                    overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
+                    startActivity(intent);
+                    finish();
+
+
+                }else{
+
+                    Log.d(TAG, "Image document isn't deleted");
 
                 }
-            });
 
-        }
-
+            }
+        });
 
     }
 
@@ -1187,8 +1310,9 @@ public class SelectedClothe extends AppCompatActivity {
 
         Intent i = new Intent(SelectedClothe.this, Closet_items.class);
         i.putExtra("imgType", img_type.getText().toString().trim());
-        overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
         finish();
+
     }
 }

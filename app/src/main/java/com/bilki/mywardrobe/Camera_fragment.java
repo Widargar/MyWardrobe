@@ -61,7 +61,7 @@ public class Camera_fragment extends Fragment {
     private static final String RANDOM_GOOD_DEED_KEY = "key";
     private Context context;
     private View view;
-    private ImageView takenPicture;
+    private ImageView takenPicture, backCamera;
     private Button camera_bttn, gallery_bttn, add_bttn;
     private RadioGroup colorGroup, sizeGroup, typeGroup, seasonGroup;
     private RadioButton color_radio, size_radio, type_radio, season_radio;
@@ -74,7 +74,7 @@ public class Camera_fragment extends Fragment {
             image_name, fileName, strUri, color, size, type, season;
     private File f, ff;
     private ProgressBar progressBar;
-    private Uri imageUri, downloadUri;
+    private Uri imageUri, downloadUri ,photoUri;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference, imageReference, spaceReference;
@@ -114,6 +114,7 @@ public class Camera_fragment extends Fragment {
         seasonGroup = (RadioGroup) view.findViewById(R.id.season_radio_group);
 
         takenPicture = (ImageView) view.findViewById(R.id.taken_picture);
+        backCamera = (ImageView) view.findViewById(R.id.back_camera);
         context = container.getContext();
 
         colorsRecycler = (RecyclerView) view.findViewById(R.id.colors_recycler);
@@ -123,6 +124,18 @@ public class Camera_fragment extends Fragment {
 
         userId = mAuth.getUid();
 
+        backCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
+                getActivity().finish();
+
+
+            }
+        });
 
         takenPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +234,11 @@ public class Camera_fragment extends Fragment {
     public void takeImageFromGallery() {
 
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        gallery.setType("image/");
         startActivityForResult(gallery, SELECT_PICTURE_CODE);
+        String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss").format(new Date());
+        fileName = "myWardrobe_" + timeStamp + ".";
+
 
     }
 
@@ -290,7 +307,7 @@ public class Camera_fragment extends Fragment {
             if (photoFile != null) {
 
                 Log.d(TAG, "File != null");
-                Uri photoUri = FileProvider.getUriForFile(getActivity(), "com.bilki.mywardrobe.fileprovider", photoFile);
+                photoUri = FileProvider.getUriForFile(getActivity(), "com.bilki.mywardrobe.fileprovider", photoFile);
                 takePicture.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 //getActivity().startActivityFromFragment(Camera_fragment.this, takePicture, REQUEST_IMAGE_CAPTURE);
                 startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
@@ -301,12 +318,21 @@ public class Camera_fragment extends Fragment {
 
     }
 
+    private String getFileExt(Uri contentUri) {
+
+        ContentResolver c = getActivity().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(c.getType(contentUri));
+
+    }
+
     private File createPhotoFile() throws IOException {
 
         Log.d(TAG, "File created");
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss").format(new Date());
         fileName = "myWardrobe_" + timeStamp + ".";
+//                + getFileExt(photoUri);
         //File storageDirectory = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File photoFile = File.createTempFile(fileName, ".jpg", storageDirectory);
@@ -355,7 +381,7 @@ public class Camera_fragment extends Fragment {
 //            String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss").format(new Date());
 //            String fileName = "myWardrobe_" + timeStamp + "." + getFileExt(imageUri);
             takenPicture.setImageURI(imageUri);
-            Log.d(TAG, "Gallery url of the photo is " + fileName);
+            Log.d(TAG, "Gallery url of the photo is " + imageUri);
             //uploadImageToFirebase(fileName, contentUri);
 
 
@@ -366,13 +392,7 @@ public class Camera_fragment extends Fragment {
         }*/
     }
 
-    private String getFileExt(Uri contentUri) {
 
-        ContentResolver c = getActivity().getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(c.getType(contentUri));
-
-    }
 
     //Add photo to gallery
     private void galleryAddPic() {
@@ -459,7 +479,21 @@ public class Camera_fragment extends Fragment {
 
 //                            Log.d(TAG, "URL: " + taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
                             String uploadId = firebaseFirestore.collection("users/").document(user_email + "/").collection("images/").document().getId();
-                            firebaseFirestore.collection("users/").document( user_email + "/").collection("images/").document(uploadId).set(upload);
+                            firebaseFirestore.collection("users/").document( user_email + "/").collection("images/").document(uploadId).set(upload).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+
+                                    Log.d(TAG, "Image metadata has been added");
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                    Log.d(TAG, "Image metadata hasn't been added");
+
+                                }
+                            });
 
 
                             Log.d(TAG, "Image Url " + uri.toString());
@@ -566,8 +600,8 @@ public class Camera_fragment extends Fragment {
                     title = clothe_title.getEditText().getText().toString().trim();
                     description = clothe_description.getEditText().getText().toString().trim();
                     Log.d(TAG, "On add button click!");
-
-                    imageUri = Uri.fromFile(f);
+//                    f = new File(currentPhotoPath);
+//                    imageUri = Uri.fromFile(f);
 
                     uploadImageToFirebase(fileName, imageUri);
 
@@ -725,6 +759,7 @@ public class Camera_fragment extends Fragment {
         seasonsRecycler.setAdapter(adapter4);
 
     }
+
 
 
 }

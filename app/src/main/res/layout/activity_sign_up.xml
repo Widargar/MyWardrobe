@@ -231,7 +231,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="10dp">
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp">
 
                 <com.hbb20.CountryCodePicker
                     android:id="@+id/country_picker"
@@ -240,7 +241,6 @@
                     app:ccp_autoDetectCountry="true"
                     app:ccp_showFlag="true"
                     app:ccp_showFullName="true"
-                    android:paddingTop="10dp"
                     android:background="@color/wood_brown_trans" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -254,7 +254,7 @@
                     app:endIconTint="@color/black"
                     app:startIconDrawable="@drawable/phone"
                     app:startIconTint="@color/black"
-                    android:paddingTop="10dp"
+                    android:layout_marginTop="5dp"
                     app:boxStrokeColor="@color/wood_brown"
                     app:boxStrokeWidthFocused="2dp"
                     app:errorTextColor="@color/red"

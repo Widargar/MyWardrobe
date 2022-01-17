@@ -10,13 +10,17 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="repeat_password">Repeat password</string>
+    <string name="change_password">Change password</string>
     <string name="register">Register</string>
     <string name="back">Back</string>
     <string name="gender">Choose your gender:</string>
+    <string name="gender_">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="choose_birthday">Choose your birthday</string>
     <string name="choose_number">Choose your number</string>
+    <string name="email_verif">Email not verified!</string>
+    <string name="resend_email">Resend verification</string>
     <string name="phone_verif">Phone verification</string>
     <string name="phone_verif_sent">Please type verification code sent\nto </string>
     <string name="invalid_code">Invalid verification code!</string>

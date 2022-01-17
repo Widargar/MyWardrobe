@@ -1,6 +1,7 @@
 package com.bilki.mywardrobe;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,10 +11,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +42,7 @@ public class Looks_fragment extends Fragment {
     private View view;
     private RecyclerView looksRecycler;
     private LooksAdapter adapter;
+    private ImageView backLooks;
     private ArrayList<Upload> uploads;
     public String user_email;
     private FirebaseAuth mAuth;
@@ -67,6 +71,18 @@ public class Looks_fragment extends Fragment {
         context = container.getContext();
         looksRecycler = (RecyclerView) view.findViewById(R.id.looks_recycler);
 
+        backLooks = (ImageView) view.findViewById(R.id.back_looks);
+        backLooks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
+                getActivity().finish();
+
+            }
+        });
 
 //        getUserEmail();
         looksRecycler();
