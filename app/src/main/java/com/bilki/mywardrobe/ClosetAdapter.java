@@ -19,13 +19,22 @@ import java.util.ArrayList;
 public class ClosetAdapter extends RecyclerView.Adapter<ClosetAdapter.ClosetViewHolder> {
 
     private Context context;
-    private ArrayList<FeaturedHelperClass> closetLocations;
-    private ClosetViewHolder.OnItemListener onItemListener;
+    private final ArrayList<FeaturedHelperClass> closetLocations;
+    private final OnItemListener onItemListener;
+    private final String mtag;
 
-    public ClosetAdapter(ArrayList<FeaturedHelperClass> closetLocations, ClosetViewHolder.OnItemListener onItemListener) {
+    public ClosetAdapter(Context context, ArrayList<FeaturedHelperClass> closetLocations, OnItemListener onItemListener, String tag) {
 
+        this.context = context;
         this.closetLocations = closetLocations;
         this.onItemListener = onItemListener;
+        this.mtag = tag;
+
+    }
+
+    public interface OnItemListener{
+
+        void onItemClick(int position, String tag);
 
     }
 
@@ -34,7 +43,7 @@ public class ClosetAdapter extends RecyclerView.Adapter<ClosetAdapter.ClosetView
     public ClosetAdapter.ClosetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.close_card_design, parent, false);
-        ClosetAdapter.ClosetViewHolder closetViewHolder = new ClosetAdapter.ClosetViewHolder(view, onItemListener);
+        ClosetAdapter.ClosetViewHolder closetViewHolder = new ClosetAdapter.ClosetViewHolder(view, onItemListener, mtag);
         return closetViewHolder;
 
     }
@@ -64,13 +73,16 @@ public class ClosetAdapter extends RecyclerView.Adapter<ClosetAdapter.ClosetView
         ImageView image;
         TextView name;
         OnItemListener onItemListener;
+        String tag;
 
-        public ClosetViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
+        public ClosetViewHolder(@NonNull View itemView, OnItemListener onItemListener, String tag) {
             super(itemView);
 
             image = itemView.findViewById(R.id.close_image);
             name = itemView.findViewById(R.id.close_name);
+            this.tag = tag;
             this.onItemListener = onItemListener;
+
 
             itemView.setOnClickListener(this);
 
@@ -79,13 +91,7 @@ public class ClosetAdapter extends RecyclerView.Adapter<ClosetAdapter.ClosetView
         @Override
         public void onClick(View v) {
 
-            onItemListener.onItemClick(getAdapterPosition());
-
-        }
-
-        public interface OnItemListener{
-
-            void onItemClick(int position);
+            onItemListener.onItemClick(getAdapterPosition(), tag);
 
         }
 

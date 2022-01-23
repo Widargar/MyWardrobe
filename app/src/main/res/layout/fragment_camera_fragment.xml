@@ -132,6 +132,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -143,52 +144,52 @@
                             android:textColor="@color/wood_brown"
                             android:textSize="20sp" />
 
-                        <RadioGroup
-                            android:id="@+id/color_radio_group"
+                        <com.google.android.flexbox.FlexboxLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            app:alignContent="stretch"
+                            app:alignItems="stretch"
+                            app:flexWrap="wrap">
 
                             <RadioButton
                                 android:id="@+id/radio_bttn_black"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@drawable/color_black_"
-                                android:tag="@string/black"
-                                android:drawablePadding="10dp"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
+                                android:layout_margin="7dp"
+                                android:background="@android:color/transparent"
+                                android:button="@drawable/black_selector"
+                                android:elevation="5dp"
+                                android:gravity="center"
+                                android:tag="@string/black" />
 
                             <RadioButton
                                 android:id="@+id/radio_bttn_white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@drawable/color_white_"
-                                android:tag="@string/white"
-                                android:drawablePadding="10dp"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
+                                android:layout_margin="7dp"
+                                android:background="@android:color/transparent"
+                                android:button="@drawable/white_selector"
+                                android:elevation="5dp"
+                                android:tag="@string/white" />
+
+                        </com.google.android.flexbox.FlexboxLayout>
 
 
-
-                        </RadioGroup>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/colors_recycler"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="10dp" />
+                        <!--                        <androidx.recyclerview.widget.RecyclerView-->
+                        <!--                            android:id="@+id/colors_recycler"-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="40dp"-->
+                        <!--                            android:layout_marginLeft="20dp"-->
+                        <!--                            android:layout_marginTop="5dp"-->
+                        <!--                            android:layout_marginRight="20dp"-->
+                        <!--                            android:layout_marginBottom="10dp" />-->
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -200,101 +201,102 @@
                             android:textColor="@color/wood_brown"
                             android:textSize="20sp" />
 
-                        <RadioGroup
-                            android:id="@+id/size_radio_group"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/radio_bttn_xs"
+                            <RadioGroup
+                                android:id="@+id/size_radio_group"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@null"
-                                android:padding="5dp"
-                                android:text="@string/xs"
-                                android:tag="@string/xs"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
-
-                            <RadioButton
-                                android:id="@+id/radio_bttn_s"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@null"
-                                android:padding="5dp"
-                                android:text="@string/s"
-                                android:tag="@string/s"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
-
-                            <RadioButton
-                                android:id="@+id/radio_bttn_m"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@null"
-                                android:padding="5dp"
-                                android:text="@string/m"
-                                android:tag="@string/m"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
-
-                            <RadioButton
-                                android:id="@+id/radio_bttn_l"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@null"
-                                android:padding="5dp"
-                                android:text="@string/l"
-                                android:tag="@string/l"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
-
-                            <RadioButton
-                                android:id="@+id/radio_bttn_xl"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@null"
-                                android:padding="5dp"
-                                android:text="@string/xl"
-                                android:tag="@string/xl"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
-
-                            <RadioButton
-                                android:id="@+id/radio_bttn_xxl"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@null"
-                                android:padding="5dp"
-                                android:text="@string/xxl"
-                                android:tag="@string/xxl"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
+                                android:orientation="horizontal">
 
 
-                        </RadioGroup>
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_xs"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/tags_selector"
+                                    android:button="@null"
+                                    android:elevation="5dp"
+                                    android:padding="5dp"
+                                    android:tag="@string/xs"
+                                    android:text="@string/xs" />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/size_recycler"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="10dp" />
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_s"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/tags_selector"
+                                    android:button="@null"
+                                    android:elevation="5dp"
+                                    android:padding="5dp"
+                                    android:tag="@string/s"
+                                    android:text="@string/s" />
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_m"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/tags_selector"
+                                    android:button="@null"
+                                    android:elevation="5dp"
+                                    android:padding="5dp"
+                                    android:tag="@string/m"
+                                    android:text="@string/m" />
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_l"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/tags_selector"
+                                    android:button="@null"
+                                    android:elevation="5dp"
+                                    android:padding="5dp"
+                                    android:tag="@string/l"
+                                    android:text="@string/l" />
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_xl"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/tags_selector"
+                                    android:button="@null"
+                                    android:elevation="5dp"
+                                    android:padding="5dp"
+                                    android:tag="@string/xl"
+                                    android:text="@string/xl" />
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_xxl"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/tags_selector"
+                                    android:button="@null"
+                                    android:elevation="5dp"
+                                    android:padding="5dp"
+                                    android:tag="@string/xxl"
+                                    android:text="@string/xxl" />
+
+                            </RadioGroup>
+
+                        <!--                        <androidx.recyclerview.widget.RecyclerView-->
+                        <!--                            android:id="@+id/size_recycler"-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="50dp"-->
+                        <!--                            android:layout_marginLeft="20dp"-->
+                        <!--                            android:layout_marginTop="5dp"-->
+                        <!--                            android:layout_marginRight="20dp"-->
+                        <!--                            android:layout_marginBottom="10dp" />-->
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -306,126 +308,151 @@
                             android:textColor="@color/wood_brown"
                             android:textSize="20sp" />
 
-                            <RadioGroup
-                                android:id="@+id/type_radio_group"
+                        <com.google.android.flexbox.FlexboxLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:alignContent="stretch"
+                            app:alignItems="stretch"
+                            app:flexWrap="wrap">
+
+                            <RadioButton
+                                android:id="@+id/radio_bttn_shirt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:layout_margin="5dp"
+                                android:background="@drawable/tags_selector"
+                                android:button="@null"
+                                android:elevation="5dp"
+                                android:padding="5dp"
+                                android:tag="@string/shirt"
+                                android:text="@string/shirt" />
 
+                            <RadioButton
+                                android:id="@+id/radio_bttn_t_shirt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/tags_selector"
+                                android:button="@null"
+                                android:elevation="5dp"
+                                android:padding="5dp"
+                                android:tag="@string/t_shirt"
+                                android:text="@string/t_shirt" />
 
-                                <RadioButton
-                                    android:id="@+id/radio_bttn_shirt"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:button="@null"
-                                    android:padding="5dp"
-                                    android:text="@string/shirt"
-                                    android:tag="@string/shirt"
-                                    android:background="@drawable/color_selector"
-                                    android:elevation="5dp"/>
+                            <RadioButton
+                                android:id="@+id/radio_bttn_sweater"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/tags_selector"
+                                android:button="@null"
+                                android:elevation="5dp"
+                                android:padding="5dp"
+                                android:tag="@string/sweater"
+                                android:text="@string/sweater" />
 
-                                <RadioButton
-                                    android:id="@+id/radio_bttn_t_shirt"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:button="@null"
-                                    android:padding="5dp"
-                                    android:text="@string/t_shirt"
-                                    android:tag="@string/t_shirt"
-                                    android:background="@drawable/color_selector"
-                                    android:elevation="5dp"/>
+                            <RadioButton
+                                android:id="@+id/radio_bttn_jacket"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/tags_selector"
+                                android:button="@null"
+                                android:elevation="5dp"
+                                android:padding="5dp"
+                                android:tag="@string/jacket"
+                                android:text="@string/jacket" />
 
-                                <RadioButton
-                                    android:id="@+id/radio_bttn_sweater"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:button="@null"
-                                    android:padding="5dp"
-                                    android:text="@string/sweater"
-                                    android:tag="@string/sweater"
-                                    android:background="@drawable/color_selector"
-                                    android:elevation="5dp"/>
+                            <RadioButton
+                                android:id="@+id/radio_bttn_pants"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/tags_selector"
+                                android:button="@null"
+                                android:elevation="5dp"
+                                android:padding="5dp"
+                                android:tag="@string/pants"
+                                android:text="@string/pants" />
 
-                                <RadioButton
-                                    android:id="@+id/radio_bttn_jacket"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:button="@null"
-                                    android:padding="5dp"
-                                    android:text="@string/jacket"
-                                    android:tag="@string/jacket"
-                                    android:background="@drawable/color_selector"
-                                    android:elevation="5dp"/>
+                            <RadioButton
+                                android:id="@+id/radio_bttn_jeans"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/tags_selector"
+                                android:button="@null"
+                                android:elevation="5dp"
+                                android:padding="5dp"
+                                android:tag="@string/jeans"
+                                android:text="@string/jeans" />
 
-                                <RadioButton
-                                    android:id="@+id/radio_bttn_jeans"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:button="@null"
-                                    android:padding="5dp"
-                                    android:text="@string/jeans"
-                                    android:tag="@string/jeans"
-                                    android:background="@drawable/color_selector"
-                                    android:elevation="5dp"/>
+                            <RadioButton
+                                android:id="@+id/radio_bttn_shorts"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/tags_selector"
+                                android:button="@null"
+                                android:elevation="5dp"
+                                android:padding="5dp"
+                                android:tag="@string/shorts"
+                                android:text="@string/shorts" />
 
-                                <RadioButton
-                                    android:id="@+id/radio_bttn_sneakers"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:button="@null"
-                                    android:padding="5dp"
-                                    android:text="@string/sneakers"
-                                    android:tag="@string/sneakers"
-                                    android:background="@drawable/color_selector"
-                                    android:elevation="5dp"/>
+                            <RadioButton
+                                android:id="@+id/radio_bttn_sneakers"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_columnSpan="2"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/tags_selector"
+                                android:button="@null"
+                                android:elevation="5dp"
+                                android:padding="5dp"
+                                android:tag="@string/sneakers"
+                                android:text="@string/sneakers" />
 
-                                <RadioButton
-                                    android:id="@+id/radio_bttn_dressed_shoes"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:button="@null"
-                                    android:padding="5dp"
-                                    android:text="@string/dressed_shoes"
-                                    android:tag="@string/dressed_shoes"
-                                    android:background="@drawable/color_selector"
-                                    android:elevation="5dp"/>
+                            <RadioButton
+                                android:id="@+id/radio_bttn_dressed_shoes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/tags_selector"
+                                android:button="@null"
+                                android:elevation="5dp"
+                                android:padding="5dp"
+                                android:tag="@string/dressed_shoes"
+                                android:text="@string/dressed_shoes" />
 
-                                <RadioButton
-                                    android:id="@+id/radio_bttn_boots"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:button="@null"
-                                    android:padding="5dp"
-                                    android:text="@string/boots"
-                                    android:tag="@string/boots"
-                                    android:background="@drawable/color_selector"
-                                    android:elevation="5dp"/>
+                            <RadioButton
+                                android:id="@+id/radio_bttn_boots"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/tags_selector"
+                                android:button="@null"
+                                android:elevation="5dp"
+                                android:padding="5dp"
+                                android:tag="@string/boots"
+                                android:text="@string/boots" />
 
+                        </com.google.android.flexbox.FlexboxLayout>
 
-                            </RadioGroup>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/type_recycler"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="10dp" />
+                        <!--                        <androidx.recyclerview.widget.RecyclerView-->
+                        <!--                            android:id="@+id/type_recycler"-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_marginLeft="20dp"-->
+                        <!--                            android:layout_marginTop="5dp"-->
+                        <!--                            android:layout_marginRight="20dp"-->
+                        <!--                            android:layout_marginBottom="10dp" />-->
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -443,64 +470,74 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <RadioButton
-                                android:id="@+id/radio_bttn_winter"
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@null"
-                                android:padding="5dp"
-                                android:text="@string/winter"
-                                android:tag="@string/winter"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
+                                app:alignContent="stretch"
+                                app:alignItems="stretch"
+                                app:flexWrap="wrap">
 
-                            <RadioButton
-                                android:id="@+id/radio_bttn_spring"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@null"
-                                android:padding="5dp"
-                                android:text="@string/spring"
-                                android:tag="@string/spring"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_winter"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/tags_selector"
+                                    android:button="@null"
+                                    android:elevation="5dp"
+                                    android:padding="5dp"
+                                    android:tag="@string/winter"
+                                    android:text="@string/winter" />
 
-                            <RadioButton
-                                android:id="@+id/radio_bttn_summer"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@null"
-                                android:padding="5dp"
-                                android:text="@string/summer"
-                                android:tag="@string/summer"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_spring"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/tags_selector"
+                                    android:button="@null"
+                                    android:elevation="5dp"
+                                    android:padding="5dp"
+                                    android:tag="@string/spring"
+                                    android:text="@string/spring" />
 
-                            <RadioButton
-                                android:id="@+id/radio_bttn_autumn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:button="@null"
-                                android:padding="5dp"
-                                android:text="@string/autumn"
-                                android:tag="@string/autumn"
-                                android:background="@drawable/color_selector"
-                                android:elevation="5dp"/>
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_summer"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/tags_selector"
+                                    android:button="@null"
+                                    android:elevation="5dp"
+                                    android:padding="5dp"
+                                    android:tag="@string/summer"
+                                    android:text="@string/summer" />
+
+                                <RadioButton
+                                    android:id="@+id/radio_bttn_autumn"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/tags_selector"
+                                    android:button="@null"
+                                    android:elevation="5dp"
+                                    android:padding="5dp"
+                                    android:tag="@string/autumn"
+                                    android:text="@string/autumn" />
+
+                            </com.google.android.flexbox.FlexboxLayout>
+
 
                         </RadioGroup>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/season_recycler"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="10dp" />
+                        <!--                        <androidx.recyclerview.widget.RecyclerView-->
+                        <!--                            android:id="@+id/season_recycler"-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_marginLeft="20dp"-->
+                        <!--                            android:layout_marginTop="5dp"-->
+                        <!--                            android:layout_marginRight="20dp"-->
+                        <!--                            android:layout_marginBottom="10dp" />-->
 
                     </LinearLayout>
 
@@ -509,15 +546,15 @@
                         android:id="@+id/add_bttn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
                         android:layout_marginBottom="100dp"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/add"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="18dp"
-                        app:backgroundTint="@color/wood_brown"
-                        android:layout_marginTop="20dp"
-                        android:layout_gravity="center_horizontal"/>
+                        app:backgroundTint="@color/wood_brown" />
 
                 </LinearLayout>
 

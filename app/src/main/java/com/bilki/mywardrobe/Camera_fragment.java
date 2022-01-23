@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -54,6 +55,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class Camera_fragment extends Fragment {
@@ -64,7 +66,9 @@ public class Camera_fragment extends Fragment {
     private ImageView takenPicture, backCamera;
     private Button camera_bttn, gallery_bttn, add_bttn;
     private RadioGroup colorGroup, sizeGroup, typeGroup, seasonGroup;
-    private RadioButton color_radio, size_radio, type_radio, season_radio;
+    private RadioButton color_radio, size_radio, type_radio, season_radio, black_radio, white_radio,
+    shirt_radio, t_shirt_radio, sweater_radio, jacket_radio, pants_radio, jeans_radio, shorts_radio,
+    sneakers_radio, dressed_shoes_radio, boots_radio, summer_radio, winter_radio, spring_radio, autumn_radio;
     private TextInputLayout clothe_title, clothe_description;
     private TextInputEditText edit_clothe_title, edit_clothe_description;
     private static final int REQUEST_IMAGE_CAPTURE = 100;
@@ -108,19 +112,38 @@ public class Camera_fragment extends Fragment {
         edit_clothe_title = (TextInputEditText) view.findViewById(R.id.edit_clothe_title);
         edit_clothe_description = (TextInputEditText) view.findViewById(R.id.edit_clothe_description);
 
-        colorGroup = (RadioGroup) view.findViewById(R.id.color_radio_group);
+        black_radio = (RadioButton) view.findViewById(R.id.radio_bttn_black);
+        white_radio = (RadioButton) view.findViewById(R.id.radio_bttn_white);
+
+        shirt_radio = (RadioButton) view.findViewById(R.id.radio_bttn_shirt);
+        t_shirt_radio = (RadioButton) view.findViewById(R.id.radio_bttn_t_shirt);
+        sweater_radio = (RadioButton) view.findViewById(R.id.radio_bttn_sweater);
+        jacket_radio = (RadioButton) view.findViewById(R.id.radio_bttn_jacket);
+        pants_radio = (RadioButton) view.findViewById(R.id.radio_bttn_pants);
+        jeans_radio = (RadioButton) view.findViewById(R.id.radio_bttn_jeans);
+        shorts_radio = (RadioButton) view.findViewById(R.id.radio_bttn_shorts);
+        sneakers_radio = (RadioButton) view.findViewById(R.id.radio_bttn_sneakers);
+        dressed_shoes_radio = (RadioButton) view.findViewById(R.id.radio_bttn_dressed_shoes);
+        boots_radio = (RadioButton) view.findViewById(R.id.radio_bttn_boots);
+
+        summer_radio = (RadioButton) view.findViewById(R.id.radio_bttn_summer);
+        winter_radio = (RadioButton) view.findViewById(R.id.radio_bttn_winter);
+        spring_radio = (RadioButton) view.findViewById(R.id.radio_bttn_spring);
+        autumn_radio = (RadioButton) view.findViewById(R.id.radio_bttn_autumn);
+
+//        colorGroup = (RadioGroup) view.findViewById(R.id.color_radio_group);
         sizeGroup = (RadioGroup) view.findViewById(R.id.size_radio_group);
-        typeGroup = (RadioGroup) view.findViewById(R.id.type_radio_group);
+//        typeGroup = (RadioGroup) view.findViewById(R.id.type_radio_group);
         seasonGroup = (RadioGroup) view.findViewById(R.id.season_radio_group);
 
         takenPicture = (ImageView) view.findViewById(R.id.taken_picture);
         backCamera = (ImageView) view.findViewById(R.id.back_camera);
         context = container.getContext();
 
-        colorsRecycler = (RecyclerView) view.findViewById(R.id.colors_recycler);
-        sizesRecycler = (RecyclerView) view.findViewById(R.id.size_recycler);
-        typesRecycler = (RecyclerView) view.findViewById(R.id.type_recycler);
-        seasonsRecycler = (RecyclerView) view.findViewById(R.id.season_recycler);
+//        colorsRecycler = (RecyclerView) view.findViewById(R.id.colors_recycler);
+//        sizesRecycler = (RecyclerView) view.findViewById(R.id.size_recycler);
+//        typesRecycler = (RecyclerView) view.findViewById(R.id.type_recycler);
+//        seasonsRecycler = (RecyclerView) view.findViewById(R.id.season_recycler);
 
         userId = mAuth.getUid();
 
@@ -146,19 +169,400 @@ public class Camera_fragment extends Fragment {
             }
         });
 
+//        if(black_radio.isSelected()){
+//
+//            color = black_radio.getTag().toString().trim();
+//            Log.d(TAG, "Black: " + color);
+//            white_radio.setChecked(false);
+//
+//        }
+
 
         getUserEmail();
+        colorCheckedStateListener();
+        typeCheckedStateListener();
+        seasonCheckedStateListener();
         addClothe();
 
 
         //askCameraPermissions();
 
-        colorsRecycler();
-        sizesRecycler();
-        typesRecycler();
-        seasonsRecycler();
+//        colorsRecycler();
+//        sizesRecycler();
+//        typesRecycler();
+//        seasonsRecycler();
 
         return view;
+    }
+
+//    public void onRadioButtonClick(View view){
+//
+//        boolean checked = ((RadioButton) view).isChecked();
+//
+//        switch (view.getId()){
+//
+//            case R.id.radio_bttn_black:
+//                if (checked){
+//
+//                    color = black_radio.getTag().toString();
+//                    Log.d(TAG, "onRadioButtonClick1: " + color);
+//                    white_radio.setChecked(false);
+//
+//                }
+//                break;
+//            case R.id.radio_bttn_white:
+//                if (checked) {
+//
+//                    color = white_radio.getTag().toString();
+//                    Log.d(TAG, "onRadioButtonClick2: " + color);
+//                    black_radio.setChecked(false);
+//
+//                }
+//                break;
+//
+//
+//
+//        }
+//
+//    }
+
+    public void colorCheckedStateListener(){
+
+        black_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (black_radio.isChecked()) {
+
+                    color = black_radio.getTag().toString().trim();
+                    Log.d(TAG, "Black: " + color);
+                    white_radio.setChecked(false);
+                }
+            }
+        });
+
+
+
+        white_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (white_radio.isChecked()) {
+
+                    color = white_radio.getTag().toString().trim();
+                    Log.d(TAG, "White: " + color);
+                    black_radio.setChecked(false);
+                }
+
+            }
+        });
+
+    }
+
+    public void typeCheckedStateListener(){
+
+        shirt_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(shirt_radio.isChecked()){
+
+                    type = shirt_radio.getTag().toString().trim();
+
+                    t_shirt_radio.setChecked(false);
+                    sweater_radio.setChecked(false);
+                    jacket_radio.setChecked(false);
+                    pants_radio.setChecked(false);
+                    jeans_radio.setChecked(false);
+                    shorts_radio.setChecked(false);
+                    sneakers_radio.setChecked(false);
+                    dressed_shoes_radio.setChecked(false);
+                    boots_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        t_shirt_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(t_shirt_radio.isChecked()){
+
+                    type = t_shirt_radio.getTag().toString().trim();
+
+                    shirt_radio.setChecked(false);
+                    sweater_radio.setChecked(false);
+                    jacket_radio.setChecked(false);
+                    pants_radio.setChecked(false);
+                    jeans_radio.setChecked(false);
+                    shorts_radio.setChecked(false);
+                    sneakers_radio.setChecked(false);
+                    dressed_shoes_radio.setChecked(false);
+                    boots_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        sweater_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(sweater_radio.isChecked()){
+
+                    type = sweater_radio.getTag().toString().trim();
+
+                    shirt_radio.setChecked(false);
+                    t_shirt_radio.setChecked(false);
+                    jacket_radio.setChecked(false);
+                    pants_radio.setChecked(false);
+                    jeans_radio.setChecked(false);
+                    shorts_radio.setChecked(false);
+                    sneakers_radio.setChecked(false);
+                    dressed_shoes_radio.setChecked(false);
+                    boots_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        jacket_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(jacket_radio.isChecked()){
+
+                    type = jacket_radio.getTag().toString().trim();
+
+                    shirt_radio.setChecked(false);
+                    t_shirt_radio.setChecked(false);
+                    sweater_radio.setChecked(false);
+                    pants_radio.setChecked(false);
+                    jeans_radio.setChecked(false);
+                    shorts_radio.setChecked(false);
+                    sneakers_radio.setChecked(false);
+                    dressed_shoes_radio.setChecked(false);
+                    boots_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        pants_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(pants_radio.isChecked()){
+
+                    type = pants_radio.getTag().toString().trim();
+
+                    shirt_radio.setChecked(false);
+                    t_shirt_radio.setChecked(false);
+                    sweater_radio.setChecked(false);
+                    jacket_radio.setChecked(false);
+                    jeans_radio.setChecked(false);
+                    shorts_radio.setChecked(false);
+                    sneakers_radio.setChecked(false);
+                    dressed_shoes_radio.setChecked(false);
+                    boots_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        jeans_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(jeans_radio.isChecked()){
+
+                    type = jeans_radio.getTag().toString().trim();
+
+                    shirt_radio.setChecked(false);
+                    t_shirt_radio.setChecked(false);
+                    sweater_radio.setChecked(false);
+                    jacket_radio.setChecked(false);
+                    pants_radio.setChecked(false);
+                    shorts_radio.setChecked(false);
+                    sneakers_radio.setChecked(false);
+                    dressed_shoes_radio.setChecked(false);
+                    boots_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        shorts_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(shorts_radio.isChecked()){
+
+                    type = shorts_radio.getTag().toString().trim();
+
+                    shirt_radio.setChecked(false);
+                    t_shirt_radio.setChecked(false);
+                    sweater_radio.setChecked(false);
+                    jacket_radio.setChecked(false);
+                    pants_radio.setChecked(false);
+                    jeans_radio.setChecked(false);
+                    sneakers_radio.setChecked(false);
+                    dressed_shoes_radio.setChecked(false);
+                    boots_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        sneakers_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(sneakers_radio.isChecked()){
+
+                    type = sneakers_radio.getTag().toString().trim();
+
+                    shirt_radio.setChecked(false);
+                    t_shirt_radio.setChecked(false);
+                    sweater_radio.setChecked(false);
+                    jacket_radio.setChecked(false);
+                    pants_radio.setChecked(false);
+                    jeans_radio.setChecked(false);
+                    shorts_radio.setChecked(false);
+                    dressed_shoes_radio.setChecked(false);
+                    boots_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        dressed_shoes_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(dressed_shoes_radio.isChecked()){
+
+                    type = dressed_shoes_radio.getTag().toString().trim();
+
+                    shirt_radio.setChecked(false);
+                    t_shirt_radio.setChecked(false);
+                    sweater_radio.setChecked(false);
+                    jacket_radio.setChecked(false);
+                    pants_radio.setChecked(false);
+                    jeans_radio.setChecked(false);
+                    shorts_radio.setChecked(false);
+                    sneakers_radio.setChecked(false);
+                    boots_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        boots_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(boots_radio.isChecked()){
+
+                    type = boots_radio.getTag().toString().trim();
+
+                    shirt_radio.setChecked(false);
+                    t_shirt_radio.setChecked(false);
+                    sweater_radio.setChecked(false);
+                    jacket_radio.setChecked(false);
+                    pants_radio.setChecked(false);
+                    jeans_radio.setChecked(false);
+                    shorts_radio.setChecked(false);
+                    sneakers_radio.setChecked(false);
+                    dressed_shoes_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+    }
+
+    public void seasonCheckedStateListener(){
+
+        winter_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(winter_radio.isChecked()){
+
+                    season = winter_radio.getTag().toString().trim();
+
+                    spring_radio.setChecked(false);
+                    summer_radio.setChecked(false);
+                    autumn_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        spring_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(spring_radio.isChecked()){
+
+                    season = spring_radio.getTag().toString().trim();
+
+                    winter_radio.setChecked(false);
+                    summer_radio.setChecked(false);
+                    autumn_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        summer_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(summer_radio.isChecked()){
+
+                    season = summer_radio.getTag().toString().trim();
+
+                    spring_radio.setChecked(false);
+                    winter_radio.setChecked(false);
+                    autumn_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
+        autumn_radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(autumn_radio.isChecked()){
+
+                    season = autumn_radio.getTag().toString().trim();
+
+                    spring_radio.setChecked(false);
+                    winter_radio.setChecked(false);
+                    summer_radio.setChecked(false);
+
+                }
+
+            }
+        });
+
     }
 
 
@@ -414,8 +818,9 @@ public class Camera_fragment extends Fragment {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Adding...");
             progressDialog.show();
+            progressDialog.setCanceledOnTouchOutside(false);
 
-            imageReference = storageReference.child("images/" + userId + "/" + name);
+            imageReference = storageReference.child("images/" + userId + "/" + "clothes/" + name);
             uploadTask = imageReference.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -447,25 +852,27 @@ public class Camera_fragment extends Fragment {
                             strUri = uri.toString();
 
 
-                            // Color get
-                            int colorId = colorGroup.getCheckedRadioButtonId();
-                            color_radio = (RadioButton) view.findViewById(colorId);
-                            color = color_radio.getTag().toString();
+//                            //Color get
+//                            int colorId = colorGroup.getCheckedRadioButtonId();
+//                            color_radio = (RadioButton) view.findViewById(colorId);
+//                            color = color_radio.getTag().toString();
+
+
 
                             //Size get
                             int sizeId = sizeGroup.getCheckedRadioButtonId();
                             size_radio = (RadioButton) view.findViewById(sizeId);
                             size = size_radio.getTag().toString();
 
-                            //Type get
-                            int typeId = typeGroup.getCheckedRadioButtonId();
-                            type_radio = (RadioButton) view.findViewById(typeId);
-                            type = type_radio.getTag().toString();
+//                            //Type get
+//                            int typeId = typeGroup.getCheckedRadioButtonId();
+//                            type_radio = (RadioButton) view.findViewById(typeId);
+//                            type = type_radio.getTag().toString();
 
-                            //Season get
-                            int seasonId = seasonGroup.getCheckedRadioButtonId();
-                            season_radio = (RadioButton) view.findViewById(seasonId);
-                            season = season_radio.getTag().toString();
+//                            //Season get
+//                            int seasonId = seasonGroup.getCheckedRadioButtonId();
+//                            season_radio = (RadioButton) view.findViewById(seasonId);
+//                            season = season_radio.getTag().toString();
 
 
 
@@ -675,90 +1082,90 @@ public class Camera_fragment extends Fragment {
 
     }
 
-    //Colors recycler
-    private void colorsRecycler() {
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 5);
-        colorsRecycler.setLayoutManager(gridLayoutManager);
-        colorsRecycler.setHasFixedSize(false);
-
-        ArrayList<ColorsHelperClass> colorsLocations = new ArrayList<>();
-
-        colorsLocations.add(new ColorsHelperClass(R.drawable.color_black));
-        colorsLocations.add(new ColorsHelperClass(R.drawable.round_background));
-
-
-        adapter1 = new ColorsAdapter(colorsLocations);
-        colorsRecycler.setAdapter(adapter1);
-
-    }
-
-    //Sizes recycler
-    private void sizesRecycler() {
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 6);
-        sizesRecycler.setLayoutManager(gridLayoutManager);
-        sizesRecycler.setHasFixedSize(true);
-
-        ArrayList<SizeHelperClass> sizeLocations = new ArrayList<>();
-
-        sizeLocations.add(new SizeHelperClass("xs"));
-        sizeLocations.add(new SizeHelperClass("s"));
-        sizeLocations.add(new SizeHelperClass("m"));
-        sizeLocations.add(new SizeHelperClass("l"));
-        sizeLocations.add(new SizeHelperClass("xl"));
-        sizeLocations.add(new SizeHelperClass("xxl"));
-
-
-        adapter2 = new SizeAdapter(sizeLocations);
-        sizesRecycler.setAdapter(adapter2);
-
-    }
-
-    //Types recycler
-    private void typesRecycler() {
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        typesRecycler.setLayoutManager(gridLayoutManager);
-        typesRecycler.setHasFixedSize(true);
-
-        ArrayList<TypeHelperClass> typeLocations = new ArrayList<>();
-
-        typeLocations.add(new TypeHelperClass("Shirt"));
-        typeLocations.add(new TypeHelperClass("T-shirt"));
-        typeLocations.add(new TypeHelperClass("Sweater"));
-        typeLocations.add(new TypeHelperClass("Jacket"));
-        typeLocations.add(new TypeHelperClass("Pants"));
-        typeLocations.add(new TypeHelperClass("Jeans"));
-        typeLocations.add(new TypeHelperClass("Shorts"));
-        typeLocations.add(new TypeHelperClass("Sneakers"));
-        typeLocations.add(new TypeHelperClass("Dressed shoes"));
-        typeLocations.add(new TypeHelperClass("Boots"));
-
-
-        adapter3 = new TypeAdapter(typeLocations);
-        typesRecycler.setAdapter(adapter3);
-
-    }
-
-    //Seasons recycler
-    private void seasonsRecycler() {
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        seasonsRecycler.setLayoutManager(gridLayoutManager);
-        seasonsRecycler.setHasFixedSize(true);
-
-        ArrayList<TypeHelperClass> typeLocations = new ArrayList<>();
-
-        typeLocations.add(new TypeHelperClass("Winter"));
-        typeLocations.add(new TypeHelperClass("Spring"));
-        typeLocations.add(new TypeHelperClass("Summer"));
-        typeLocations.add(new TypeHelperClass("Autumn"));
-
-        adapter4 = new TypeAdapter(typeLocations);
-        seasonsRecycler.setAdapter(adapter4);
-
-    }
+//    //Colors recycler
+//    private void colorsRecycler() {
+//
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 5);
+//        colorsRecycler.setLayoutManager(gridLayoutManager);
+//        colorsRecycler.setHasFixedSize(false);
+//
+//        ArrayList<ColorsHelperClass> colorsLocations = new ArrayList<>();
+//
+//        colorsLocations.add(new ColorsHelperClass(R.drawable.color_black));
+//        colorsLocations.add(new ColorsHelperClass(R.drawable.round_background));
+//
+//
+//        adapter1 = new ColorsAdapter(colorsLocations);
+//        colorsRecycler.setAdapter(adapter1);
+//
+//    }
+//
+//    //Sizes recycler
+//    private void sizesRecycler() {
+//
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 6);
+//        sizesRecycler.setLayoutManager(gridLayoutManager);
+//        sizesRecycler.setHasFixedSize(true);
+//
+//        ArrayList<SizeHelperClass> sizeLocations = new ArrayList<>();
+//
+//        sizeLocations.add(new SizeHelperClass("xs"));
+//        sizeLocations.add(new SizeHelperClass("s"));
+//        sizeLocations.add(new SizeHelperClass("m"));
+//        sizeLocations.add(new SizeHelperClass("l"));
+//        sizeLocations.add(new SizeHelperClass("xl"));
+//        sizeLocations.add(new SizeHelperClass("xxl"));
+//
+//
+//        adapter2 = new SizeAdapter(sizeLocations);
+//        sizesRecycler.setAdapter(adapter2);
+//
+//    }
+//
+//    //Types recycler
+//    private void typesRecycler() {
+//
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+//        typesRecycler.setLayoutManager(gridLayoutManager);
+//        typesRecycler.setHasFixedSize(true);
+//
+//        ArrayList<TypeHelperClass> typeLocations = new ArrayList<>();
+//
+//        typeLocations.add(new TypeHelperClass("Shirt"));
+//        typeLocations.add(new TypeHelperClass("T-shirt"));
+//        typeLocations.add(new TypeHelperClass("Sweater"));
+//        typeLocations.add(new TypeHelperClass("Jacket"));
+//        typeLocations.add(new TypeHelperClass("Pants"));
+//        typeLocations.add(new TypeHelperClass("Jeans"));
+//        typeLocations.add(new TypeHelperClass("Shorts"));
+//        typeLocations.add(new TypeHelperClass("Sneakers"));
+//        typeLocations.add(new TypeHelperClass("Dressed shoes"));
+//        typeLocations.add(new TypeHelperClass("Boots"));
+//
+//
+//        adapter3 = new TypeAdapter(typeLocations);
+//        typesRecycler.setAdapter(adapter3);
+//
+//    }
+//
+//    //Seasons recycler
+//    private void seasonsRecycler() {
+//
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+//        seasonsRecycler.setLayoutManager(gridLayoutManager);
+//        seasonsRecycler.setHasFixedSize(true);
+//
+//        ArrayList<TypeHelperClass> typeLocations = new ArrayList<>();
+//
+//        typeLocations.add(new TypeHelperClass("Winter"));
+//        typeLocations.add(new TypeHelperClass("Spring"));
+//        typeLocations.add(new TypeHelperClass("Summer"));
+//        typeLocations.add(new TypeHelperClass("Autumn"));
+//
+//        adapter4 = new TypeAdapter(typeLocations);
+//        seasonsRecycler.setAdapter(adapter4);
+//
+//    }
 
 
 

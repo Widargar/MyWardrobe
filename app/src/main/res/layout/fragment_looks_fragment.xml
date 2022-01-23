@@ -28,6 +28,21 @@
                 android:clickable="true"
                 android:src="@drawable/back" />
 
+            <Button
+                android:id="@+id/add_looks_bttn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/add"
+                android:textAllCaps="false"
+                android:textColor="@color/wood_brown"
+                android:textSize="15dp"
+                android:visibility="visible"
+                app:backgroundTint="@color/white" />
+
         </RelativeLayout>
 
 
@@ -49,10 +64,6 @@
                 android:textSize="23sp"
                 android:textStyle="bold" />
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -62,11 +73,13 @@
                         android:id="@+id/looks_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp" />
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"/>
 
                 </LinearLayout>
 
-            </ScrollView>
 
         </LinearLayout>
     </LinearLayout>

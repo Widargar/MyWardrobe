@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -32,6 +33,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +44,13 @@ public class Looks_fragment extends Fragment {
     private Context context;
     private View view;
     private RecyclerView looksRecycler;
+    private Button addLookBttn;
     private LooksAdapter adapter;
     private ImageView backLooks;
     private ArrayList<Upload> uploads;
-    public String user_email;
+    private String user_email;
     private FirebaseAuth mAuth;
+    private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
     private DocumentReference documentReference;
     private CollectionReference collectionReference, collectionReferenceImages;
@@ -58,20 +63,19 @@ public class Looks_fragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_looks_fragment, container, false);
 
-
-
+        mAuth = FirebaseAuth.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         collectionReference = firebaseFirestore.collection("users/");
         documentReference = collectionReference.document(FirebaseAuth.getInstance().getCurrentUser().getEmail() + "/");
 
-//        collectionReferenceImages = collectionReference.document(user_email + "/").collection("images");
-//        collectionReference = firebaseFirestore.collection("images/");
-
         context = container.getContext();
         looksRecycler = (RecyclerView) view.findViewById(R.id.looks_recycler);
 
         backLooks = (ImageView) view.findViewById(R.id.back_looks);
+        addLookBttn = (Button) view.findViewById(R.id.add_looks_bttn);
+
         backLooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +88,8 @@ public class Looks_fragment extends Fragment {
             }
         });
 
-//        getUserEmail();
+        getUserEmail();
+        addLookBttn();
         looksRecycler();
 
         return view;
@@ -124,42 +129,36 @@ public class Looks_fragment extends Fragment {
 
     }
 
+    public void addLookBttn(){
+
+        addLookBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(getActivity(), AddNewLook.class);
+                startActivity(i);
+                getActivity().finish();
+
+            }
+        });
+
+    }
+
+
+
     private void looksRecycler() {
 
-//        Query query = collectionReference.orderBy("name", Query.Direction.DESCENDING);
-        Query query = documentReference.collection("images/").orderBy("name", Query.Direction.DESCENDING);
+        Query query = documentReference.collection("looks/").orderBy("lookName", Query.Direction.DESCENDING);
 
-        FirestoreRecyclerOptions<Upload> options = new FirestoreRecyclerOptions.Builder<Upload>()
-                .setQuery(query, Upload.class)
+        FirestoreRecyclerOptions<Look> options = new FirestoreRecyclerOptions.Builder<Look>()
+                .setQuery(query, Look.class)
                 .build();
-
         adapter = new LooksAdapter(context, options);
-//        adapter.setHasStableIds(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         looksRecycler.setLayoutManager(gridLayoutManager);
         looksRecycler.setHasFixedSize(false);
         looksRecycler.setAdapter(adapter);
         Log.d(TAG, "looksRecycler: Adapter set");
-//        loadrecyclerViewData();
-
-//        uploads = new ArrayList<>();
-//        adapter = new LooksAdapter(getContext(), uploads);
-//        looksRecycler.setAdapter(adapter);
-//        loadrecyclerViewData();
-
-//        ArrayList<LooksHelperClass> looksLocations = new ArrayList<>();
-//
-//        looksLocations.add(new LooksHelperClass(R.drawable.hanger));
-//        looksLocations.add(new LooksHelperClass(R.drawable.hanger));
-//        looksLocations.add(new LooksHelperClass(R.drawable.hanger));
-//        looksLocations.add(new LooksHelperClass(R.drawable.hanger));
-//        looksLocations.add(new LooksHelperClass(R.drawable.hanger));
-//        looksLocations.add(new LooksHelperClass(R.drawable.hanger));
-//        looksLocations.add(new LooksHelperClass(R.drawable.hanger));
-//        looksLocations.add(new LooksHelperClass(R.drawable.hanger));
-//
-//        adapter = new LooksAdapter(looksLocations);
-//        looksRecycler.setAdapter(adapter);
 
     }
 
@@ -181,4 +180,5 @@ public class Looks_fragment extends Fragment {
         super.onStop();
         adapter.stopListening();
     }
+
 }

@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -37,10 +40,17 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 import com.hbb20.CountryCodePicker;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
@@ -52,8 +62,8 @@ public class SignUp extends AppCompatActivity {
     private RadioButton male, female, male_female_radio_bttn;
     private Button back_sign_up, register_bttn;
     boolean email_bool;
-    private String date, userID, str_birthday_pass, str_gender_pass, str_full_number_pass,
-            str_name_pass, str_email_pass, str_password_pass, str_surname_pass;
+    private String date, userId, str_birthday_pass, str_gender_pass, str_full_number_pass,
+            str_name_pass, str_email_pass, str_password_pass, str_surname_pass, str_profile_image_name, str_profile_image_url;
     private TextView choose_gender;
     public SharedPreferences sharedpreferences;
     public static final String mypreference = "mypref";
@@ -69,8 +79,10 @@ public class SignUp extends AppCompatActivity {
     public Calendar calendar;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     public DatePickerDialog picker;
+    private StorageReference mStorageReference, mImageReference;
     private FirebaseFirestore mFirebaseFirestore;
     private FirebaseAuth mAuth;
+    private StorageTask uploadTask;
     private DocumentSnapshot mDocumentSnaphot;
     private DocumentReference mDocumentReference;
     private final static String TAG = "bilki: Sign_up ";
@@ -83,6 +95,9 @@ public class SignUp extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseFirestore = FirebaseFirestore.getInstance();
+        mStorageReference = FirebaseStorage.getInstance().getReference();
+        userId = mAuth.getUid();
+
 
         name = (TextInputLayout) findViewById(R.id.sign_up_name);
         surname = (TextInputLayout) findViewById(R.id.sign_up_surname);
@@ -168,6 +183,7 @@ public class SignUp extends AppCompatActivity {
                 str_birthday_pass = ((day < 10) ? "0" + day : day) + "."
                         + ((month < 10) ? "0" + month  : month) + "." + year;
                 //String str_birthday_pass = birthday.getEditText().getText().toString().trim();
+
 
 
                 /*
@@ -564,9 +580,18 @@ public class SignUp extends AppCompatActivity {
 
                         //UserHelperClass addNewUser = new UserHelperClass(_name, _surname, _email, _birthday, _gender, _phone, _password);
 
-                        userID =mAuth.getCurrentUser().getUid();
+                        userId =mAuth.getCurrentUser().getUid();
                         DocumentReference documentReference = mFirebaseFirestore.collection("users").document(str_email_pass);//userID);
-                        UserHelperClass user = new UserHelperClass(str_name_pass, str_surname_pass, str_email_pass, str_birthday_pass, str_gender_pass, str_full_number_pass, str_password_pass);
+
+                        mImageReference = mStorageReference.child("images/" + "default_image/" + "default_profile_photo.png");
+                        mImageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+
+                                str_profile_image_url = uri.toString().trim();
+                                str_profile_image_name = "default_profile_photo.png";
+
+                                UserHelperClass user = new UserHelperClass(str_name_pass, str_surname_pass, str_email_pass, str_birthday_pass, str_gender_pass, str_full_number_pass, str_password_pass, str_profile_image_url, str_profile_image_name);
 //                        Map<String, Object> user = new HashMap<>();
 //                        user.put("id", userID);
 //                        user.put("name", str_name_pass);
@@ -576,40 +601,75 @@ public class SignUp extends AppCompatActivity {
 //                        user.put("gender", str_gender_pass);
 //                        user.put("phone", str_full_number_pass);
 //                        user.put("password", str_password_pass);
-                        Log.d(TAG, "Adding users data");
+                                Log.d(TAG, "Adding users data");
 
-
-                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Log.d(TAG, "Data has been added");
-                            }
-                        })
-                                .addOnFailureListener(new OnFailureListener() {
+                                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
-                                    public void onFailure(@NonNull Exception e) {
-
-                                        Log.d(TAG, "Data hasn't been added. Smth gone wrong");
-
+                                    public void onSuccess(Void unused) {
+                                        Log.d(TAG, "Data has been added");
                                     }
                                 })
-                                .addOnCanceledListener(new OnCanceledListener() {
-                                    @Override
-                                    public void onCanceled() {
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
 
-                                        Log.d(TAG, "Data adding has been canceled");
+                                                Log.d(TAG, "Data hasn't been added. Smth gone wrong");
 
-                                    }
-                                });
+                                            }
+                                        })
+                                        .addOnCanceledListener(new OnCanceledListener() {
+                                            @Override
+                                            public void onCanceled() {
+
+                                                Log.d(TAG, "Data adding has been canceled");
+
+                                            }
+                                        });
 
 
-                    }
-                });
+                            }
+                        });
+
+                            }
+                        });
+
+
+
+
 
 
         mAuth.signOut();
 
     }
+
+//    private void uploadImageToFirebase(String name, Uri contentUri){
+//
+//        final ProgressDialog progressDialog = new ProgressDialog(this);
+//        progressDialog.setTitle("Creating new user...");
+//        progressDialog.show();
+//
+//        mImageReference = mStorageReference.child("images/" + userId + "/" + "profile_image/" + name);
+//        uploadTask = mImageReference.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//
+//                Log.d(TAG, "Default profile image has been uploaded");
+//                progressDialog.dismiss();
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//
+//                Log.d(TAG, "Default profile image has not been uploaded: " + e.getMessage());
+//                Toast.makeText(SignUp.this, "User's default image has not been uploaded!", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//
+//
+//
+//    }
 
 
     @Override

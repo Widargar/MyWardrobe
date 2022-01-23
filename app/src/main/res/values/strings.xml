@@ -100,7 +100,10 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="enter_description">Write a description...</string>
-    
+    <string name="step_one">Step 1: Add look photo, it`s title and description.</string>
+    <string name="step_two">Step 2: Add look items.</string>
+    <string name="add_image">Add image!</string>
+
     <string-array name="types">
         <item>Shirt</item>
         <item>T-shirt</item>
@@ -127,7 +130,6 @@
         <item>Summer</item>
         <item>Autumn</item>
     </string-array>
-
 
 
     <!-- TODO: Remove or change this placeholder text -->

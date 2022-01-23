@@ -99,8 +99,6 @@ public class ClothesAdapter extends FirestoreRecyclerAdapter<Upload, ClothesAdap
 
         }
 
-
-
     }
 
     public interface OnItemClickListener {

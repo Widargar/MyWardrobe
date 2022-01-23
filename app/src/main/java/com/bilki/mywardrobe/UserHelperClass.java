@@ -42,6 +42,20 @@ public class UserHelperClass {
 
     }
 
+    public UserHelperClass(String name, String surname, String email, String birthday, String gender, String phone, String password, String imageUrl, String imageName) {
+
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.phone = phone;
+        this.password = password;
+        this.imageUrl = imageUrl;
+        this.imageName = imageName;
+
+    }
+
     public String getName() {
         return name;
     }

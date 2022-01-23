@@ -46,6 +46,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -66,7 +67,7 @@ import java.util.Map;
 public class Profile extends AppCompatActivity {
 
     private String userId, fileName, currentPhotoPath, strUri, urll, name, surname, email ,
-            phone, fullPhone, birthday, gender, user_email, date;
+            phone, fullPhone, birthday, gender, user_email, date, default_img_name, default_default_img_name, default_default_image_url;
     private TextView profName, profEmail, profPhone, profBirthday, profGender, resendEmail, notVerified;
     private LinearLayout profileData, profileDataEdit;
     private ImageView profImgMale, profImgFemale, backProfile, profileImg, profileImgEdit;
@@ -84,7 +85,7 @@ public class Profile extends AppCompatActivity {
     private CountryCodePicker country;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
-    private StorageReference storageReference, imageReference, existedImageReference;
+    private StorageReference storageReference, imageReference, default_image_reference, existedImageReference;
     private StorageTask uploadTask;
     private CollectionReference collectionReference;
     private DocumentReference documentReference;
@@ -99,10 +100,6 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         storageReference = FirebaseStorage.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
-
-
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         collectionReference = firebaseFirestore.collection("users/");
@@ -547,6 +544,8 @@ public class Profile extends AppCompatActivity {
 
                 if(imageName != null && fileName == null){
 
+
+//                    UserHelperClass userr = new UserHelperClass(name, surname, email, birthday, gender, fullPhone);
                     Map<String, Object> userr = new HashMap<>();
                     userr.put("name", name);
                     userr.put("surname", surname);
@@ -912,14 +911,16 @@ public class Profile extends AppCompatActivity {
 
                     UserHelperClass user = documentSnapshot.toObject(UserHelperClass.class);
                     String ImageUrl = user.getImageUrl();
+                    default_img_name = user.getImageName();
+                    default_default_img_name = "default_profile_photo.png";
 
-                    if (ImageUrl != null){
+                    if (ImageUrl != null) {
 
                         Uri imgUrl = Uri.parse(ImageUrl);
                         strUri = imgUrl.toString().trim();
 
+                        Log.d(TAG, "strUri:" + strUri);
                     }
-
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -940,8 +941,30 @@ public class Profile extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
 
-                            deletePreviousImage(strUri);
-                            progressDialog.dismiss();
+                            Log.d(TAG, "Default image name: " + default_img_name);
+
+                            default_image_reference = storageReference.child("images/" + "default_image/" + default_default_img_name);
+                            default_image_reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+
+                                    default_default_image_url = uri.toString().trim();
+                                    Log.d(TAG, "default_default_image_url: " + default_default_image_url);
+
+                                    if (!default_default_image_url.equals(strUri) || !default_img_name.equals(default_default_img_name)) {
+
+                                        deletePreviousImage(strUri);
+
+                                    }
+                                    progressDialog.dismiss();
+
+                                }
+                            });
+
+
+
+
+
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {

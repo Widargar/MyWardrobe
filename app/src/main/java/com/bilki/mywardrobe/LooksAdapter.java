@@ -15,25 +15,25 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class LooksAdapter extends FirestoreRecyclerAdapter<Upload, LooksAdapter.LooksViewHolder> {
+public class LooksAdapter extends FirestoreRecyclerAdapter<Look, LooksAdapter.LooksViewHolder> {
 
     private Context context;
-    private FirestoreRecyclerOptions<Upload> uploads;
+    private FirestoreRecyclerOptions<Look> looks;
 
-    public LooksAdapter(Context context, FirestoreRecyclerOptions<Upload> uploads) {
-        super(uploads);
+    public LooksAdapter(Context context, FirestoreRecyclerOptions<Look> look) {
+        super(look);
 
         this.context = context;
-        this.uploads = uploads;
+        this.looks = look;
 
     }
 
     @NonNull
     @Override
-    public LooksAdapter.LooksViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LooksViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(this.context/*parent.getContext()*/).inflate(R.layout.look_card_design, parent, false);
-        LooksAdapter.LooksViewHolder looksViewHolder = new LooksAdapter.LooksViewHolder(view);
+        View view = LayoutInflater.from(this.context).inflate(R.layout.look_card_design, parent, false);
+        LooksViewHolder looksViewHolder = new LooksViewHolder(view);
         return looksViewHolder;
 
     }
@@ -53,23 +53,17 @@ public class LooksAdapter extends FirestoreRecyclerAdapter<Upload, LooksAdapter.
 //    }
 
     @Override
-    protected void onBindViewHolder(@NonNull LooksViewHolder holder, int position, @NonNull Upload model) {
+    protected void onBindViewHolder(@NonNull LooksViewHolder holder, int position, @NonNull Look model) {
 
-        Upload upload = uploads.getSnapshots().get(position);
-
-
-//        LooksHelperClass looksHelperClass = looksLocations.get(position);
-
-        Picasso.get().load(upload.getImageUrl()).fit().centerCrop().into(holder.image);
-
-//        holder.image.setImageResource(looksHelperClass.getImage());
+        Look look = looks.getSnapshots().get(position);
+        Picasso.get().load(look.getLookImageUrl()).fit().centerCrop().into(holder.image);
 
     }
 
     @Override
     public int getItemCount() {
 
-        return uploads.getSnapshots().size();
+        return looks.getSnapshots().size();
 
     }
 

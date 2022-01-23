@@ -6,7 +6,6 @@ public class Upload {
 
     public Upload(){
 
-
     }
 
     public Upload(String name, String imageUrl, String imageName, String description, String color, String size, String type, String season){
@@ -34,10 +33,10 @@ public class Upload {
 
     }
 
-    public Upload(String imageUrl, String type){
+    public Upload(String imageUrl, String name){
 
         mImageUrl = imageUrl;
-        mType = type;
+        mName = name;
 
     }
 

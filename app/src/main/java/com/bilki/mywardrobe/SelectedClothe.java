@@ -439,13 +439,13 @@ public class SelectedClothe extends AppCompatActivity {
 
                                             case "Black":
 //                img_color.setBackground(getResources().getDrawable(R.drawable.color_black));
-                                                img_color.setImageDrawable(getResources().getDrawable(R.drawable.color_black));
+                                                img_color.setImageDrawable(getResources().getDrawable(R.drawable.color_black_));
 //                img_color.setText(_color);
                                                 break;
 
                                             case "White":
 //                img_color.setBackground(getResources().getDrawable(R.drawable.round_background));
-                                                img_color.setImageDrawable(getResources().getDrawable(R.drawable.round_background));
+                                                img_color.setImageDrawable(getResources().getDrawable(R.drawable.color_white_));
 //                img_color.setText(_color);
                                         }
 
@@ -474,11 +474,11 @@ public class SelectedClothe extends AppCompatActivity {
                                         switch (imgColor) {
 
                                             case "Black":
-                                                img_color_edit.setImageDrawable(getResources().getDrawable(R.drawable.color_black));
+                                                img_color_edit.setImageDrawable(getResources().getDrawable(R.drawable.color_black_));
                                                 break;
 
                                             case "White":
-                                                img_color_edit.setImageDrawable(getResources().getDrawable(R.drawable.round_background));
+                                                img_color_edit.setImageDrawable(getResources().getDrawable(R.drawable.color_white_));
                                         }
 
 //                                    img_type_edit.setText(imgType);
@@ -1053,7 +1053,7 @@ public class SelectedClothe extends AppCompatActivity {
                 }
             });
 
-            imageReference = storageReference.child("images/" + userId + "/" + name);
+            imageReference = storageReference.child("images/" + userId + "/" + "clothes/" + name);
             uploadTask = imageReference.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

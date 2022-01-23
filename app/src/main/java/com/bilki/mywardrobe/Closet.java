@@ -31,6 +31,7 @@ public class Closet extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private Camera_fragment camera_fragment;
+    private boolean look;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,22 @@ public class Closet extends AppCompatActivity {
         setContentView(R.layout.activity_closet);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
+        Intent intent = getIntent();
+        look = intent.getBooleanExtra("look", false);
 
+        if (look){
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        getSupportFragmentManager().beginTransaction().replace(R.id.closet_layout, new Closet_fragment()).commit();
-        bottomNavigationView.setSelectedItemId(R.id.bot_nav_closet);
+            bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+            getSupportFragmentManager().beginTransaction().replace(R.id.closet_layout, new Looks_fragment()).commit();
+            bottomNavigationView.setSelectedItemId(R.id.bot_nav_looks);
+
+        } else {
+
+            bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+            getSupportFragmentManager().beginTransaction().replace(R.id.closet_layout, new Closet_fragment()).commit();
+            bottomNavigationView.setSelectedItemId(R.id.bot_nav_closet);
+
+        }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
