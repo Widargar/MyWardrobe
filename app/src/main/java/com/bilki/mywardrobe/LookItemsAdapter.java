@@ -12,13 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 public class LookItemsAdapter extends FirestoreRecyclerAdapter<LookItems, LookItemsAdapter.LookItemsViewHolder> {
 
     private Context context;
     private FirestoreRecyclerOptions<LookItems> lookItems;
-//    private OnItemClickListener listener;
+    private OnClotheClickListener listener;
 
     public LookItemsAdapter(Context context, FirestoreRecyclerOptions<LookItems> lookItems){
         super(lookItems);
@@ -66,7 +68,34 @@ public class LookItemsAdapter extends FirestoreRecyclerAdapter<LookItems, LookIt
             image = itemView.findViewById(R.id.close_image);
             name = itemView.findViewById(R.id.close_name);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int position = getAdapterPosition();
+
+                    if(position != RecyclerView.NO_POSITION && listener != null){
+
+                        listener.onClotheClick(getSnapshots().getSnapshot(position), position);
+
+                    }
+
+                }
+            });
+
         }
+    }
+
+    public interface OnClotheClickListener {
+
+        void onClotheClick(DocumentSnapshot documentSnapshot, int position);
+
+    }
+
+    public void setOnClotheClickListener(LookItemsAdapter.OnClotheClickListener listener){
+
+        this.listener = listener;
+
     }
 
 

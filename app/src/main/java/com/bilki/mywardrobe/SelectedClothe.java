@@ -1,39 +1,32 @@
 package com.bilki.mywardrobe;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.FileProvider;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.webkit.MimeTypeMap;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,22 +39,21 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
+
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,7 +86,6 @@ public class SelectedClothe extends AppCompatActivity {
     private StorageTask uploadTask;
     private CollectionReference collectionReference;
     private DocumentReference documentReference;
-    private DocumentSnapshot documentSnapshot;
     private static final int REQUEST_IMAGE_CAPTURE = 100;
     private static final int SELECT_PICTURE_CODE = 101;
     private final static String TAG = "bilki: selected_clothe ";
@@ -106,10 +97,6 @@ public class SelectedClothe extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         storageReference = FirebaseStorage.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
-
-
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         collectionReference = firebaseFirestore.collection("users/");
@@ -164,7 +151,7 @@ public class SelectedClothe extends AppCompatActivity {
 
 
         img_desc = (LinearLayout) findViewById(R.id.img_description_layout);
-        tags_layout = (LinearLayout) findViewById(R.id.tags_layout);
+        tags_layout = (LinearLayout) findViewById(R.id.clothe_tags_layout);
         tags_layout_edit = (LinearLayout) findViewById(R.id.tags_layout_edit);
 
         title_input = (TextInputLayout) findViewById(R.id.img_title_edit);
@@ -173,9 +160,9 @@ public class SelectedClothe extends AppCompatActivity {
         title_edit = (TextInputEditText) findViewById(R.id.edit_clothe_title);
         description_edit = (TextInputEditText) findViewById(R.id.edit_clothe_description);
 
-        edit_bttn = (Button) findViewById(R.id.edit_bttn);
-        save_bttn = (Button) findViewById(R.id.save_bttn);
-        delete_bttn = (Button) findViewById(R.id.delete_bttn);
+        edit_bttn = (Button) findViewById(R.id.clothe_edit_bttn);
+        save_bttn = (Button) findViewById(R.id.clothe_save_bttn);
+        delete_bttn = (Button) findViewById(R.id.clothe_delete_bttn);
 
 
 
@@ -284,6 +271,8 @@ public class SelectedClothe extends AppCompatActivity {
 
                                 editClothe();
                                 setData();
+                                imageUri = null;
+                                UIUtil.hideKeyboard(SelectedClothe.this);
 
 //                            Intent i = new Intent(SelectedClothe.this, SelectedClothe.class);
 //                            startActivity(i);
@@ -305,6 +294,7 @@ public class SelectedClothe extends AppCompatActivity {
 
                         editClothe();
                         setData();
+                    UIUtil.hideKeyboard(SelectedClothe.this);
 
 //                    }
 
@@ -380,7 +370,7 @@ public class SelectedClothe extends AppCompatActivity {
 
     private void setData() {
 
-        documentReference.collection("images/").document(_id).addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+        documentReference.collection("clothes/").document(_id).addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
@@ -390,7 +380,7 @@ public class SelectedClothe extends AppCompatActivity {
 
                 }
 
-                documentReference.collection("images/").document(_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                documentReference.collection("clothes/").document(_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
@@ -446,6 +436,7 @@ public class SelectedClothe extends AppCompatActivity {
                                             case "White":
 //                img_color.setBackground(getResources().getDrawable(R.drawable.round_background));
                                                 img_color.setImageDrawable(getResources().getDrawable(R.drawable.color_white_));
+                                                break;
 //                img_color.setText(_color);
                                         }
 
@@ -1035,7 +1026,7 @@ public class SelectedClothe extends AppCompatActivity {
 //            deletePreviousImage();
 
 
-            documentReference.collection("images/").document(_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            documentReference.collection("clothes/").document(_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
 
@@ -1131,7 +1122,7 @@ public class SelectedClothe extends AppCompatActivity {
 
     private void editClothe() {
 
-        documentReference.collection("images/").document(_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        documentReference.collection("clothes/").document(_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
@@ -1147,7 +1138,7 @@ public class SelectedClothe extends AppCompatActivity {
                 Log.d(TAG, "editClothe: imageName: " + imageName);
                 if(fileName == null){
 
-                    imageReference = storageReference.child("images/" + userId + "/" + imageName);
+                    imageReference = storageReference.child("images/" + userId + "/" + "clothes/" + imageName);
                     imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -1169,7 +1160,7 @@ public class SelectedClothe extends AppCompatActivity {
                                 clothe.put("size", size);
                                 clothe.put("season", season);
                                 Log.d(TAG, "Check Type: " + type);
-                                documentReference.collection("images/").document(_id).update(clothe);
+                                documentReference.collection("clothes/").document(_id).update(clothe);
 
                             } else {
 
@@ -1182,7 +1173,7 @@ public class SelectedClothe extends AppCompatActivity {
                                 clothe.put("size", size);
                                 clothe.put("season", season);
                                 Log.d(TAG, "Check Type: " + type);
-                                documentReference.collection("images/").document(_id).update(clothe);
+                                documentReference.collection("clothes/").document(_id).update(clothe);
 
                             }
 
@@ -1198,7 +1189,7 @@ public class SelectedClothe extends AppCompatActivity {
 
                 }else {
 
-                    imageReference = storageReference.child("images/" + userId + "/" + fileName);
+                    imageReference = storageReference.child("images/" + userId + "/" + "clothes/" + fileName);
                     imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -1220,7 +1211,7 @@ public class SelectedClothe extends AppCompatActivity {
                                 clothe.put("size", size);
                                 clothe.put("season", season);
                                 Log.d(TAG, "Check Type: " + type);
-                                documentReference.collection("images/").document(_id).update(clothe);
+                                documentReference.collection("clothes/").document(_id).update(clothe);
 
                             } else {
 
@@ -1233,7 +1224,7 @@ public class SelectedClothe extends AppCompatActivity {
                                 clothe.put("size", size);
                                 clothe.put("season", season);
                                 Log.d(TAG, "Check Type: " + type);
-                                documentReference.collection("images/").document(_id).update(clothe);
+                                documentReference.collection("clothes/").document(_id).update(clothe);
 
                             }
 
@@ -1255,7 +1246,7 @@ public class SelectedClothe extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
 
-                Log.d(TAG, "Getting data to edit clothe wasn't successful");
+                Log.d(TAG, "Getting data to edit clothe wasn't successful: " + e.getMessage());
 
             }
         });
@@ -1266,7 +1257,7 @@ public class SelectedClothe extends AppCompatActivity {
 
     private void deleteClothe(){
 
-        documentReference.collection("images/").document(_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        documentReference.collection("clothes/").document(_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
@@ -1308,11 +1299,27 @@ public class SelectedClothe extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent i = new Intent(SelectedClothe.this, Closet_items.class);
-        i.putExtra("imgType", img_type.getText().toString().trim());
-        startActivity(i);
-        overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
-        finish();
+        if (edit_bttn.getVisibility() == View.GONE){
+
+            save_bttn.setVisibility(View.GONE);
+            delete_bttn.setVisibility(View.GONE);
+            tags_layout.setVisibility(View.VISIBLE);
+            tags_layout_edit.setVisibility(View.GONE);
+            edit_bttn.setVisibility(View.VISIBLE);
+            img.setVisibility(View.VISIBLE);
+            img_edit.setVisibility(View.GONE);
+
+        } else {
+
+            Intent i = new Intent(SelectedClothe.this, Closet_items.class);
+            i.putExtra("imgType", img_type.getText().toString().trim());
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
+            finish();
+
+        }
+
+
 
     }
 }

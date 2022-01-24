@@ -56,7 +56,7 @@ public class LookItemsChoose extends DialogFragment {
 
     private void lookItemsRecycler(){
 
-        Query query = documentReference.collection("images/").orderBy("name", Query.Direction.DESCENDING);
+        Query query = documentReference.collection("clothes/").orderBy("name", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Upload> options = new FirestoreRecyclerOptions.Builder<Upload>()
                 .setQuery(query, Upload.class)
                 .build();

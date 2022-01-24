@@ -24,6 +24,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyWardrobe">
         <activity
+            android:name=".SelectedLooks"
+            android:exported="true" />
+        <activity
             android:name=".AddLookItems"
             android:exported="true" />
         <activity

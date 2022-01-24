@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class LooksAdapter extends FirestoreRecyclerAdapter<Look, LooksAdapter.Lo
 
     private Context context;
     private FirestoreRecyclerOptions<Look> looks;
+    private OnLookClickListener listener;
 
     public LooksAdapter(Context context, FirestoreRecyclerOptions<Look> look) {
         super(look);
@@ -67,7 +69,7 @@ public class LooksAdapter extends FirestoreRecyclerAdapter<Look, LooksAdapter.Lo
 
     }
 
-    public static class LooksViewHolder extends RecyclerView.ViewHolder{
+    public class LooksViewHolder extends RecyclerView.ViewHolder{
 
         ImageView image;
 
@@ -76,7 +78,35 @@ public class LooksAdapter extends FirestoreRecyclerAdapter<Look, LooksAdapter.Lo
 
             image = itemView.findViewById(R.id.look_image);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int position =getAdapterPosition();
+
+                    if(position != RecyclerView.NO_POSITION && listener != null){
+
+                        listener.OnLookClick(getSnapshots().getSnapshot(position), position);
+
+                    }
+
+                }
+            });
+
         }
     }
+
+    public interface OnLookClickListener{
+
+        void OnLookClick(DocumentSnapshot documentSnapshot, int position);
+
+    }
+
+    public void setOnLookClickListener(OnLookClickListener listener){
+
+        this.listener = listener;
+
+    }
+
 
 }

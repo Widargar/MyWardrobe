@@ -127,7 +127,7 @@ public class Closet_items extends AppCompatActivity{
 
 
 
-        Query query = documentReference.collection("images/").whereEqualTo("type", img_type).orderBy("name", Query.Direction.DESCENDING);
+        Query query = documentReference.collection("clothes/").whereEqualTo("type", img_type).orderBy("name", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Upload> options = new FirestoreRecyclerOptions.Builder<Upload>()
                 .setQuery(query, Upload.class)
                 .build();

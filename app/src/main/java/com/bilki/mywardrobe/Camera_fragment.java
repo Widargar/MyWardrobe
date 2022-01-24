@@ -99,7 +99,6 @@ public class Camera_fragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_camera_fragment, container, false);
 
-
         storageReference = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -885,8 +884,8 @@ public class Camera_fragment extends Fragment {
                             Log.d(TAG, "FileName: " + fileName);
 
 //                            Log.d(TAG, "URL: " + taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
-                            String uploadId = firebaseFirestore.collection("users/").document(user_email + "/").collection("images/").document().getId();
-                            firebaseFirestore.collection("users/").document( user_email + "/").collection("images/").document(uploadId).set(upload).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            String uploadId = firebaseFirestore.collection("users/").document(user_email + "/").collection("clothes/").document().getId();
+                            firebaseFirestore.collection("users/").document( user_email + "/").collection("clothes/").document(uploadId).set(upload).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
 

@@ -27,7 +27,7 @@
             app:tint="@color/wood_brown" />
 
         <Button
-            android:id="@+id/edit_bttn"
+            android:id="@+id/clothe_edit_bttn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -42,7 +42,7 @@
             app:backgroundTint="@color/white" />
 
         <Button
-            android:id="@+id/delete_bttn"
+            android:id="@+id/clothe_delete_bttn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -57,7 +57,7 @@
             app:backgroundTint="@color/white" />
 
         <Button
-            android:id="@+id/save_bttn"
+            android:id="@+id/clothe_save_bttn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -111,7 +111,7 @@
                     android:visibility="gone" />
 
                 <LinearLayout
-                    android:id="@+id/tags_layout"
+                    android:id="@+id/clothe_tags_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -130,6 +130,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/wood_brown"
+                            android:fontFamily="@font/montserrat"
                             android:textSize="25dp" />
 
                     </LinearLayout>
@@ -150,6 +151,7 @@
                             android:layout_height="wrap_content"
                             android:hint="You didn't give a description!"
                             android:textColor="@color/wood_brown_lighter"
+                            android:fontFamily="@font/montserrat"
                             android:textSize="15dp" />
 
                     </LinearLayout>
@@ -178,6 +180,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="left"
                                     android:text="@string/color"
+                                    android:fontFamily="@font/montserrat"
                                     android:textColor="@color/wood_brown"
                                     android:textSize="15dp" />
 
@@ -201,6 +204,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="left"
                                     android:text="@string/type"
+                                    android:fontFamily="@font/montserrat"
                                     android:textColor="@color/wood_brown"
                                     android:textSize="15dp" />
 
@@ -210,6 +214,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="left"
                                     android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/montserrat"
                                     android:background="@drawable/round_corners_bottom_nav"
                                     android:padding="5dp"
                                     android:text="@string/type"
@@ -230,6 +235,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="left"
                                     android:text="@string/size"
+                                    android:fontFamily="@font/montserrat"
                                     android:textColor="@color/wood_brown"
                                     android:textSize="15dp" />
 
@@ -242,6 +248,7 @@
                                     android:background="@drawable/round_corners_bottom_nav"
                                     android:padding="5dp"
                                     android:text="@string/size"
+                                    android:fontFamily="@font/montserrat"
                                     android:textColor="@color/wood_brown"
                                     android:textSize="20dp" />
 
@@ -259,6 +266,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="left"
                                     android:text="@string/season"
+                                    android:fontFamily="@font/montserrat"
                                     android:textColor="@color/wood_brown"
                                     android:textSize="15dp" />
 
@@ -270,6 +278,7 @@
                                     android:layout_marginTop="5dp"
                                     android:background="@drawable/round_corners_bottom_nav"
                                     android:padding="5dp"
+                                    android:fontFamily="@font/montserrat"
                                     android:text="@string/season"
                                     android:textColor="@color/wood_brown"
                                     android:textSize="20dp" />

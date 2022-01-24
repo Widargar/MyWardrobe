@@ -31,7 +31,7 @@ public class Closet extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private Camera_fragment camera_fragment;
-    private boolean look;
+    private boolean look_add, look_select;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +40,10 @@ public class Closet extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         Intent intent = getIntent();
-        look = intent.getBooleanExtra("look", false);
+        look_add = intent.getBooleanExtra("look", false);
+        look_select = intent.getBooleanExtra("look_select", false);
 
-        if (look){
+        if (look_add || look_select){
 
             bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
             getSupportFragmentManager().beginTransaction().replace(R.id.closet_layout, new Looks_fragment()).commit();
@@ -95,7 +96,7 @@ public class Closet extends AppCompatActivity {
 
         Intent i = new Intent(Closet.this, MainActivity.class);
         startActivity(i);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
         finish();
 

@@ -213,7 +213,7 @@ public class AddLookItems extends AppCompatActivity {
             progressDialog.setOwnerActivity(AddLookItems.this);
             progressDialog.show();
 
-            imageReference = storageReference.child("images/" + userId + "/" + "looks/" + title + "/" + name);
+            imageReference = storageReference.child("images/" + userId + "/" + "looks/" + name);
             uploadTask = imageReference.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

@@ -102,6 +102,7 @@ public class AddNewLook extends AppCompatActivity {
 
                 Intent i = new Intent(AddNewLook.this, Closet.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
                 finish();
 
             }

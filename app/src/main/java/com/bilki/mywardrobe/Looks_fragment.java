@@ -42,6 +42,7 @@ import java.util.List;
 public class Looks_fragment extends Fragment {
 
     private Context context;
+    private boolean look;
     private View view;
     private RecyclerView looksRecycler;
     private Button addLookBttn;
@@ -158,7 +159,20 @@ public class Looks_fragment extends Fragment {
         looksRecycler.setLayoutManager(gridLayoutManager);
         looksRecycler.setHasFixedSize(false);
         looksRecycler.setAdapter(adapter);
-        Log.d(TAG, "looksRecycler: Adapter set");
+
+        adapter.setOnLookClickListener(new LooksAdapter.OnLookClickListener() {
+            @Override
+            public void OnLookClick(DocumentSnapshot documentSnapshot, int position) {
+
+                Look look = documentSnapshot.toObject(Look.class);
+                String lookId = documentSnapshot.getId();
+                Intent intent = new Intent(context, SelectedLooks.class);
+                intent.putExtra("lookId", lookId);
+                startActivity(intent);
+                getActivity().finish();
+
+            }
+        });
 
     }
 
