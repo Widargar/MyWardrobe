@@ -29,7 +29,7 @@ public class AddLookItemsAdapter extends RecyclerView.Adapter<AddLookItemsAdapte
     @Override
     public AddLookItemsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.close_card_design, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.clothe_card_design, parent, false);
         AddLookItemsViewHolder addLookItemsViewHolder = new AddLookItemsViewHolder(view);
         return addLookItemsViewHolder;
 

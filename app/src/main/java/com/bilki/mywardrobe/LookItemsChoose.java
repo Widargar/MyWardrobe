@@ -25,7 +25,7 @@ public class LookItemsChoose extends DialogFragment {
 
     private View view;
     private RecyclerView lookItemsChooseRecycler;
-    private static final String TAG = "LookItemsChoose";
+    private static final String TAG = "bilki: LookItemsChoose: ";
     private Context context;
     private ClothesAdapter _adapter;
     private FirebaseAuth mAuth;

@@ -75,7 +75,7 @@ public class Profile extends AppCompatActivity {
     private CardView profImage, profileImageEdit;
     private RadioGroup profileGenderEdit;
     private RadioButton profileMale, profileFemale, ProfileGender;
-    private Button editProfile, saveProfile, cancelProfile, camera_bttn, gallery_bttn;
+    private Button editProfile, saveProfile, cancelProfile, camera_bttn, gallery_bttn, change_password;
     private Uri imageUri, photoUri;
     private File f;
     private Dialog choose_source;
@@ -144,6 +144,17 @@ public class Profile extends AppCompatActivity {
         getUserEmail();
         userEmailVerification();
 
+        change_password = (Button) findViewById(R.id.change_password_bttn);
+        change_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(Profile.this, ChangePassword.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
 
         backProfile = (ImageView) findViewById(R.id.back_profile);
         backProfile.setOnClickListener(new View.OnClickListener() {

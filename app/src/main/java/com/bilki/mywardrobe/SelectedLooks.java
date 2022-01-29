@@ -65,10 +65,11 @@ public class SelectedLooks extends AppCompatActivity {
     private Uri imageUri;
     private Dialog choose_source;
     private LookItemChosen dialog;
+    private LookItemAdd _dialog;
     private ImageView backSelectedLooks, lookImage, lookImageEdit;
     private TextView lookTitle, lookDescription;
     private RecyclerView lookItemsRecycler;
-    private Button lookEditBttn, lookSaveBttn, lookDeleteBttn, camera_bttn, gallery_bttn;
+    private Button lookEditBttn, lookSaveBttn, lookDeleteBttn, camera_bttn, gallery_bttn, lookItemAddBttn;
     private TextInputLayout lookTitleInput, lookDescriptionInput;
     private TextInputEditText lookTitleEdit, lookDescriptionEdit;
     private LinearLayout lookTagsLayout, lookTagsEditLayout;
@@ -116,6 +117,7 @@ public class SelectedLooks extends AppCompatActivity {
         lookEditBttn = (Button) findViewById(R.id.look_edit_bttn);
         lookSaveBttn = (Button) findViewById(R.id.look_save_bttn);
         lookDeleteBttn = (Button) findViewById(R.id.look_delete_bttn);
+        lookItemAddBttn = (Button) findViewById(R.id.look_item_add_bttn);
 
         backSelectedLooks.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +210,16 @@ public class SelectedLooks extends AppCompatActivity {
             }
         });
 
+        lookItemAddBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                _dialog = new LookItemAdd();
+                _dialog.show(getFragmentManager(), "dialog");
+
+            }
+        });
+
         lookDeleteBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,6 +269,8 @@ public class SelectedLooks extends AppCompatActivity {
         lookClothesRecycler();
 
     }
+
+
 
     private void setData(){
 

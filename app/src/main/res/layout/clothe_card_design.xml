@@ -23,18 +23,21 @@
                 android:id="@+id/close_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/item_name"
-                android:textSize="15sp"
-                android:fontFamily="@font/montserrat"
                 android:layout_gravity="center"
-                android:textColor="@color/wood_brown"/>
+                android:fontFamily="@font/montserrat"
+                android:text="@string/item_name"
+                android:gravity="center"
+                android:textColor="@color/wood_brown"
+                android:textSize="13sp" />
 
 
             <ImageView
                 android:id="@+id/close_image"
                 android:layout_width="95dp"
                 android:layout_height="95dp"
-                android:src="@drawable/hanger"/>
+                android:layout_gravity="center"
+                android:src="@drawable/hanger"
+                android:layout_marginBottom="2dp"/>
 
         </LinearLayout>
 

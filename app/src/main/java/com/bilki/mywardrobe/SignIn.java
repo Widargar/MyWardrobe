@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,11 +27,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class SignIn extends AppCompatActivity {
 
     private long pressedTime;
-    Button reg_redir_bttn, pass_forget_bttn, sign_in_bttn;
-    TextInputLayout email, password;
+    private Button reg_redir_bttn, pass_forget_bttn, sign_in_bttn;
+    private TextInputLayout email, password;
     private FirebaseAuth mAuth;
+    private noInternetConnection dialog;
+    private Dialog internetReconnect;
     private FirebaseFirestore mFirebaseFirestore;
-    //String _email, _password;
     private final static String TAG = "bilki: SignIn ";
 
     @Override
@@ -49,6 +51,7 @@ public class SignIn extends AppCompatActivity {
             startActivity(i);
             finish();
         }
+
         mFirebaseFirestore = FirebaseFirestore.getInstance();
 
         /*Intent intent = getIntent();
@@ -81,11 +84,18 @@ public class SignIn extends AppCompatActivity {
             }
         });
 
-        sign_in_bttn =(Button) findViewById(R.id.sign_in_bttn);
+        sign_in_bttn = (Button) findViewById(R.id.sign_in_bttn);
         sign_in_bttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                CheckInternet checkInternet = new CheckInternet();
+                if(!checkInternet.isConnected(SignIn.this)){
+
+                    dialog = new noInternetConnection();
+                    dialog.show(getFragmentManager(), "internetConnectionDialog");
+
+                }
                 signInUser();
 
             }
@@ -198,6 +208,7 @@ public class SignIn extends AppCompatActivity {
 
         String _email = email.getEditText().getText().toString().trim();
         String _password = password.getEditText().getText().toString().trim();
+        String val_code = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 
         if (_email.isEmpty()) {
 
@@ -205,11 +216,25 @@ public class SignIn extends AppCompatActivity {
             email.requestFocus();
             return false;
 
-        } else if (_password.isEmpty()) {
+        } else if (!_email.matches(val_code)){
+
+            email.setError("Invalid email!");
+            email.requestFocus();
+            return false;
+
+        } else if (_email.isEmpty() && _password.isEmpty()) {
 
             password.setError("Enter your password!");
             password.requestFocus();
+            email.setError("Enter your email!");
             return false;
+        }  else if (!_email.matches(val_code) && _password.isEmpty()) {
+
+            password.setError("Enter your password!");
+            password.requestFocus();
+            email.setError("Invalid email!");
+            return false;
+
         } else {
 
             password.setError(null);

@@ -24,6 +24,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyWardrobe">
         <activity
+            android:name=".ChangePassword"
+            android:exported="true" />
+        <activity
+            android:name=".Closet_search"
+            android:exported="true" />
+        <activity
             android:name=".SelectedLooks"
             android:exported="true" />
         <activity

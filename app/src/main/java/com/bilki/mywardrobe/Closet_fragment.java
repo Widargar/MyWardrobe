@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,6 +42,7 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.OnItemLis
     private View view;
     private RecyclerView topsRecycler, bottomsRecycler, shoesRecycler, accessoriesRecycler;
     private ClosetAdapter adapter1, adapter2, adapter3;
+    private TextView topsShowAll, bottomsShowAll, shoesShowAll;
     private ImageView backCloset;
     private String _uri, imageUrl, type;
     private Bundle result;
@@ -63,10 +65,6 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.OnItemLis
         storageReference = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-
-
-        mAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
         collectionReference = firebaseFirestore.collection("users/");
         documentReference = collectionReference.document(FirebaseAuth.getInstance().getCurrentUser().getEmail() + "/");
 
@@ -74,6 +72,10 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.OnItemLis
         topsRecycler = (RecyclerView) view.findViewById(R.id.tops_recycler);
         bottomsRecycler = (RecyclerView) view.findViewById(R.id.bottoms_recycler);
         shoesRecycler = (RecyclerView) view.findViewById(R.id.shoes_recycler);
+
+        topsShowAll = (TextView) view.findViewById(R.id.tops_show_all);
+        bottomsShowAll = (TextView) view.findViewById(R.id.bottoms_show_all);
+        shoesShowAll = (TextView) view.findViewById(R.id.shoes_show_all);
 
         backCloset = (ImageView) view.findViewById(R.id.back_closet);
 
@@ -88,6 +90,52 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.OnItemLis
 
             }
         });
+
+        topsShowAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), Closet_items.class);
+                intent.putExtra("Shirt", "Shirt");
+                intent.putExtra("T-shirt", "T-shirt");
+                intent.putExtra("Sweater", "Sweater");
+                intent.putExtra("Jacket", "Jacket");
+                startActivity(intent);
+                getActivity().finish();
+
+
+            }
+        });
+
+        bottomsShowAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), Closet_items.class);
+                intent.putExtra("Pants", "Pants");
+                intent.putExtra("Jeans", "Jeans");
+                intent.putExtra("Shorts", "Shorts");
+                startActivity(intent);
+                getActivity().finish();
+
+            }
+        });
+
+        shoesShowAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), Closet_items.class);
+                intent.putExtra("Sneakers", "Sneakers");
+                intent.putExtra("Dressed shoes", "Dressed shoes");
+                intent.putExtra("Boots", "Boots");
+                startActivity(intent);
+                getActivity().finish();
+
+            }
+        });
+
+
 
         topsRecycler();
         bottomsRecycler();
@@ -140,10 +188,11 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.OnItemLis
         topsRecycler.setHasFixedSize(true);
         topsRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-        closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Shirt"));
-        closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "T-shirt"));
-        closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Sweater"));
-        closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Jacket"));
+        closetLocations.add(new FeaturedHelperClass(R.drawable.shirt, "Shirt"));
+        closetLocations.add(new FeaturedHelperClass(R.drawable.t_shirt, "T-shirt"));
+        closetLocations.add(new FeaturedHelperClass(R.drawable.sweater, "Sweater"));
+        closetLocations.add(new FeaturedHelperClass(R.drawable.hoodie_, "Hoodie"));
+        closetLocations.add(new FeaturedHelperClass(R.drawable.outwear, "Jacket"));
 
         adapter1 = new ClosetAdapter(getActivity(), closetLocations, this::onItemClick, "topsAdapter");
         topsRecycler.setAdapter(adapter1);
@@ -170,9 +219,9 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.OnItemLis
 
         ArrayList<FeaturedHelperClass> closetLocations = new ArrayList<>();
 
-        closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Pants"));
-        closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Jeans"));
-        closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Shorts"));
+        closetLocations.add(new FeaturedHelperClass(R.drawable.pant, "Pants"));
+        closetLocations.add(new FeaturedHelperClass(R.drawable.pants, "Jeans"));
+        closetLocations.add(new FeaturedHelperClass(R.drawable.shorts, "Shorts"));
 
         adapter2 = new ClosetAdapter(getActivity(), closetLocations, this::onItemClick, "bottomsAdapter");
         bottomsRecycler.setAdapter(adapter2);
@@ -186,9 +235,9 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.OnItemLis
 
         ArrayList<FeaturedHelperClass> closetLocations = new ArrayList<>();
 
-        closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Sneakers"));
-        closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Dressed shoes"));
-        closetLocations.add(new FeaturedHelperClass(R.drawable.hanger, "Boots"));
+        closetLocations.add(new FeaturedHelperClass(R.drawable.shoe, "Sneakers"));
+        closetLocations.add(new FeaturedHelperClass(R.drawable.dressed_shoes, "Dressed shoes"));
+        closetLocations.add(new FeaturedHelperClass(R.drawable.boots_, "Boots"));
 
         adapter3 = new ClosetAdapter(getActivity(), closetLocations, this::onItemClick, "shoesAdapter");
         shoesRecycler.setAdapter(adapter3);
@@ -233,7 +282,6 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.OnItemLis
             case "topsAdapter":
                 Intent intent1 = new Intent(getActivity(), Closet_items.class);
 
-
                 switch (position){
 
                     case 0:
@@ -246,6 +294,9 @@ public class Closet_fragment extends Fragment implements ClosetAdapter.OnItemLis
                         intent1.putExtra("closet", "Sweater");
                         break;
                     case 3:
+                        intent1.putExtra("closet", "Hoodie");
+                        break;
+                    case 4:
                         intent1.putExtra("closet", "Jacket");
                         break;
 

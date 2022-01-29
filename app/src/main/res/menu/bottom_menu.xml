@@ -16,8 +16,8 @@
 
         <item
             android:id="@+id/bot_nav_camera"
-            android:icon="@drawable/camera"
-            android:title="@string/camera" />
+            android:icon="@drawable/add_clothe"
+            android:title="@string/add_clothe" />
 
     </group>
 

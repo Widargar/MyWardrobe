@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -27,11 +29,18 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.firestore.Query;
 
+import java.util.Arrays;
+
 public class Closet_items extends AppCompatActivity{
 
     private int position;
     private Context context;
-    private String textPosition, imageUrl, name, imgType, img_type, imgTypeCheck;
+    private String textPosition, imageUrl, name, imgType, img_type, imgTypeCheck,
+            imgTypeShirt, imgTypeTShirt, imgTypeSweater, imgTypeHoodie, imgTypeJacket,
+            imgTypePants, imgTypeJeans, imgTypeShorts,
+            imgTypeSneaker, imgTypeDressedShoes, imgTypeBoots, search;
+    private TextInputLayout searchInput;
+    private TextInputEditText searchEdit;
     private TextView closetItemText;
     private ImageView backClosetItems;
     private ClothesAdapter adapter;
@@ -58,6 +67,11 @@ public class Closet_items extends AppCompatActivity{
 
         context = Closet_items.this;
 
+        searchInput = (TextInputLayout) findViewById(R.id.search_input);
+        searchEdit = (TextInputEditText) findViewById(R.id.edit_search);
+//        search = searchInput.getEditText().getText().toString().trim();
+        search = "Black";
+
         Intent intent = getIntent();
 
         backClosetItems = (ImageView) findViewById(R.id.back_closet_items);
@@ -77,6 +91,22 @@ public class Closet_items extends AppCompatActivity{
         }
 
         textPosition = intent.getStringExtra("closet");
+
+        imgTypeShirt = intent.getStringExtra("Shirt");
+        imgTypeTShirt = intent.getStringExtra("T-shirt");
+        imgTypeSweater = intent.getStringExtra("Sweater");
+        imgTypeHoodie = intent.getStringExtra("Hoodie");
+        imgTypeJacket = intent.getStringExtra("Jacket");
+
+        imgTypePants = intent.getStringExtra("Pants");
+        imgTypeJeans = intent.getStringExtra("Jeans");
+        imgTypeShorts = intent.getStringExtra("Shorts");
+
+        imgTypeSneaker = intent.getStringExtra("Sneakers");
+        imgTypeDressedShoes = intent.getStringExtra("Dressed shoes");
+        imgTypeBoots = intent.getStringExtra("Boots");
+
+
 
 
         closetItemText = (TextView) findViewById(R.id.closet_items);
@@ -111,6 +141,18 @@ public class Closet_items extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
+                imgTypeShirt = null;
+                imgTypeTShirt = null;
+                imgTypeSweater = null;
+                imgTypeHoodie = null;
+                imgTypeJacket = null;
+                imgTypePants = null;
+                imgTypeJeans = null;
+                imgTypeShorts = null;
+                imgTypeSneaker = null;
+                imgTypeBoots = null;
+                imgTypeDressedShoes = null;
+
                 Intent i = new Intent(Closet_items.this, Closet.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
@@ -125,21 +167,108 @@ public class Closet_items extends AppCompatActivity{
 
     private void closetRecycler(){
 
+        if (imgTypeShirt != null && imgTypeTShirt!= null && imgTypeSweater!= null && imgTypeHoodie != null && imgTypeJacket != null){
+
+            Query query = documentReference.collection("clothes/").whereIn("type", Arrays.asList(imgTypeShirt, imgTypeTShirt, imgTypeSweater, imgTypeJacket)).orderBy("name", Query.Direction.DESCENDING);
+            FirestoreRecyclerOptions<Upload> options = new FirestoreRecyclerOptions.Builder<Upload>()
+                    .setQuery(query, Upload.class)
+                    .build();
+            adapter = new ClothesAdapter(context, options);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+            closetRecycler.setLayoutManager(gridLayoutManager);
+            closetRecycler.setHasFixedSize(false);
+            closetRecycler.setAdapter(adapter);
+
+            adapter.setOnItemClickListener(new ClothesAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+
+                    Upload upload = documentSnapshot.toObject(Upload.class);
+                    String imgId = documentSnapshot.getId();
+
+                    Intent intent = new Intent(context, SelectedClothe.class);
+                    intent.putExtra("imgId", imgId);
+                    startActivity(intent);
+                    finish();
 
 
-        Query query = documentReference.collection("clothes/").whereEqualTo("type", img_type).orderBy("name", Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<Upload> options = new FirestoreRecyclerOptions.Builder<Upload>()
-                .setQuery(query, Upload.class)
-                .build();
-        adapter = new ClothesAdapter(context, options);
+                }
+            });
+            Log.d(TAG, "closetsRecycler: Adapter set");
+
+        } else if (imgTypePants != null && imgTypeJeans != null && imgTypeShorts != null){
+
+            Query query = documentReference.collection("clothes/").whereIn("type", Arrays.asList(imgTypePants, imgTypeJeans, imgTypeShorts)).orderBy("name", Query.Direction.DESCENDING);
+            FirestoreRecyclerOptions<Upload> options = new FirestoreRecyclerOptions.Builder<Upload>()
+                    .setQuery(query, Upload.class)
+                    .build();
+            adapter = new ClothesAdapter(context, options);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+            closetRecycler.setLayoutManager(gridLayoutManager);
+            closetRecycler.setHasFixedSize(false);
+            closetRecycler.setAdapter(adapter);
+
+            adapter.setOnItemClickListener(new ClothesAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+
+                    Upload upload = documentSnapshot.toObject(Upload.class);
+                    String imgId = documentSnapshot.getId();
+
+                    Intent intent = new Intent(context, SelectedClothe.class);
+                    intent.putExtra("imgId", imgId);
+                    startActivity(intent);
+                    finish();
+
+
+                }
+            });
+            Log.d(TAG, "closetsRecycler: Adapter set");
+
+        } else if (imgTypeBoots != null && imgTypeSneaker != null && imgTypeDressedShoes != null){
+
+            Query query = documentReference.collection("clothes/").whereIn("type", Arrays.asList(imgTypeBoots, imgTypeSneaker, imgTypeDressedShoes)).orderBy("name", Query.Direction.DESCENDING);
+            FirestoreRecyclerOptions<Upload> options = new FirestoreRecyclerOptions.Builder<Upload>()
+                    .setQuery(query, Upload.class)
+                    .build();
+            adapter = new ClothesAdapter(context, options);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+            closetRecycler.setLayoutManager(gridLayoutManager);
+            closetRecycler.setHasFixedSize(false);
+            closetRecycler.setAdapter(adapter);
+
+            adapter.setOnItemClickListener(new ClothesAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+
+                    Upload upload = documentSnapshot.toObject(Upload.class);
+                    String imgId = documentSnapshot.getId();
+
+                    Intent intent = new Intent(context, SelectedClothe.class);
+                    intent.putExtra("imgId", imgId);
+                    startActivity(intent);
+                    finish();
+
+
+                }
+            });
+            Log.d(TAG, "closetsRecycler: Adapter set");
+
+        } else {
+//            Query query = documentReference.collection("clothes/").orderBy("name", Query.Direction.DESCENDING).startAt(search).endAt(search + "\uf8ff");
+            Query query = documentReference.collection("clothes/").whereEqualTo("type", img_type).orderBy("name", Query.Direction.DESCENDING);
+            FirestoreRecyclerOptions<Upload> options = new FirestoreRecyclerOptions.Builder<Upload>()
+                    .setQuery(query, Upload.class)
+                    .build();
+            adapter = new ClothesAdapter(context, options);
 //        adapter.setHasStableIds(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
 //        closetRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 //        int initialSize = options.getSnapshots().size();
 
-        closetRecycler.setLayoutManager(gridLayoutManager);
-        closetRecycler.setHasFixedSize(false);
-        closetRecycler.setAdapter(adapter);
+            closetRecycler.setLayoutManager(gridLayoutManager);
+            closetRecycler.setHasFixedSize(false);
+            closetRecycler.setAdapter(adapter);
 //        adapter.notifyItemRangeChanged(initialSize - 1, options.getSnapshots().size());
 //        adapter.notifyItemRangeInserted(initialSize, options.getSnapshots().size() - 1);
 
@@ -166,12 +295,12 @@ public class Closet_items extends AppCompatActivity{
 //
 //        }
 
-        adapter.setOnItemClickListener(new ClothesAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+            adapter.setOnItemClickListener(new ClothesAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
-                Upload upload = documentSnapshot.toObject(Upload.class);
-                String imgId = documentSnapshot.getId();
+                    Upload upload = documentSnapshot.toObject(Upload.class);
+                    String imgId = documentSnapshot.getId();
 
 //                String path = documentSnapshot.getReference().getPath();
 //
@@ -183,7 +312,7 @@ public class Closet_items extends AppCompatActivity{
 //                String imgType = upload.getType();
 //                String imgSeason = upload.getSeason();
 
-                Intent intent = new Intent(context, SelectedClothe.class);
+                    Intent intent = new Intent(context, SelectedClothe.class);
 //                intent.putExtra("imgUrl", imgUrl);
 //                intent.putExtra("imgName", imgName);
 //                intent.putExtra("imgDescription", imgDescription);
@@ -191,14 +320,18 @@ public class Closet_items extends AppCompatActivity{
 //                intent.putExtra("imgSize", imgSize);
 //                intent.putExtra("imgType", imgType);
 //                intent.putExtra("imgSeason", imgSeason);
-                intent.putExtra("imgId", imgId);
-                startActivity(intent);
-                finish();
+                    intent.putExtra("imgId", imgId);
+                    startActivity(intent);
+                    finish();
 
 
-            }
-        });
-        Log.d(TAG, "closetsRecycler: Adapter set");
+                }
+            });
+            Log.d(TAG, "closetsRecycler: Adapter set");
+
+        }
+
+
 
 
 //        collectionReferenceImage = documentReference.collection("images/");
@@ -259,6 +392,17 @@ public class Closet_items extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
+        imgTypeShirt = null;
+        imgTypeTShirt = null;
+        imgTypeSweater = null;
+        imgTypeJacket = null;
+        imgTypePants = null;
+        imgTypeJeans = null;
+        imgTypeShorts = null;
+        imgTypeSneaker = null;
+        imgTypeBoots = null;
+        imgTypeDressedShoes = null;
 
         Intent i = new Intent(Closet_items.this, Closet.class);
         startActivity(i);

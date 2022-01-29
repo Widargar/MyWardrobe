@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -183,7 +184,6 @@ public class SignUp extends AppCompatActivity {
                 str_birthday_pass = ((day < 10) ? "0" + day : day) + "."
                         + ((month < 10) ? "0" + month  : month) + "." + year;
                 //String str_birthday_pass = birthday.getEditText().getText().toString().trim();
-
 
 
                 /*
@@ -436,6 +436,8 @@ public class SignUp extends AppCompatActivity {
 
         } else {
 
+            phone.setError(null);
+            phone.setErrorEnabled(false);
             return true;
 
         }
@@ -497,14 +499,23 @@ public class SignUp extends AppCompatActivity {
     private boolean repeatPasswordValidation() {
 
         String val = repeat_password.getEditText().getText().toString().trim();
+        str_password_pass = password.getEditText().getText().toString().trim();
+
 
         if (val.isEmpty()){
+
+            repeat_password.setError("Repeat your password!");
+            return false;
+
+        }else if(!val.equals(password.getEditText().getText().toString().trim())){
 
             repeat_password.setError("Repeat password correctly!");
             return false;
 
         }else {
 
+            repeat_password.setError(null);
+            repeat_password.setErrorEnabled(false);
             return true;
 
         }
@@ -519,6 +530,7 @@ public class SignUp extends AppCompatActivity {
 
         } else {
 
+            choose_gender.setVisibility(View.GONE);
             return true;
 
         }
@@ -529,7 +541,7 @@ public class SignUp extends AppCompatActivity {
         //String val = birthday.getEditText().getText().toString().trim();
         int currYear = Calendar.getInstance().get(Calendar.YEAR);
         int userAge=0;
-        if(picker!=null) {
+        if(picker != null) {
 
             userAge = picker.getDatePicker().getYear();
 
@@ -548,6 +560,8 @@ public class SignUp extends AppCompatActivity {
 
         }else {
 
+            birthday.setError(null);
+            birthday.setErrorEnabled(false);
             return true;
 
         }
@@ -591,7 +605,7 @@ public class SignUp extends AppCompatActivity {
                                 str_profile_image_url = uri.toString().trim();
                                 str_profile_image_name = "default_profile_photo.png";
 
-                                UserHelperClass user = new UserHelperClass(str_name_pass, str_surname_pass, str_email_pass, str_birthday_pass, str_gender_pass, str_full_number_pass, str_password_pass, str_profile_image_url, str_profile_image_name);
+                                UserHelperClass user = new UserHelperClass(str_name_pass, str_surname_pass, str_email_pass, str_birthday_pass, str_gender_pass, str_full_number_pass, str_profile_image_url, str_profile_image_name);
 //                        Map<String, Object> user = new HashMap<>();
 //                        user.put("id", userID);
 //                        user.put("name", str_name_pass);

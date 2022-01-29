@@ -10,10 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 public class ClosetAdapter extends RecyclerView.Adapter<ClosetAdapter.ClosetViewHolder> {
@@ -42,7 +38,7 @@ public class ClosetAdapter extends RecyclerView.Adapter<ClosetAdapter.ClosetView
     @Override
     public ClosetAdapter.ClosetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.close_card_design, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.clothe_card_design, parent, false);
         ClosetAdapter.ClosetViewHolder closetViewHolder = new ClosetAdapter.ClosetViewHolder(view, onItemListener, mtag);
         return closetViewHolder;
 

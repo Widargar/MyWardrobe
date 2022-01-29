@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,7 +33,7 @@ public class ClothesAdapter extends FirestoreRecyclerAdapter<Upload, ClothesAdap
     @Override
     public ClothesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(this.context).inflate(R.layout.close_card_design, parent, false);
+        View view = LayoutInflater.from(this.context).inflate(R.layout.clothe_card_design, parent, false);
         ClothesViewHolder closetViewHolder = new ClothesViewHolder(view);
         return closetViewHolder;
 

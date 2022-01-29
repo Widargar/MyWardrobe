@@ -5,12 +5,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="3dp"
     app:cardElevation="5dp"
+    android:layout_gravity="center"
     android:layout_margin="5dp">
 
     <RelativeLayout
+        android:id="@+id/day_look_layout"
         android:layout_width="155dp"
         android:layout_height="190dp"
         android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/hanger" />
+
+        <ImageView
+            android:id="@+id/reroll_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/reroll" />
 
         <LinearLayout
             android:id="@+id/item_layout"
@@ -20,21 +39,7 @@
             android:layout_centerInParent="true">
 
 
-            <ImageView
-                android:id="@+id/item_image"
-                android:layout_width="150dp"
-                android:layout_height="160dp"
-                android:src="@drawable/hanger"
-                android:layout_gravity="center"/>
 
-            <ImageView
-                android:id="@+id/reroll_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="end"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:src="@drawable/reroll"/>
 
         </LinearLayout>
 

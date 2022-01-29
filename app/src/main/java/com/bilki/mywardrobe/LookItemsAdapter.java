@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 public class LookItemsAdapter extends FirestoreRecyclerAdapter<LookItems, LookItemsAdapter.LookItemsViewHolder> {
@@ -34,7 +33,7 @@ public class LookItemsAdapter extends FirestoreRecyclerAdapter<LookItems, LookIt
     @Override
     public LookItemsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(this.context).inflate(R.layout.close_card_design, parent, false);
+        View view = LayoutInflater.from(this.context).inflate(R.layout.clothe_card_design, parent, false);
         LookItemsViewHolder lookItemsViewHolder = new LookItemsViewHolder(view);
         return lookItemsViewHolder;
 

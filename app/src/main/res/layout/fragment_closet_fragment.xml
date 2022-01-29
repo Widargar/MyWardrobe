@@ -7,8 +7,6 @@
     android:background="@color/peach"
     tools:context=".Closet_fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,42 +21,24 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="15dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
                 android:background="@drawable/round_background"
                 android:clickable="true"
                 android:src="@drawable/back" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/search_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="15dp"
-                android:hint="@string/search"
-                android:textColorHint="@color/black"
-                app:boxStrokeErrorColor="@color/red"
-                app:endIconMode="clear_text"
-                app:endIconTint="@color/black"
-                app:errorIconTint="@color/red"
-                app:errorTextColor="@color/red"
-                app:startIconDrawable="@drawable/search"
-                app:startIconTint="@color/black">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@drawable/flag_transparent"
-                    android:fontFamily="@font/montserrat"
-                    android:inputType="text"
-                    android:textAlignment="center"
-                    android:textColor="@color/black" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
+            <ImageView
+                android:id="@+id/closet_search"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:src="@drawable/search" />
 
         </RelativeLayout>
 
@@ -116,6 +96,7 @@
                                 android:textSize="18sp" />
 
                             <TextView
+                                android:id="@+id/tops_show_all"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
@@ -163,6 +144,7 @@
                                 android:textSize="18sp" />
 
                             <TextView
+                                android:id="@+id/bottoms_show_all"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
@@ -209,6 +191,7 @@
                                 android:textSize="18sp" />
 
                             <TextView
+                                android:id="@+id/shoes_show_all"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"

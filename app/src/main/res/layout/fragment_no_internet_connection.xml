@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/round_corners_weather"
+    tools:context=".noInternetConnection">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/internetConnection"
+        android:textSize="20dp"
+        android:maxLines="1"
+        android:fontFamily="@font/montserrat"
+        android:textColor="@color/wood_brown"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/reconnect_bttn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/try_again"
+        android:fontFamily="@font/montserrat"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:backgroundTint="@color/wood_brown"
+        android:layout_gravity="center"
+        android:drawableRight="@drawable/retry"
+        android:drawableTint="@color/white"/>
+
+</LinearLayout>

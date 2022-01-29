@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.FeaturedViewHolder> {
@@ -32,7 +34,7 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
     public void onBindViewHolder(@NonNull FeaturedViewHolder holder, int position) {
 
         FeaturedHelperClass featuredHelperClass = featuredLocations.get(position);
-        holder.image.setImageResource(featuredHelperClass.getImage());
+        Picasso.get().load(featuredHelperClass.getImage()).fit().centerCrop().into(holder.image);
     }
 
     @Override

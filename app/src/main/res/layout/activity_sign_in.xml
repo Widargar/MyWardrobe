@@ -45,10 +45,10 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
                 android:textColorHint="@color/black_trans"
-                app:startIconDrawable="@drawable/email"
-                app:startIconTint="@color/black"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/black"
+                app:startIconDrawable="@drawable/email"
+                app:startIconTint="@color/black"
                 app:boxStrokeColor="@color/wood_brown"
                 app:boxStrokeWidthFocused="2dp">
 
@@ -93,18 +93,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp">
-
-                <CheckBox
-                    android:id="@+id/radio_bttn_remember"
-                    style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:buttonTint="@color/black"
-                    android:fontFamily="@font/montserrat"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:text="@string/remember"
-                    android:textColor="@color/black" />
 
                 <Button
                     android:id="@+id/password_forget"
