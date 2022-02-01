@@ -2,14 +2,22 @@ package com.bilki.mywardrobe;
 
 public class WeatherHelperClass {
 
-    String time, temperature, icon, windSpeed;
+    String time, temperature, icon, windSpeed, condition;
 
-    public WeatherHelperClass(String time, String temperature, String icon, String windSpeed) {
+//    public WeatherHelperClass(String time, String temperature, String icon, String windSpeed) {
+//        this.time = time;
+//        this.temperature = temperature;
+//        this.icon = icon;
+//        this.windSpeed = windSpeed;
+//    }
+
+    public WeatherHelperClass(String time, String temperature, String icon, String condition) {
         this.time = time;
         this.temperature = temperature;
         this.icon = icon;
-        this.windSpeed = windSpeed;
+        this.condition = condition;
     }
+
 
     public String getTime() {
         return time;
@@ -41,5 +49,13 @@ public class WeatherHelperClass {
 
     public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 }

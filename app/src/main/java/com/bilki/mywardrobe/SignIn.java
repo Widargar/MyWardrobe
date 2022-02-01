@@ -44,6 +44,9 @@ public class SignIn extends AppCompatActivity {
         email = (TextInputLayout) findViewById(R.id.email_edit_in);
         password = (TextInputLayout) findViewById(R.id.password_edit_in);
 
+
+
+
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null){
             Log.d(TAG, "Logged in using: " + mAuth.getCurrentUser().getEmail());

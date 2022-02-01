@@ -43,6 +43,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
 
         Picasso.get().load("https:".concat(weatherObject.getIcon())).fit().into(holder.conditionImage);
         holder.temperature.setText(weatherObject.getTemperature() + "°C");
+        holder.condition.setText(weatherObject.getCondition());
         SimpleDateFormat day = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         SimpleDateFormat hour = new SimpleDateFormat("hh:mm aa");
 

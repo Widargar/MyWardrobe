@@ -1,5 +1,6 @@
 package com.bilki.mywardrobe;
 
+import android.annotation.SuppressLint;
 import android.app.DialogFragment;
 import android.os.Bundle;
 
@@ -29,6 +30,7 @@ public class WeatherForecast extends DialogFragment {
     private final static String TAG = "bilki: Weatherforecas: ";
 
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,12 +39,8 @@ public class WeatherForecast extends DialogFragment {
         weatherForecastRecycler = (RecyclerView) view.findViewById(R.id.weather_forecast_recycler);
         weatherForecastRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         MainActivity mainActivity = (MainActivity) getActivity();
-//        weatherAdapter = mainActivity.getWeatherAdapter();
-        weatherArrayList = mainActivity.getWeatherArrayList();
-
-
-
-
+        weatherArrayList = new ArrayList<>();
+        weatherAdapter = new WeatherAdapter(getActivity(), weatherArrayList);
         hourArray = mainActivity.getHourArray();
 
         try{
@@ -53,13 +51,13 @@ public class WeatherForecast extends DialogFragment {
                 String time = hourObject.getString("time");
                 String temperat = hourObject.getString("temp_c");
                 String img = hourObject.getJSONObject("condition").getString("icon");
-                String conditon = hourObject.getJSONObject("condition").getString("text");
-                weatherArrayList.add(new WeatherHelperClass(time, temperat, img, conditon));
-                Log.d(TAG, "temp:" + temperat);
-                Log.d(TAG, "array: " + weatherArrayList);
+                String condition = hourObject.getJSONObject("condition").getString("text");
+                weatherArrayList.add(new WeatherHelperClass(time, temperat, img, condition));
+                Log.d(TAG, "condition: " + condition);
 
 
             }
+            Log.d(TAG, "array: " + weatherArrayList);
 
 
         }catch (JSONException e){
@@ -67,9 +65,9 @@ public class WeatherForecast extends DialogFragment {
             e.printStackTrace();
 
         }
-        weatherAdapter = new WeatherAdapter(getActivity(), weatherArrayList);
         weatherForecastRecycler.setAdapter(weatherAdapter);
         weatherAdapter.notifyDataSetChanged();
+
 
         return view;
     }

@@ -24,32 +24,44 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyWardrobe">
         <activity
-            android:name=".ChangePassword"
+            android:name=".ChosenNews"
             android:exported="true" />
+        <activity
+            android:name=".ChangePassword"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Closet_search"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SelectedLooks"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AddLookItems"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AddNewLook"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SelectedClothe"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Closet_items"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Profile"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Closet"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Reset_choose"
             android:exported="true"

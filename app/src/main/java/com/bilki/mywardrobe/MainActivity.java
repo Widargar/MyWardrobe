@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.location.LocationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -40,9 +42,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bilki.mywardrobe.NewsModels.NewsApiResponse;
+import com.bilki.mywardrobe.NewsModels.NewsHeadlines;
+import com.bumptech.glide.RequestManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -54,10 +60,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, fashionNewsAdapter.SelectNewsListener {
 
     private long pressedTime;
-    private TextView city, temp, cond;
+    private TextView city, temp, cond, news;
     private ImageView icon, menuIcon;
     private LinearLayout weatherLayout, content;
     public LinearLayout weatherDataLayout;
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private noInternetConnection dialog;
     public ProgressBar progressBar;
     private LocationManager locationManager;
+    private Location location;
     private RecyclerView featuredRecycler, fashNewsRecycler;
     private RecyclerView.Adapter adapter, _adapter;
     private int PERMISSION_CODE = 1;
@@ -126,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+
         //Hooks
         city = (TextView) findViewById(R.id.city_weather);
         temp = (TextView) findViewById(R.id.temperature);
@@ -133,9 +141,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         icon = (ImageView) findViewById(R.id.weather_icon);
         weatherLayout = (LinearLayout) findViewById(R.id.weather);
         weatherDataLayout = (LinearLayout) findViewById(R.id.weather_data);
-        weatherArrayList = new ArrayList<>();
         progressBar = (ProgressBar) findViewById(R.id.progress);
         featuredRecycler = (RecyclerView) findViewById(R.id.featured_recycler);
+        news = (TextView) findViewById(R.id.news);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -149,9 +157,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, PackageManager.PERMISSION_GRANTED);
 
         navigationDrawer();
-
         featuredRecycler();
         newsRecycler();
+
 
         //askCameraPermissions();
         //askLocationPermission();
@@ -164,9 +172,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Weather --start--
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        cityName = getCityName(location.getLongitude(), location.getLatitude());
-
+        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        langANDlong();
         //Weather --end--
 
 
@@ -192,6 +199,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
+
+        getWeatherInfo(cityName);
+
         CheckInternet checkInternet = new CheckInternet();
         if(!checkInternet.isConnected(MainActivity.this)){
 
@@ -202,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             dialog.setCancelable(false);
 
         }
-        getWeatherInfo(cityName);
+
     }
 
     @Override
@@ -486,17 +496,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void getWeatherInfo(String cityName){
 
 //        String url = "https://api.weatherapi.com/v1/current.json?key=cd599d82deb5404f81a232210211311&q=Cracov&aqi=no";
-        String url = "https://api.weatherapi.com/v1/forecast.json?key=cd599d82deb5404f81a232210211311&q=Cracov&aqi&q=Cracow&days=1&aqi=no&alerts=no";
+//        String url = "https://api.weatherapi.com/v1/forecast.json?key=ec099509b8474853b85230806222901&q=" + cityName + "&days=1&aqi=no&alerts=no";
+        String url = "https://api.weatherapi.com/v1/forecast.json?key=ec099509b8474853b85230806222901&q=Cracov&days=1&aqi=no&alerts=no";
         city.setText(cityName);
 
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
             public void onResponse(JSONObject response) {
 
                 progressBar.setVisibility(View.GONE);
                 weatherLayout.setVisibility(View.VISIBLE);
-                weatherArrayList.clear();
 
                 try {
 
@@ -514,6 +523,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     hourArray = forecastday.getJSONArray("hour");
 
                     Log.d(TAG, "Temp: " + temp);
+
 
 
 //                    for(int i = 0; i < hourArray.length(); i++){
@@ -550,18 +560,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         requestQueue.add(jsonObjectRequest);
 
-
-    }
-
-    public WeatherAdapter getWeatherAdapter(){
-
-        return weatherAdapter;
-
-    }
-
-    public ArrayList<WeatherHelperClass> getWeatherArrayList(){
-
-        return weatherArrayList;
 
     }
 
@@ -613,6 +611,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private boolean isLocationEnable(Context context){
+
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return LocationManagerCompat.isLocationEnabled(locationManager);
+
+    }
+
+    private void langANDlong(){
+
+        if(!isLocationEnable(MainActivity.this)){
+
+            Toast.makeText(this, "Enable your location!", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.VISIBLE);
+            weatherDataLayout.setVisibility(View.GONE);
+
+        } else {
+
+            cityName = getCityName(location.getLongitude(), location.getLatitude());
+            progressBar.setVisibility(View.GONE);
+            weatherDataLayout.setVisibility(View.VISIBLE);
+
+        }
+
+
+
+    }
+
     private void featuredRecycler(){
 
         featuredRecycler.setHasFixedSize(true);
@@ -633,17 +658,57 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void newsRecycler(){
+
+
+
+    private final OnFetchNewsDataListener<NewsApiResponse> listener = new OnFetchNewsDataListener<NewsApiResponse>() {
+        @Override
+        public void onFetchData(List<NewsHeadlines> list, String message) {
+
+            showNews(list);
+
+        }
+
+        @Override
+        public void onError(String message) {
+
+        }
+    };
+
+    private void showNews(List<NewsHeadlines> list) {
 
         fashNewsRecycler.setHasFixedSize(true);
         fashNewsRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-        fashionArrayList.add(new fashionNewsHelperClass(R.drawable.article_2, "Finally, Sexy Clothes For Men", "When COVID first hit back in early 2020, I remember several friends texting me their cozy sweatsuit fits in the weeks that followed. I, however, went a more impractical dressing route. Feeling unsexier than ever—an impending sense of doom will do that to you—I ordered a fancy..."));
-        fashionArrayList.add(new fashionNewsHelperClass(R.drawable.article_1, "How J Balvin Stole the Show at Dior Men’s", "Anyone looking to make a splash during Paris Fashion Week could take a page from J Balvin’s playbook. The Colombian singer was a welcome presence in the front row of Kim Jones’ Dior Men’s show last Friday. Clad in a cream bomber jacket, khakis, and blue pin-striped shirt..."));
-        fashionArrayList.add(new fashionNewsHelperClass(R.drawable.article_3, "How Letterman Jackets Are Taking Over Paris Streetstyle", "It’s time to dust off your old letterman jackets, because the collegiate look is officially back—but with a cool new upgrade. At Louis Vuitton’s fall menswear show models and guests alike sported colorful varsity jackets, some in neon hues, bearing the house’s initials..."));
-
-        _adapter = new fashionNewsAdapter(fashionArrayList);
+        _adapter = new fashionNewsAdapter(MainActivity.this, list, MainActivity.this);
         fashNewsRecycler.setAdapter(_adapter);
+
+
+    }
+
+    private void newsRecycler(){
+
+        NewsRequestManager manager = new NewsRequestManager(MainActivity.this);
+        manager.getNewsHeadlines(listener, "men's fashion");
+
+
+
+
+//        fashionArrayList.add(new fashionNewsHelperClass(R.drawable.article_2, "Finally, Sexy Clothes For Men", "When COVID first hit back in early 2020, I remember several friends texting me their cozy sweatsuit fits in the weeks that followed. I, however, went a more impractical dressing route. Feeling unsexier than ever—an impending sense of doom will do that to you—I ordered a fancy..."));
+//        fashionArrayList.add(new fashionNewsHelperClass(R.drawable.article_1, "How J Balvin Stole the Show at Dior Men’s", "Anyone looking to make a splash during Paris Fashion Week could take a page from J Balvin’s playbook. The Colombian singer was a welcome presence in the front row of Kim Jones’ Dior Men’s show last Friday. Clad in a cream bomber jacket, khakis, and blue pin-striped shirt..."));
+//        fashionArrayList.add(new fashionNewsHelperClass(R.drawable.article_3, "How Letterman Jackets Are Taking Over Paris Streetstyle", "It’s time to dust off your old letterman jackets, because the collegiate look is officially back—but with a cool new upgrade. At Louis Vuitton’s fall menswear show models and guests alike sported colorful varsity jackets, some in neon hues, bearing the house’s initials..."));
+//
+////        _adapter = new fashionNewsAdapter(fashionArrayList);
+//        fashNewsRecycler.setAdapter(_adapter);
+
+    }
+
+    @Override
+    public void OnNewsClick(NewsHeadlines headlines) {
+
+        Intent i = new Intent(MainActivity.this, ChosenNews.class);
+        i.putExtra("news", headlines);
+        startActivity(i);
+        finish();
 
     }
 

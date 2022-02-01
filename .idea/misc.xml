@@ -41,6 +41,7 @@
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_add_new_look.xml" value="0.25" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_all_clothes.xml" value="0.18070652173913043" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_change_password.xml" value="0.22" />
+        <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_chosen_news.xml" value="0.17527173913043478" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_closet.xml" value="0.22" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_closet_search.xml" value="0.16847826086956522" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/activity_closte_items.xml" value="0.22" />
@@ -59,7 +60,7 @@
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/colors_card_design.xml" value="0.15489130434782608" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/day_look_card_design.xml" value="0.22" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/dialog_choose_source.xml" value="0.33" />
-        <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/fashion_news_card_design.xml" value="0.5" />
+        <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/fashion_news_card_design.xml" value="0.33" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/fragment_camera_fragment.xml" value="0.33" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/fragment_closet_fragment.xml" value="0.25" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/MyWardrobe/app/src/main/res/layout/fragment_clothe_selected.xml" value="0.19429347826086957" />

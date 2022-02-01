@@ -116,6 +116,7 @@
     <string name="enter_new">Enter new password</string>
     <string name="repeat_new">Repeat new password</string>
     <string name="change">Change</string>
+    <string name="news_api_key">d35e39b91a9d434f863608b44ddb4754</string>
 
     <string-array name="types">
         <item>Shirt</item>
